@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { authClient, useSession } from "@/lib/auth-client"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
-import { LogOut, Mail, User, Calendar, Shield } from "lucide-react"
+import { LogOut, Mail, User, Calendar, Shield, ArrowLeft } from "lucide-react"
 
 export default function AccountPage() {
   const router = useRouter()
@@ -62,27 +62,28 @@ export default function AccountPage() {
 
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col">
-      {/* Lower Purple Header */}
-      <div className="bg-gradient-to-r from-[#3D0086] to-[#500099] border-b border-[#2d0066] shadow-lg shadow-[#500099]/10">
+      {/* Header with Back Navigation */}
+      <div className="bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm sticky top-0 z-40">
         <div className="max-w-4xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14">
-            <a href="/" className="flex items-center space-x-2.5 group">
-              <div className="w-6 h-6 rounded-lg bg-white/10 backdrop-blur-sm flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow border border-white/20">
-                <span className="text-white font-semibold text-xs">T</span>
-              </div>
-              <span className="text-base font-semibold text-white tracking-tight">
-                Trovii
-              </span>
-            </a>
+          <div className="flex items-center justify-between h-16">
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={() => router.push("/user-space")}
+                className="flex items-center gap-2 text-stone-600 hover:text-[#500099] transition-colors group"
+              >
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-0.5 transition-transform" />
+                <span className="text-sm font-medium">Back to Space</span>
+              </button>
+            </div>
             <div className="flex items-center gap-3">
-              <span className="text-xs text-white/80 hidden sm:inline">
+              <span className="text-xs text-stone-600 hidden sm:inline">
                 {session.user.email}
               </span>
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={handleSignOut}
-                className="text-[12px] font-medium h-8 text-white/90 hover:text-white hover:bg-white/10 gap-1.5"
+                className="text-xs font-medium h-8 text-stone-600 hover:text-[#500099] hover:bg-stone-50 gap-1.5"
               >
                 <LogOut className="w-3.5 h-3.5" />
                 Sign Out
@@ -200,19 +201,9 @@ export default function AccountPage() {
 
             {/* Card Footer */}
             <div className="px-6 py-4 bg-stone-50 border-t border-stone-100">
-              <div className="flex items-center justify-between flex-wrap gap-3">
-                <p className="text-xs text-stone-500">
-                  Last updated: {formatDate(session.user.updatedAt)}
-                </p>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => router.push("/")}
-                  className="text-xs border-[#500099] text-[#500099] hover:bg-[#500099]/5"
-                >
-                  Back to Home
-                </Button>
-              </div>
+              <p className="text-xs text-stone-500">
+                Last updated: {formatDate(session.user.updatedAt)}
+              </p>
             </div>
           </div>
 

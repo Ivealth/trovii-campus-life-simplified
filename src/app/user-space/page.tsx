@@ -29,7 +29,7 @@ export default function UserSpacePage() {
   if (!session?.user) return null
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col pb-20">
+    <div className="min-h-screen bg-stone-50 flex flex-col pb-16">
       {/* Header - White with Drop Shadow (matching landing page) */}
       <div className="bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -130,26 +130,29 @@ export default function UserSpacePage() {
         </div>
       </div>
 
-      {/* Fixed Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-lg z-50">
-        <div className="max-w-md mx-auto px-6">
-          <div className="flex items-center justify-between h-20">
+      {/* Improved Fixed Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-stone-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
+        <div className="max-w-md mx-auto px-8">
+          <div className="flex items-center justify-center gap-16 h-14">
             {/* Shop/Cart Icon */}
-            <button className="flex flex-col items-center justify-center gap-1 group p-2 rounded-lg hover:bg-stone-50 transition-colors">
-              <ShoppingBag className="w-6 h-6 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={1.5} />
+            <button className="flex flex-col items-center justify-center gap-0.5 group active:scale-95 transition-transform">
+              <ShoppingBag className="w-5 h-5 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+              <span className="text-[10px] font-medium text-stone-500 group-hover:text-[#500099] transition-colors">Shop</span>
             </button>
 
             {/* Grid/Menu Icon */}
-            <button className="flex flex-col items-center justify-center gap-1 group p-2 rounded-lg hover:bg-stone-50 transition-colors">
-              <Grid3x3 className="w-6 h-6 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={1.5} />
+            <button className="flex flex-col items-center justify-center gap-0.5 group active:scale-95 transition-transform">
+              <Grid3x3 className="w-5 h-5 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+              <span className="text-[10px] font-medium text-stone-500 group-hover:text-[#500099] transition-colors">Menu</span>
             </button>
 
             {/* User/Profile Icon */}
             <button 
               onClick={() => router.push("/account")}
-              className="flex flex-col items-center justify-center gap-1 group p-2 rounded-lg hover:bg-stone-50 transition-colors"
+              className="flex flex-col items-center justify-center gap-0.5 group active:scale-95 transition-transform"
             >
-              <User className="w-6 h-6 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={1.5} />
+              <User className="w-5 h-5 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+              <span className="text-[10px] font-medium text-stone-500 group-hover:text-[#500099] transition-colors">Profile</span>
             </button>
           </div>
         </div>
