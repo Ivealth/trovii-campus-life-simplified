@@ -3,7 +3,6 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
-import { ShoppingBag, LayoutGrid, User } from "lucide-react"
 
 export default function UserSpacePage() {
   const router = useRouter()
@@ -130,35 +129,51 @@ export default function UserSpacePage() {
         </div>
       </div>
 
-      {/* Compact Fixed Bottom Navigation with Active States */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] z-50">
-        <div className="max-w-md mx-auto px-4">
-          <div className="flex items-center justify-around h-14">
-            {/* Shop Icon */}
-            <button className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all">
+      {/* Premium Fixed Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-stone-200 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] z-50">
+        <div className="max-w-md mx-auto px-6">
+          <div className="flex items-center justify-around h-16">
+            {/* Shop Icon - Stylish Logo Design */}
+            <button 
+              onClick={() => router.push("/shop")}
+              className="flex flex-col items-center justify-center gap-1.5 py-2 px-4 group active:scale-95 transition-all"
+            >
               <div className="relative">
-                <ShoppingBag className="w-5 h-5 text-stone-400 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-stone-400 group-hover:bg-[#500099] transition-colors" />
+                <div className="w-6 h-6 rounded-lg bg-stone-100 group-hover:bg-gradient-to-br group-hover:from-[#500099] group-hover:to-[#3D0086] flex items-center justify-center transition-all group-hover:shadow-lg group-hover:shadow-[#500099]/20">
+                  <svg className="w-3.5 h-3.5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                </div>
               </div>
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] transition-colors">Shop</span>
+              <span className="text-[11px] font-medium text-stone-500 group-hover:text-[#500099] group-hover:font-semibold transition-all">Shop</span>
             </button>
 
-            {/* Menu/Grid Icon - Active State */}
-            <button className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all">
+            {/* Menu Icon - Active with Modern Logo */}
+            <button className="flex flex-col items-center justify-center gap-1.5 py-2 px-4 group active:scale-95 transition-all">
               <div className="relative">
-                <LayoutGrid className="w-5 h-5 text-[#500099] transition-colors" strokeWidth={2} />
+                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center shadow-lg shadow-[#500099]/20">
+                  <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                </div>
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
               </div>
-              <span className="text-[10px] font-semibold text-[#500099] transition-colors">Menu</span>
+              <span className="text-[11px] font-semibold text-[#500099]">Menu</span>
             </button>
 
-            {/* Profile Icon */}
+            {/* Profile Icon - Elegant Logo */}
             <button 
               onClick={() => router.push("/account")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all"
+              className="flex flex-col items-center justify-center gap-1.5 py-2 px-4 group active:scale-95 transition-all"
             >
-              <User className="w-5 h-5 text-stone-400 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] transition-colors">Profile</span>
+              <div className="relative">
+                <div className="w-6 h-6 rounded-full bg-stone-100 group-hover:bg-gradient-to-br group-hover:from-[#500099] group-hover:to-[#3D0086] flex items-center justify-center transition-all group-hover:shadow-lg group-hover:shadow-[#500099]/20">
+                  <svg className="w-3.5 h-3.5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+              </div>
+              <span className="text-[11px] font-medium text-stone-500 group-hover:text-[#500099] group-hover:font-semibold transition-all">Profile</span>
             </button>
           </div>
         </div>
