@@ -14,7 +14,7 @@ const features = [
     icon: Briefcase,
     title: "Career Launchpad",
     description: "Find gigs, internships, and opportunities tailored for students on your schedule.",
-    color: "#FFD800"
+    color: "#500099"
   },
   {
     icon: Users,
@@ -56,7 +56,7 @@ export default function Features() {
               transition={{ duration: 0.4, delay: index * 0.1 }}
               className="group relative"
             >
-              <div className="relative h-full bg-stone-50 border border-stone-200 rounded-lg p-6 hover:border-[#FFD800]/30 hover:shadow-lg hover:shadow-[#FFD800]/5 transition-all duration-200">
+              <div className="relative h-full bg-stone-50 border border-stone-200 rounded-lg p-6 hover:border-[#500099]/30 hover:shadow-lg hover:shadow-[#500099]/5 transition-all duration-200">
                 {/* Icon */}
                 <div 
                   className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
@@ -86,7 +86,7 @@ export default function Features() {
           className="mt-16 bg-gradient-to-br from-stone-900 via-[#1c1917] to-[#0f0f0f] rounded-xl p-10 md:p-12 relative overflow-hidden"
         >
           {/* Accent circles */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFD800]/10 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-64 h-64 bg-[#500099]/10 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#FFEA32]/5 rounded-full blur-3xl" />
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">
@@ -99,7 +99,7 @@ export default function Features() {
               </div>
             </div>
             <div>
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#FFD800] to-[#FDC500] bg-clip-text text-transparent mb-1">
+              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#500099] to-[#086BFA] bg-clip-text text-transparent mb-1">
                 $500+
               </div>
               <div className="text-[13px] text-stone-400 font-medium">
