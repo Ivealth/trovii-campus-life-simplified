@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Menu, X, User } from "lucide-react"
+import { Menu, X } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
 
@@ -12,124 +12,129 @@ export default function Navigation() {
   const { data: session, isPending } = useSession()
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/70 backdrop-blur-xl border-b border-stone-200/50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-2.5">
-              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center shadow-sm">
-                <span className="text-white font-semibold text-sm">T</span>
-              </div>
-              <span className="text-lg font-semibold text-stone-900 tracking-tight">
-                Trovii
-              </span>
+          <a href="/" className="flex items-center gap-2">
+            <svg className="w-8 h-8" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="32" height="32" rx="8" fill="#500099"/>
+              <path d="M16 8V24M10 14H22" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
+            </svg>
+            <span className="text-[17px] font-semibold text-stone-900 tracking-tight">
+              Trovii
+            </span>
+          </a>
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8">
+            <a href="#features" className="text-[14px] font-medium text-stone-600 hover:text-stone-900 transition-colors">
+              Features
+            </a>
+            <a href="#how-it-works" className="text-[14px] font-medium text-stone-600 hover:text-stone-900 transition-colors">
+              How it works
+            </a>
+            <a href="#testimonials" className="text-[14px] font-medium text-stone-600 hover:text-stone-900 transition-colors">
+              Students
             </a>
           </div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
-            <a href="#features" className="px-3 py-2 text-[13px] font-medium text-stone-600 hover:text-[#500099] transition-colors">
-              Features
-            </a>
-            <a href="#testimonials" className="px-3 py-2 text-[13px] font-medium text-stone-600 hover:text-[#500099] transition-colors">
-              Testimonials
-            </a>
-            <div className="w-px h-4 bg-stone-200 mx-2" />
-            
+          <div className="hidden md:flex items-center gap-3">
             {!isPending && session?.user ? (
               <Button 
-                size="sm" 
-                className="bg-gradient-to-r from-[#500099] to-[#3D0086] hover:from-[#3D0086] hover:to-[#500099] text-white text-[13px] font-medium h-9 ml-1 shadow-lg shadow-[#500099]/20 gap-1.5"
-                onClick={() => router.push("/account")}
+                size="sm"
+                className="bg-stone-900 hover:bg-stone-800 text-white text-[13px] font-medium h-9 px-4 rounded-lg"
+                onClick={() => router.push("/user-space")}
               >
-                <User className="w-3.5 h-3.5" />
-                {session.user.name}
+                Dashboard
               </Button>
             ) : (
               <>
                 <Button 
                   variant="ghost" 
-                  size="sm" 
-                  className="text-[13px] font-medium h-9 hover:text-[#500099]"
+                  size="sm"
+                  className="text-[13px] font-medium text-stone-600 hover:text-stone-900 h-9"
                   onClick={() => router.push("/register?mode=signin")}
                 >
-                  Sign In
+                  Sign in
                 </Button>
                 <Button 
-                  size="sm" 
-                  className="bg-gradient-to-r from-[#500099] to-[#3D0086] hover:from-[#3D0086] hover:to-[#500099] text-white text-[13px] font-medium h-9 ml-1 shadow-lg shadow-[#500099]/20"
+                  size="sm"
+                  className="bg-stone-900 hover:bg-stone-800 text-white text-[13px] font-medium h-9 px-4 rounded-lg"
                   onClick={() => router.push("/register")}
                 >
-                  Get Started
+                  Get started
                 </Button>
               </>
             )}
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="p-2 rounded-md hover:bg-stone-100 transition-colors"
-              aria-label="Toggle menu"
-            >
-              {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-            </button>
-          </div>
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 hover:bg-stone-100 rounded-lg transition-colors"
+          >
+            {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </div>
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden border-t border-stone-200 bg-white">
-          <div className="px-6 py-4 space-y-3">
+        <div className="md:hidden border-t border-stone-200/50 bg-white/95 backdrop-blur-xl">
+          <div className="px-4 py-6 space-y-4">
             <a
               href="#features"
-              className="block py-2 text-sm font-medium text-stone-600 hover:text-[#500099] transition-colors"
+              className="block text-[15px] font-medium text-stone-600 hover:text-stone-900"
               onClick={() => setIsOpen(false)}
             >
               Features
             </a>
             <a
-              href="#testimonials"
-              className="block py-2 text-sm font-medium text-stone-600 hover:text-[#500099] transition-colors"
+              href="#how-it-works"
+              className="block text-[15px] font-medium text-stone-600 hover:text-stone-900"
               onClick={() => setIsOpen(false)}
             >
-              Testimonials
+              How it works
             </a>
-            <div className="pt-3 space-y-2">
+            <a
+              href="#testimonials"
+              className="block text-[15px] font-medium text-stone-600 hover:text-stone-900"
+              onClick={() => setIsOpen(false)}
+            >
+              Students
+            </a>
+            <div className="pt-4 space-y-2">
               {!isPending && session?.user ? (
                 <Button 
-                  className="w-full bg-gradient-to-r from-[#500099] to-[#3D0086] hover:from-[#3D0086] hover:to-[#500099] text-white text-sm shadow-lg shadow-[#500099]/20 gap-1.5"
+                  className="w-full bg-stone-900 hover:bg-stone-800 text-white"
                   onClick={() => {
                     setIsOpen(false)
-                    router.push("/account")
+                    router.push("/user-space")
                   }}
                 >
-                  <User className="w-4 h-4" />
-                  {session.user.name}
+                  Dashboard
                 </Button>
               ) : (
                 <>
                   <Button 
-                    variant="outline" 
-                    className="w-full text-sm border-[#500099] text-[#500099] hover:bg-[#500099]/5"
+                    variant="outline"
+                    className="w-full"
                     onClick={() => {
                       setIsOpen(false)
                       router.push("/register?mode=signin")
                     }}
                   >
-                    Sign In
+                    Sign in
                   </Button>
                   <Button 
-                    className="w-full bg-gradient-to-r from-[#500099] to-[#3D0086] hover:from-[#3D0086] hover:to-[#500099] text-white text-sm shadow-lg shadow-[#500099]/20"
+                    className="w-full bg-stone-900 hover:bg-stone-800 text-white"
                     onClick={() => {
                       setIsOpen(false)
                       router.push("/register")
                     }}
                   >
-                    Get Started
+                    Get started
                   </Button>
                 </>
               )}

@@ -1,122 +1,136 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { UtensilsCrossed, Briefcase, Users } from "lucide-react"
+import { UtensilsCrossed, Briefcase, Users, ArrowRight } from "lucide-react"
 
 const features = [
   {
     icon: UtensilsCrossed,
     title: "Food Delivery",
-    description: "Order from campus restaurants and get meals delivered to your dorm or library.",
-    color: "#FFEA32"
+    description: "Order from campus restaurants and get meals delivered directly to your location. Save time during busy study sessions.",
   },
   {
     icon: Briefcase,
     title: "Career Launchpad",
-    description: "Find gigs, internships, and opportunities tailored for students on your schedule.",
-    color: "#500099"
+    description: "Browse gigs, internships, and part-time opportunities tailored for students. Earn money on your schedule.",
   },
   {
     icon: Users,
     title: "Community Hub",
-    description: "Connect with students, join clubs, and stay updated on campus events.",
-    color: "#086BFA"
+    description: "Connect with classmates, join clubs, and stay updated on campus events. Build your network.",
   }
+]
+
+const stats = [
+  { label: "Active students", value: "1,200+" },
+  { label: "Jobs posted", value: "450+" },
+  { label: "Hours saved", value: "10k+" },
 ]
 
 export default function Features() {
   return (
-    <section id="features" className="py-20 md:py-24 bg-white">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto mb-14">
+    <>
+      {/* Features Section */}
+      <section id="features" className="py-24 px-4 sm:px-6 lg:px-8 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="max-w-2xl mb-16">
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+            >
+              <h2 className="text-[2.5rem] sm:text-5xl font-bold text-stone-900 mb-4 tracking-tight leading-tight">
+                Everything you need
+              </h2>
+              <p className="text-[17px] text-stone-600 leading-relaxed">
+                Three essential services integrated into one platform. Designed specifically for student life.
+              </p>
+            </motion.div>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+              >
+                <div className="group">
+                  <div className="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center mb-5 group-hover:bg-stone-900 transition-colors duration-200">
+                    <feature.icon className="w-6 h-6 text-stone-900 group-hover:text-white transition-colors duration-200" />
+                  </div>
+                  <h3 className="text-[19px] font-semibold text-stone-900 mb-3 tracking-tight">
+                    {feature.title}
+                  </h3>
+                  <p className="text-[15px] text-stone-600 leading-relaxed">
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* How it Works Section */}
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-50">
+        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.5 }}
+            className="text-center max-w-2xl mx-auto mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-3 tracking-tight">
-              Everything in one place
+            <h2 className="text-[2.5rem] sm:text-5xl font-bold text-stone-900 mb-4 tracking-tight leading-tight">
+              Simple to get started
             </h2>
-            <p className="text-[15px] text-stone-600">
-              Essential campus services integrated into a single platform.
+            <p className="text-[17px] text-stone-600">
+              Create an account, explore opportunities, and start saving time in minutes.
             </p>
           </motion.div>
-        </div>
 
-        {/* Feature Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: index * 0.1 }}
-              className="group relative"
-            >
-              <div className="relative h-full bg-stone-50 border border-stone-200 rounded-lg p-6 hover:border-[#500099]/30 hover:shadow-lg hover:shadow-[#500099]/5 transition-all duration-200">
-                {/* Icon */}
-                <div 
-                  className="w-10 h-10 rounded-lg flex items-center justify-center mb-4"
-                  style={{ backgroundColor: `${feature.color}${feature.color === '#FFEA32' ? '' : '15'}` }}
-                >
-                  <feature.icon className="w-5 h-5" style={{ color: feature.color === '#FFEA32' ? '#1c1917' : feature.color }} />
-                </div>
-
-                {/* Content */}
-                <h3 className="text-lg font-semibold text-stone-900 mb-2 tracking-tight">
-                  {feature.title}
-                </h3>
-                <p className="text-[14px] text-stone-600 leading-relaxed">
-                  {feature.description}
-                </p>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        {/* Stats Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          className="mt-16 bg-gradient-to-br from-stone-900 via-[#1c1917] to-[#0f0f0f] rounded-xl p-10 md:p-12 relative overflow-hidden"
-        >
-          {/* Accent circles */}
-          <div className="absolute top-0 right-0 w-64 h-64 bg-[#500099]/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 left-0 w-48 h-48 bg-[#FFEA32]/5 rounded-full blur-3xl" />
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center relative">
-            <div>
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#FFEA32] to-[#FFD800] bg-clip-text text-transparent mb-1">
-                10+
-              </div>
-              <div className="text-[13px] text-stone-400 font-medium">
-                Hours saved weekly
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#500099] to-[#086BFA] bg-clip-text text-transparent mb-1">
-                $500+
-              </div>
-              <div className="text-[13px] text-stone-400 font-medium">
-                Average monthly earnings
-              </div>
-            </div>
-            <div>
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#FFEA32] to-[#FFD800] bg-clip-text text-transparent mb-1">
-                85%
-              </div>
-              <div className="text-[13px] text-stone-400 font-medium">
-                Career placement rate
-              </div>
-            </div>
+          <div className="grid md:grid-cols-3 gap-12 mb-20">
+            {[
+              { step: "01", title: "Sign up", desc: "Create your free account with your student email" },
+              { step: "02", title: "Browse", desc: "Explore food options, gigs, and community events" },
+              { step: "03", title: "Get started", desc: "Order, apply, or connect—it's that simple" },
+            ].map((item, index) => (
+              <motion.div
+                key={item.step}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="text-center"
+              >
+                <div className="text-[13px] font-bold text-stone-400 mb-4 tracking-wider">{item.step}</div>
+                <h3 className="text-[19px] font-semibold text-stone-900 mb-2">{item.title}</h3>
+                <p className="text-[15px] text-stone-600">{item.desc}</p>
+              </motion.div>
+            ))}
           </div>
-        </motion.div>
-      </div>
-    </section>
+
+          {/* Stats */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+            className="grid grid-cols-3 gap-8 max-w-3xl mx-auto py-12 border-t border-stone-200"
+          >
+            {stats.map((stat) => (
+              <div key={stat.label} className="text-center">
+                <div className="text-[2rem] sm:text-4xl font-bold text-stone-900 mb-1">{stat.value}</div>
+                <div className="text-[13px] text-stone-500 font-medium">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+    </>
   )
 }
