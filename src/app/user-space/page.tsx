@@ -3,7 +3,7 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
-import { ShoppingBag, Grid3x3, User } from "lucide-react"
+import { ShoppingBag, LayoutGrid, User } from "lucide-react"
 
 export default function UserSpacePage() {
   const router = useRouter()
@@ -29,7 +29,7 @@ export default function UserSpacePage() {
   if (!session?.user) return null
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col pb-16">
+    <div className="min-h-screen bg-stone-50 flex flex-col pb-20">
       {/* Header - White with Drop Shadow (matching landing page) */}
       <div className="bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -130,29 +130,26 @@ export default function UserSpacePage() {
         </div>
       </div>
 
-      {/* Improved Fixed Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-sm border-t border-stone-200 shadow-[0_-2px_10px_rgba(0,0,0,0.05)] z-50">
-        <div className="max-w-md mx-auto px-8">
-          <div className="flex items-center justify-center gap-16 h-14">
-            {/* Shop/Cart Icon */}
-            <button className="flex flex-col items-center justify-center gap-0.5 group active:scale-95 transition-transform">
-              <ShoppingBag className="w-5 h-5 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
-              <span className="text-[10px] font-medium text-stone-500 group-hover:text-[#500099] transition-colors">Shop</span>
+      {/* Redesigned Fixed Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50 safe-area-inset-bottom">
+        <div className="max-w-lg mx-auto px-6">
+          <div className="flex items-center justify-around h-16">
+            {/* Shop Icon */}
+            <button className="flex items-center justify-center w-14 h-14 group active:scale-95 transition-all">
+              <ShoppingBag className="w-6 h-6 text-stone-700 group-hover:text-[#500099] group-active:text-[#500099] transition-colors" strokeWidth={1.5} />
             </button>
 
-            {/* Grid/Menu Icon */}
-            <button className="flex flex-col items-center justify-center gap-0.5 group active:scale-95 transition-transform">
-              <Grid3x3 className="w-5 h-5 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
-              <span className="text-[10px] font-medium text-stone-500 group-hover:text-[#500099] transition-colors">Menu</span>
+            {/* Menu/Grid Icon */}
+            <button className="flex items-center justify-center w-14 h-14 group active:scale-95 transition-all">
+              <LayoutGrid className="w-6 h-6 text-stone-700 group-hover:text-[#500099] group-active:text-[#500099] transition-colors" strokeWidth={1.5} />
             </button>
 
-            {/* User/Profile Icon */}
+            {/* Profile Icon */}
             <button 
               onClick={() => router.push("/account")}
-              className="flex flex-col items-center justify-center gap-0.5 group active:scale-95 transition-transform"
+              className="flex items-center justify-center w-14 h-14 group active:scale-95 transition-all"
             >
-              <User className="w-5 h-5 text-stone-600 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
-              <span className="text-[10px] font-medium text-stone-500 group-hover:text-[#500099] transition-colors">Profile</span>
+              <User className="w-6 h-6 text-stone-700 group-hover:text-[#500099] group-active:text-[#500099] transition-colors" strokeWidth={1.5} />
             </button>
           </div>
         </div>
