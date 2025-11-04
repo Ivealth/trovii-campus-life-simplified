@@ -3,8 +3,6 @@
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
-import BottomNav from "@/components/BottomNav"
-import { ArrowRight, Package, Briefcase, Users, TrendingUp } from "lucide-react"
 
 export default function UserSpacePage() {
   const router = useRouter()
@@ -20,7 +18,7 @@ export default function UserSpacePage() {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-stone-900 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[#500099] border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-stone-600">Loading...</p>
         </div>
       </div>
@@ -29,46 +27,24 @@ export default function UserSpacePage() {
 
   if (!session?.user) return null
 
-  const services = [
-    {
-      title: "Food Delivery",
-      description: "Order from campus restaurants and cafes",
-      icon: Package,
-      href: "/food",
-      stats: "15+ restaurants",
-      color: "bg-stone-900"
-    },
-    {
-      title: "Career Hub",
-      description: "Find gigs, internships, and job opportunities",
-      icon: Briefcase,
-      href: "/careers",
-      stats: "200+ listings",
-      color: "bg-stone-900"
-    },
-    {
-      title: "Community",
-      description: "Connect with students and join events",
-      icon: Users,
-      href: "/community",
-      stats: "5,000+ students",
-      color: "bg-stone-900"
-    }
-  ]
-
   return (
-    <div className="min-h-screen bg-white flex flex-col pb-20">
-      {/* Simple Header */}
-      <div className="border-b border-stone-200">
-        <div className="max-w-2xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-semibold text-stone-900 tracking-tight">
-                Dashboard
-              </h1>
-              <p className="text-sm text-stone-600 mt-0.5">
-                Welcome back, {session.user.name?.split(' ')[0] || 'there'}
-              </p>
+    <div className="min-h-screen bg-stone-50 flex flex-col pb-16">
+      {/* Header - White with Drop Shadow (matching landing page) */}
+      <div className="bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            <a href="/" className="flex items-center space-x-2.5 group">
+              <div className="w-7 h-7 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                <span className="text-white font-semibold text-sm">T</span>
+              </div>
+              <span className="text-lg font-semibold text-stone-900 tracking-tight">
+                Trovii
+              </span>
+            </a>
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium text-stone-700 hidden sm:inline">
+                {session.user.name}
+              </span>
             </div>
           </div>
         </div>
@@ -76,78 +52,126 @@ export default function UserSpacePage() {
 
       {/* Main Content */}
       <div className="flex-1 px-6 py-8">
-        <div className="max-w-2xl mx-auto space-y-8">
-          {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-4">
-            <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
-              <div className="text-2xl font-semibold text-stone-900">0</div>
-              <div className="text-xs text-stone-600 mt-1">Orders</div>
+        <div className="max-w-6xl mx-auto">
+          {/* Welcome Section */}
+          <div className="mb-8">
+            <h1 className="text-3xl font-bold text-stone-900 mb-2">
+              Welcome to Your Space! 👋
+            </h1>
+            <p className="text-stone-600">
+              Everything you need for campus life in one place
+            </p>
+          </div>
+
+          {/* Quick Access Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            {/* Food Delivery Card */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#FFD800] to-[#FFEA32] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">🍔</span>
+              </div>
+              <h3 className="text-lg font-semibold text-stone-900 mb-2">
+                Food Delivery
+              </h3>
+              <p className="text-sm text-stone-600">
+                Order from your favorite campus restaurants
+              </p>
             </div>
-            <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
-              <div className="text-2xl font-semibold text-stone-900">0</div>
-              <div className="text-xs text-stone-600 mt-1">Applications</div>
+
+            {/* Career Launchpad Card */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">💼</span>
+              </div>
+              <h3 className="text-lg font-semibold text-stone-900 mb-2">
+                Career Launchpad
+              </h3>
+              <p className="text-sm text-stone-600">
+                Discover gigs, internships, and opportunities
+              </p>
             </div>
-            <div className="bg-stone-50 rounded-lg p-4 border border-stone-200">
-              <div className="text-2xl font-semibold text-stone-900">0</div>
-              <div className="text-xs text-stone-600 mt-1">Events</div>
+
+            {/* Community Hub Card */}
+            <div className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group">
+              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#086BFA] to-[#500099] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                <span className="text-2xl">👥</span>
+              </div>
+              <h3 className="text-lg font-semibold text-stone-900 mb-2">
+                Community Hub
+              </h3>
+              <p className="text-sm text-stone-600">
+                Connect with fellow students and join events
+              </p>
             </div>
           </div>
 
-          {/* Services Grid */}
-          <div>
-            <h2 className="text-lg font-semibold text-stone-900 mb-4">
-              Services
-            </h2>
-            <div className="space-y-3">
-              {services.map((service) => (
-                <button
-                  key={service.title}
-                  onClick={() => router.push(service.href)}
-                  className="w-full bg-white hover:bg-stone-50 border border-stone-200 rounded-lg p-5 transition-colors group text-left"
-                >
-                  <div className="flex items-start gap-4">
-                    <div className={`${service.color} rounded-lg p-3 transition-transform group-hover:scale-105`}>
-                      <service.icon className="w-5 h-5 text-white" strokeWidth={2} />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-1">
-                        <h3 className="text-base font-semibold text-stone-900">
-                          {service.title}
-                        </h3>
-                        <ArrowRight className="w-4 h-4 text-stone-400 group-hover:translate-x-1 transition-transform" strokeWidth={2} />
-                      </div>
-                      <p className="text-sm text-stone-600 mb-2">
-                        {service.description}
-                      </p>
-                      <span className="text-xs text-stone-500">
-                        {service.stats}
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
-
-          {/* Recent Activity */}
-          <div>
-            <h2 className="text-lg font-semibold text-stone-900 mb-4">
+          {/* Recent Activity Section */}
+          <div className="bg-white rounded-xl border border-stone-200 p-6 shadow-sm">
+            <h2 className="text-xl font-semibold text-stone-900 mb-4">
               Recent Activity
             </h2>
-            <div className="bg-stone-50 border border-stone-200 rounded-lg p-8 text-center">
-              <div className="w-12 h-12 rounded-full bg-white border border-stone-200 flex items-center justify-center mx-auto mb-3">
-                <TrendingUp className="w-5 h-5 text-stone-400" strokeWidth={2} />
+            <div className="space-y-4">
+              <div className="flex items-center gap-4 p-4 bg-stone-50 rounded-lg">
+                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#FFD800] to-[#FFEA32] flex items-center justify-center flex-shrink-0">
+                  <span className="text-xl">🎉</span>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-stone-900">
+                    Welcome to Trovii!
+                  </p>
+                  <p className="text-xs text-stone-500">
+                    Start exploring campus services
+                  </p>
+                </div>
               </div>
-              <p className="text-sm text-stone-600 mb-1">No activity yet</p>
-              <p className="text-xs text-stone-500">
-                Start using Trovii services to see your activity here
-              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <BottomNav />
+      {/* Clean Fixed Bottom Navigation */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50">
+        <div className="max-w-md mx-auto px-4">
+          <div className="flex items-center justify-around h-16">
+            {/* Shop Icon */}
+            <button 
+              onClick={() => router.push("/shop")}
+              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
+            >
+              <div className="w-6 h-6 flex items-center justify-center">
+                <svg className="w-6 h-6 text-stone-400 group-hover:text-[#500099] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </div>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] group-hover:font-semibold transition-all">Shop</span>
+            </button>
+
+            {/* Menu Icon - Active */}
+            <button className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative">
+              <div className="w-6 h-6 flex items-center justify-center">
+                <svg className="w-6 h-6 text-[#500099]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+              </div>
+              <span className="text-[10px] font-semibold text-[#500099]">Menu</span>
+              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
+            </button>
+
+            {/* Profile Icon */}
+            <button 
+              onClick={() => router.push("/account")}
+              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
+            >
+              <div className="w-6 h-6 flex items-center justify-center">
+                <svg className="w-6 h-6 text-stone-400 group-hover:text-[#500099] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+              </div>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] group-hover:font-semibold transition-all">Profile</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

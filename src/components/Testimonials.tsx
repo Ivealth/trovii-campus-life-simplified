@@ -7,22 +7,19 @@ const testimonials = [
     name: "Sarah Mitchell",
     role: "CS Junior @ Berkeley",
     content: "Trovii completely changed how I manage my time. Found an internship through the platform and now I'm earning while studying. The food delivery is a lifesaver during finals.",
-    rating: 5,
-    gradient: "from-purple-500 to-purple-600"
+    rating: 5
   },
   {
     name: "Marcus Johnson",
     role: "Business @ NYU",
     content: "The gig marketplace is incredible. I've made over $2,000 doing freelance work I found on Trovii. Plus, the community features help me stay connected with my classmates.",
-    rating: 5,
-    gradient: "from-blue-500 to-blue-600"
+    rating: 5
   },
   {
     name: "Emma Chen",
     role: "Psychology @ MIT",
     content: "As a senior, Trovii helped me land my dream job. The career resources and connections I made through the platform were invaluable. Highly recommend to any student.",
-    rating: 5,
-    gradient: "from-yellow-500 to-orange-500"
+    rating: 5
   }
 ]
 
@@ -55,10 +52,10 @@ export default function Testimonials() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <div className="h-full bg-white rounded-2xl p-8 border border-stone-200 hover:border-transparent hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
+              <div className="h-full bg-stone-50 rounded-2xl p-8 border border-stone-200">
                 <div className="flex mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
-                    <svg key={i} className="w-4 h-4 text-yellow-500 fill-current" viewBox="0 0 20 20">
+                    <svg key={i} className="w-4 h-4 text-stone-900 fill-current" viewBox="0 0 20 20">
                       <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                     </svg>
                   ))}
@@ -68,15 +65,12 @@ export default function Testimonials() {
                   {testimonial.content}
                 </p>
 
-                <div className="pt-6 border-t border-stone-200 flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${testimonial.gradient}`} />
-                  <div>
-                    <div className="font-semibold text-[15px] text-stone-900">
-                      {testimonial.name}
-                    </div>
-                    <div className="text-[13px] text-stone-500 mt-0.5">
-                      {testimonial.role}
-                    </div>
+                <div className="pt-6 border-t border-stone-200">
+                  <div className="font-semibold text-[15px] text-stone-900">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-[13px] text-stone-500 mt-0.5">
+                    {testimonial.role}
                   </div>
                 </div>
               </div>
@@ -97,7 +91,7 @@ export default function Testimonials() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-12">
             {["Berkeley", "MIT", "Stanford", "NYU", "Columbia"].map((uni) => (
-              <div key={uni} className="text-[15px] font-semibold text-stone-400 hover:text-purple-600 transition-colors cursor-pointer">
+              <div key={uni} className="text-[15px] font-semibold text-stone-400">
                 {uni}
               </div>
             ))}
