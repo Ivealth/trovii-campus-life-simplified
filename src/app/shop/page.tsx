@@ -4,30 +4,35 @@ import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
 import { 
-  Search, ChevronRight, ChevronLeft, Heart, Star, 
-  ShoppingCart, User, ChevronDown, Store, Timer
+  Search, ChevronRight, Heart, Star, 
+  ShoppingCart, User, Filter, SlidersHorizontal,
+  TrendingUp, Zap, Package, Shield
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 
-// Define hero banners at module scope to avoid TDZ issues
+// Define hero banners at module scope
 const HERO_BANNERS = [
   {
     id: "banner-1",
-    title: "Back to Campus Deals",
-    sub: "Save big on tech, fashion & essentials",
-    bg: "from-[#500099] to-[#3D0086]",
+    title: "Welcome to Campus Marketplace",
+    subtitle: "Everything students need, delivered to your dorm",
+    cta: "Start Shopping",
+    gradient: "from-violet-600 via-purple-600 to-indigo-600",
   },
   {
     id: "banner-2",
-    title: "Food Delivery Savings",
-    sub: "Free delivery on first 3 orders",
-    bg: "from-[#086BFA] to-[#500099]",
+    title: "Tech Essentials for Every Student",
+    subtitle: "Latest gadgets, best prices, fast delivery",
+    cta: "Explore Tech",
+    gradient: "from-blue-600 via-cyan-600 to-teal-600",
   },
   {
     id: "banner-3",
-    title: "Internship Kickstart",
-    sub: "Launch your career on Trovii",
-    bg: "from-[#FDC500] to-[#FFD800]",
+    title: "Fashion That Fits Your Style",
+    subtitle: "Trendy looks for campus life",
+    cta: "Shop Fashion",
+    gradient: "from-pink-600 via-rose-600 to-red-600",
   },
 ]
 
@@ -35,20 +40,8 @@ export default function ShopPage() {
   const router = useRouter()
   const { data: session, isPending } = useSession()
   const [searchQuery, setSearchQuery] = useState("")
-  const [now, setNow] = useState(() => Date.now())
   const [heroIndex, setHeroIndex] = useState(0)
-  const [showCategories, setShowCategories] = useState(false)
-
-  // Countdown to next 2 hours for Deals of the Day
-  const dealEndsAt = useMemo(() => Date.now() + 2 * 60 * 60 * 1000, [])
-  useEffect(() => {
-    const t = setInterval(() => setNow(Date.now()), 1000)
-    return () => clearInterval(t)
-  }, [])
-  const remainingMs = Math.max(0, dealEndsAt - now)
-  const hours = String(Math.floor(remainingMs / (1000 * 60 * 60))).padStart(2, "0")
-  const minutes = String(Math.floor((remainingMs / (1000 * 60)) % 60)).padStart(2, "0")
-  const seconds = String(Math.floor((remainingMs / 1000) % 60)).padStart(2, "0")
+  const [hoveredProduct, setHoveredProduct] = useState<number | null>(null)
 
   useEffect(() => {
     if (!isPending && !session?.user) {
@@ -59,7 +52,7 @@ export default function ShopPage() {
   // Auto-rotate hero banners
   useEffect(() => {
     if (HERO_BANNERS.length <= 1) return
-    const id = setInterval(() => setHeroIndex((i) => (i + 1) % HERO_BANNERS.length), 5000)
+    const id = setInterval(() => setHeroIndex((i) => (i + 1) % HERO_BANNERS.length), 6000)
     return () => clearInterval(id)
   }, [])
 
@@ -67,8 +60,8 @@ export default function ShopPage() {
     return (
       <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-[#500099] border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-stone-600">Loading...</p>
+          <div className="w-10 h-10 border-4 border-stone-900 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-stone-600 font-medium">Loading marketplace...</p>
         </div>
       </div>
     )
@@ -76,462 +69,477 @@ export default function ShopPage() {
 
   if (!session?.user) return null
 
-  const topLinks = [
-    { label: "Sell on Trovii", href: "#" },
-    { label: "Help", href: "#" },
-    { label: "Track Order", href: "#" },
-  ]
-
   const categories = [
-    { id: "phones", name: "Phones & Tablets" },
-    { id: "computers", name: "Computers & Accessories" },
-    { id: "electronics", name: "Electronics" },
-    { id: "fashion", name: "Fashion" },
-    { id: "beauty", name: "Beauty & Health" },
-    { id: "home", name: "Home & Kitchen" },
-    { id: "grocery", name: "Grocery" },
-    { id: "gaming", name: "Gaming" },
+    { id: "electronics", name: "Electronics", icon: "💻" },
+    { id: "fashion", name: "Fashion", icon: "👕" },
+    { id: "books", name: "Books & Supplies", icon: "📚" },
+    { id: "home", name: "Home & Living", icon: "🏠" },
+    { id: "sports", name: "Sports & Fitness", icon: "⚽" },
+    { id: "beauty", name: "Beauty & Health", icon: "💄" },
+    { id: "food", name: "Food & Snacks", icon: "🍕" },
+    { id: "accessories", name: "Accessories", icon: "⌚" },
   ]
 
   const featuredProducts = [
     {
       id: 1,
-      name: "Noise Cancelling Headphones",
+      name: "Premium Wireless Headphones",
       category: "Electronics",
-      price: "₦24,500",
-      originalPrice: "₦35,000",
-      discount: 30,
+      price: 24500,
+      originalPrice: 35000,
       rating: 4.8,
-      reviews: 124,
+      reviews: 234,
       image: "🎧",
+      badge: "Best Seller",
       inStock: true,
     },
     {
       id: 2,
-      name: "Premium Backpack Pro",
-      category: "Fashion",
-      price: "₦12,900",
-      originalPrice: "₦18,000",
-      discount: 28,
+      name: "Smart Watch Series 5",
+      category: "Electronics",
+      price: 45000,
+      originalPrice: 65000,
       rating: 4.9,
-      reviews: 89,
-      image: "🎒",
+      reviews: 189,
+      image: "⌚",
+      badge: "Trending",
       inStock: true,
     },
     {
       id: 3,
-      name: "Smart Watch Series 5",
-      category: "Electronics",
-      price: "₦45,000",
-      originalPrice: "₦65,000",
-      discount: 31,
+      name: "Designer Backpack Pro",
+      category: "Fashion",
+      price: 12900,
+      originalPrice: 18000,
       rating: 4.7,
-      reviews: 203,
-      image: "⌚",
+      reviews: 156,
+      image: "🎒",
+      badge: null,
       inStock: true,
     },
     {
       id: 4,
-      name: "Wireless Mouse Pro",
+      name: "Ergonomic Wireless Mouse",
       category: "Electronics",
-      price: "₦8,200",
-      originalPrice: "₦12,000",
-      discount: 32,
+      price: 8200,
+      originalPrice: 12000,
       rating: 4.6,
-      reviews: 156,
+      reviews: 203,
       image: "🖱️",
+      badge: "Best Value",
       inStock: true,
     },
     {
       id: 5,
-      name: "Designer Sneakers",
+      name: "Premium Running Sneakers",
       category: "Fashion",
-      price: "₦32,000",
-      originalPrice: "₦48,000",
-      discount: 33,
+      price: 32000,
+      originalPrice: 48000,
       rating: 4.9,
       reviews: 178,
       image: "👟",
+      badge: "Top Rated",
       inStock: true,
     },
     {
       id: 6,
-      name: "Study Desk Lamp LED",
-      category: "Electronics",
-      price: "₦6,800",
-      originalPrice: "₦9,500",
-      discount: 28,
+      name: "LED Study Desk Lamp",
+      category: "Home",
+      price: 6800,
+      originalPrice: 9500,
       rating: 4.5,
-      reviews: 92,
+      reviews: 142,
       image: "💡",
+      badge: null,
+      inStock: true,
+    },
+    {
+      id: 7,
+      name: "Bluetooth Speaker Pro",
+      category: "Electronics",
+      price: 15500,
+      originalPrice: 22000,
+      rating: 4.7,
+      reviews: 167,
+      image: "🔊",
+      badge: "New Arrival",
+      inStock: true,
+    },
+    {
+      id: 8,
+      name: "Canvas Tote Bag",
+      category: "Fashion",
+      price: 4500,
+      originalPrice: 7000,
+      rating: 4.4,
+      reviews: 98,
+      image: "👜",
+      badge: null,
       inStock: true,
     },
   ]
 
-  const officialStores = [
-    { id: "apple", name: "Apple", bg: "from-stone-100 to-stone-50" },
-    { id: "samsung", name: "Samsung", bg: "from-stone-100 to-stone-50" },
-    { id: "nike", name: "Nike", bg: "from-stone-100 to-stone-50" },
-    { id: "adidas", name: "Adidas", bg: "from-stone-100 to-stone-50" },
-    { id: "hp", name: "HP", bg: "from-stone-100 to-stone-50" },
-    { id: "dell", name: "Dell", bg: "from-stone-100 to-stone-50" },
+  const quickLinks = [
+    { icon: <TrendingUp className="w-5 h-5" />, label: "Trending", count: "120+ items" },
+    { icon: <Zap className="w-5 h-5" />, label: "Flash Deals", count: "Save up to 50%" },
+    { icon: <Package className="w-5 h-5" />, label: "Free Delivery", count: "On orders ₦5,000+" },
+    { icon: <Shield className="w-5 h-5" />, label: "Verified Sellers", count: "100% authentic" },
   ]
 
-  // Brands strip (reuse official stores names for now)
-  const brands = officialStores.map((s) => s.name)
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency: 'NGN',
+      minimumFractionDigits: 0,
+    }).format(price)
+  }
+
+  const calculateDiscount = (original: number, current: number) => {
+    return Math.round(((original - current) / original) * 100)
+  }
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col">
-      {/* Top Utility Bar */}
-      <div className="hidden md:block bg-stone-100 border-b border-stone-200">
-        <div className="max-w-6xl mx-auto px-4 h-10 flex items-center justify-end gap-6 text-[13px] text-stone-600">
-          {topLinks.map((l) => (
-            <a key={l.label} href={l.href} className="hover:text-stone-900 transition-colors">{l.label}</a>
-          ))}
-        </div>
-      </div>
-
-      {/* Main Header: Logo + Search + Icons */}
-      <header className="bg-white border-b border-stone-200 sticky top-0 z-40">
-        <div className="max-w-6xl mx-auto px-4 py-3 grid grid-cols-12 items-center gap-4">
-          {/* Logo */}
-          <a href="/" className="col-span-6 sm:col-span-3 flex items-center gap-2">
-            <div className="w-9 h-9 rounded-xl bg-stone-900 text-white flex items-center justify-center font-bold">T</div>
-            <span className="text-base font-semibold text-stone-900">Trovii</span>
-          </a>
-
-          {/* Search */}
-          <div className="col-span-12 sm:col-span-6">
-            <div className="flex items-stretch rounded-xl border border-stone-200 overflow-hidden">
-              <button className="hidden sm:flex items-center gap-1 px-3 bg-stone-50 border-r border-stone-200 text-[13px] text-stone-700">
-                All Categories <ChevronDown className="w-4 h-4" />
-              </button>
-              <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-                <Input
-                  type="text"
-                  placeholder="Search for products, brands and categories"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="h-11 pl-9 border-0 focus-visible:ring-0"
-                />
-              </div>
-              <button className="px-4 bg-stone-900 text-white text-[13px] font-medium hover:bg-stone-800">Search</button>
+    <div className="min-h-screen bg-stone-50">
+      {/* Modern Header */}
+      <header className="bg-white border-b border-stone-200 sticky top-0 z-50 shadow-sm">
+        <div className="max-w-7xl mx-auto">
+          {/* Top Bar */}
+          <div className="hidden lg:flex items-center justify-between px-6 py-2 text-xs text-stone-600 border-b border-stone-100">
+            <div className="flex items-center gap-6">
+              <span className="flex items-center gap-1">
+                <Package className="w-3.5 h-3.5" />
+                Free delivery on orders over ₦5,000
+              </span>
+              <span className="flex items-center gap-1">
+                <Shield className="w-3.5 h-3.5" />
+                100% authentic products
+              </span>
+            </div>
+            <div className="flex items-center gap-4">
+              <a href="#" className="hover:text-stone-900 transition-colors">Help Center</a>
+              <a href="#" className="hover:text-stone-900 transition-colors">Track Order</a>
+              <a href="#" className="hover:text-stone-900 transition-colors">Sell on Trovii</a>
             </div>
           </div>
 
-          {/* Icons */}
-          <div className="col-span-6 sm:col-span-3 flex items-center justify-end gap-3">
-            <button
-              onClick={() => router.push("/account")}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-stone-100"
-            >
-              <User className="w-5 h-5 text-stone-700" />
-              <span className="hidden md:inline text-[13px] font-medium text-stone-700">Account</span>
-            </button>
-            <button className="relative flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-stone-100">
-              <ShoppingCart className="w-5 h-5 text-stone-700" />
-              <span className="hidden md:inline text-[13px] font-medium text-stone-700">Cart</span>
-              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#500099] text-white text-[11px] grid place-items-center">0</span>
-            </button>
-          </div>
-        </div>
+          {/* Main Header */}
+          <div className="px-4 lg:px-6 py-4">
+            <div className="flex items-center gap-6">
+              {/* Logo */}
+              <a href="/" className="flex items-center gap-2 flex-shrink-0">
+                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">T</span>
+                </div>
+                <div className="hidden sm:block">
+                  <span className="text-lg font-bold text-stone-900 block leading-none">Trovii</span>
+                  <span className="text-[10px] text-stone-500 leading-none">Marketplace</span>
+                </div>
+              </a>
 
-        {/* Category Nav Bar */}
-        <div className="hidden md:block border-t border-stone-200 relative">
-          <div className="max-w-6xl mx-auto px-4 h-11 flex items-center gap-6 text-[13px]">
-            <button onClick={() => setShowCategories((s) => !s)} className="flex items-center gap-2 font-semibold text-stone-900">
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>
-              </svg>
-              All Categories
-            </button>
-            <div className="flex items-center gap-6 text-stone-700">
-              {categories.map((c) => (
-                <button key={c.id} className="hover:text-stone-900">{c.name}</button>
-              ))}
-            </div>
-          </div>
-
-          {showCategories && (
-            <div className="absolute left-0 right-0 top-11 z-30">
-              <div className="max-w-6xl mx-auto px-4">
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-white border border-stone-200 rounded-xl shadow-2xl">
-                  {categories.map((c) => (
-                    <button key={c.id} className="text-left p-3 rounded-lg hover:bg-stone-50">
-                      <p className="text-[13px] font-semibold text-stone-900">{c.name}</p>
-                      <p className="text-[12px] text-stone-500">Explore {c.name.toLowerCase()}</p>
-                    </button>
-                  ))}
+              {/* Search Bar */}
+              <div className="flex-1 max-w-2xl">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+                  <Input
+                    type="text"
+                    placeholder="Search for products, brands, and more..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="h-12 pl-12 pr-4 bg-stone-50 border-stone-200 rounded-xl text-sm focus-visible:ring-2 focus-visible:ring-stone-900"
+                  />
                 </div>
               </div>
+
+              {/* Actions */}
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => router.push("/account")}
+                  className="hidden sm:flex items-center gap-2 h-10 px-4"
+                >
+                  <User className="w-5 h-5" />
+                  <span className="hidden lg:inline text-sm">Account</span>
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="relative h-10 px-4"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  <span className="hidden lg:inline ml-2 text-sm">Cart</span>
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-stone-900 text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                    0
+                  </span>
+                </Button>
+              </div>
             </div>
-          )}
+          </div>
+
+          {/* Categories Bar */}
+          <div className="hidden lg:block px-6 py-2 border-t border-stone-100">
+            <div className="flex items-center gap-8">
+              {categories.slice(0, 6).map((cat) => (
+                <button
+                  key={cat.id}
+                  className="flex items-center gap-2 text-sm text-stone-600 hover:text-stone-900 transition-colors py-2"
+                >
+                  <span className="text-base">{cat.icon}</span>
+                  <span className="font-medium">{cat.name}</span>
+                </button>
+              ))}
+              <button className="flex items-center gap-1 text-sm text-stone-900 font-semibold ml-auto">
+                <SlidersHorizontal className="w-4 h-4" />
+                More
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* Main Hero Area: Left Sidebar + Carousel + Side Banners */}
-      <section className="max-w-6xl mx-auto px-4 py-4 grid grid-cols-1 md:grid-cols-12 gap-4">
-        {/* Left categories (desktop) */}
-        <aside className="hidden md:block md:col-span-3 bg-white rounded-xl border border-stone-200 sticky top-24">
-          <ul className="py-2">
-            {categories.map((c) => (
-              <li key={c.id}>
-                <button className="w-full flex items-center justify-between text-left text-[14px] px-4 py-2.5 hover:bg-stone-50">
-                  <span className="text-stone-700">{c.name}</span>
-                  <ChevronRight className="w-4 h-4 text-stone-400" />
-                </button>
-              </li>
-            ))}
-          </ul>
-        </aside>
-
-        {/* Center hero carousel */}
-        <div className="md:col-span-6">
-          <div className="relative bg-white rounded-xl border border-stone-200 overflow-hidden h-56 md:h-72">
-            {HERO_BANNERS.map((b, idx) => (
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 lg:px-6 py-6 lg:py-8">
+        {/* Hero Section */}
+        <section className="mb-8 lg:mb-12">
+          <div className="relative h-[280px] sm:h-[360px] lg:h-[420px] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl">
+            {HERO_BANNERS.map((banner, idx) => (
               <div
-                key={b.id}
-                className={`absolute inset-0 transition-opacity duration-500 ${idx === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+                key={banner.id}
+                className={`absolute inset-0 transition-opacity duration-700 ${
+                  idx === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                }`}
               >
-                <div className={`h-full w-full bg-gradient-to-r ${b.bg} p-6 relative text-white`}>
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute -right-6 -top-6 w-40 h-40 bg-white rounded-full blur-3xl" />
-                  </div>
-                  <div className="relative h-full flex flex-col items-start justify-center">
-                    <h3 className="text-xl md:text-2xl font-bold mb-1">{b.title}</h3>
-                    <p className="text-sm/6 text-white/90 mb-4">{b.sub}</p>
-                    <button className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-[13px] font-medium px-3 py-2 rounded-lg">
-                      Shop Now <ChevronRight className="w-4 h-4" />
-                    </button>
+                <div className={`h-full w-full bg-gradient-to-r ${banner.gradient} relative`}>
+                  {/* Decorative elements */}
+                  <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC4xIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
+                  
+                  <div className="relative h-full flex items-center">
+                    <div className="w-full px-6 sm:px-12 lg:px-16">
+                      <div className="max-w-xl">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 lg:mb-4 leading-tight">
+                          {banner.title}
+                        </h1>
+                        <p className="text-base sm:text-lg text-white/90 mb-6 lg:mb-8 leading-relaxed">
+                          {banner.subtitle}
+                        </p>
+                        <Button
+                          size="lg"
+                          className="bg-white text-stone-900 hover:bg-stone-100 h-12 px-8 text-base font-semibold rounded-xl shadow-lg"
+                        >
+                          {banner.cta}
+                          <ChevronRight className="w-5 h-5 ml-1" />
+                        </Button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             ))}
-            <div className="absolute inset-y-0 left-0 flex items-center p-2">
-              <button
-                aria-label="Previous"
-                onClick={() => setHeroIndex((i) => (i - 1 + HERO_BANNERS.length) % HERO_BANNERS.length)}
-                className="w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center"
-              >
-                <ChevronLeft className="w-5 h-5 text-stone-800" />
-              </button>
-            </div>
-            <div className="absolute inset-y-0 right-0 flex items-center p-2">
-              <button
-                aria-label="Next"
-                onClick={() => setHeroIndex((i) => (i + 1) % HERO_BANNERS.length)}
-                className="w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center"
-              >
-                <ChevronRight className="w-5 h-5 text-stone-800" />
-              </button>
-            </div>
-            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
-              {HERO_BANNERS.map((_, i) => (
+
+            {/* Carousel Indicators */}
+            <div className="absolute bottom-6 left-0 right-0 flex justify-center gap-2 z-10">
+              {HERO_BANNERS.map((_, idx) => (
                 <button
-                  key={i}
-                  onClick={() => setHeroIndex(i)}
-                  className={`h-1.5 rounded-full transition-all ${i === heroIndex ? 'w-6 bg-white' : 'w-3 bg-white/60'}`}
-                  aria-label={`Go to slide ${i + 1}`}
+                  key={idx}
+                  onClick={() => setHeroIndex(idx)}
+                  className={`h-1.5 rounded-full transition-all ${
+                    idx === heroIndex 
+                      ? 'w-8 bg-white' 
+                      : 'w-1.5 bg-white/50 hover:bg-white/75'
+                  }`}
+                  aria-label={`Go to slide ${idx + 1}`}
                 />
               ))}
             </div>
           </div>
-        </div>
+        </section>
 
-        {/* Right side banners */}
-        <div className="md:col-span-3 grid grid-rows-2 gap-4">
-          <div className="rounded-xl border border-stone-200 bg-gradient-to-br from-stone-100 to-stone-50 p-5">
-            <p className="text-sm font-semibold text-stone-900">Student Essentials</p>
-            <p className="text-[13px] text-stone-600">Bags, bottles & more</p>
+        {/* Quick Links */}
+        <section className="mb-8 lg:mb-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+            {quickLinks.map((link, idx) => (
+              <button
+                key={idx}
+                className="bg-white rounded-xl lg:rounded-2xl p-4 lg:p-6 border border-stone-200 hover:border-stone-300 hover:shadow-md transition-all group"
+              >
+                <div className="flex items-start gap-3 lg:gap-4">
+                  <div className="w-10 h-10 lg:w-12 lg:h-12 rounded-xl bg-stone-100 group-hover:bg-stone-900 text-stone-700 group-hover:text-white flex items-center justify-center transition-colors flex-shrink-0">
+                    {link.icon}
+                  </div>
+                  <div className="text-left">
+                    <p className="text-sm lg:text-base font-semibold text-stone-900 mb-0.5">
+                      {link.label}
+                    </p>
+                    <p className="text-xs lg:text-sm text-stone-500">
+                      {link.count}
+                    </p>
+                  </div>
+                </div>
+              </button>
+            ))}
           </div>
-          <div className="rounded-xl border border-stone-200 bg-gradient-to-br from-stone-100 to-stone-50 p-5">
-            <p className="text-sm font-semibold text-stone-900">Campus Tech</p>
-            <p className="text-[13px] text-stone-600">Laptops & accessories</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Deals of the Day */}
-      <section className="max-w-6xl mx-auto px-4 mt-2">
-        <div className="bg-white rounded-xl border border-stone-200">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-[#FFD800] grid place-items-center">
-                <Timer className="w-4 h-4 text-stone-900" />
-              </div>
-              <h2 className="text-base font-semibold">Deals of the Day</h2>
+        {/* Featured Products */}
+        <section className="mb-8 lg:mb-12">
+          <div className="flex items-center justify-between mb-5 lg:mb-6">
+            <div>
+              <h2 className="text-xl lg:text-2xl font-bold text-stone-900 mb-1">Featured Products</h2>
+              <p className="text-sm text-stone-600">Handpicked deals for students</p>
             </div>
-            <div className="text-[13px] font-mono bg-stone-100 rounded-md px-2 py-1">
-              Ends in {hours}:{minutes}:{seconds}
-            </div>
+            <Button variant="ghost" className="text-sm font-semibold group">
+              View All
+              <ChevronRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
 
-          <div className="p-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-            {featuredProducts.slice(0, 5).map((product) => (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+            {featuredProducts.map((product) => (
               <div
                 key={product.id}
-                className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
+                onMouseEnter={() => setHoveredProduct(product.id)}
+                onMouseLeave={() => setHoveredProduct(null)}
+                className="bg-white rounded-xl lg:rounded-2xl border border-stone-200 overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all cursor-pointer group"
               >
-                <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-4">
-                  <span className="text-5xl group-hover:scale-110 transition-transform">{product.image}</span>
-                  {product.discount > 0 && (
-                    <div className="absolute top-2 left-2 bg-[#500099] text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-md">
-                      -{product.discount}%
+                {/* Product Image */}
+                <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-6 lg:p-8">
+                  <span className="text-6xl lg:text-7xl group-hover:scale-110 transition-transform duration-300">
+                    {product.image}
+                  </span>
+                  
+                  {/* Badges */}
+                  {product.badge && (
+                    <div className="absolute top-3 left-3 bg-stone-900 text-white text-[10px] lg:text-xs font-bold px-2 lg:px-2.5 py-1 rounded-lg shadow-md">
+                      {product.badge}
                     </div>
                   )}
-                  <button className="absolute bottom-2 left-2 right-2 h-8 rounded-lg bg-stone-900 text-white text-[12px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                    Add to Cart
+                  
+                  {/* Discount Badge */}
+                  {product.originalPrice > product.price && (
+                    <div className="absolute top-3 right-3 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-lg shadow-md">
+                      -{calculateDiscount(product.originalPrice, product.price)}%
+                    </div>
+                  )}
+
+                  {/* Wishlist Button */}
+                  <button className="absolute bottom-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all hover:bg-stone-900 hover:text-white">
+                    <Heart className="w-4 h-4" />
                   </button>
                 </div>
-                <div className="p-3">
-                  <p className="text-[11px] text-stone-500 mb-0.5">{product.category}</p>
-                  <h4 className="text-[13px] font-semibold text-stone-900 mb-1.5 line-clamp-2 leading-tight">
+
+                {/* Product Info */}
+                <div className="p-3 lg:p-4">
+                  <p className="text-[10px] lg:text-xs text-stone-500 font-medium mb-1">
+                    {product.category}
+                  </p>
+                  <h3 className="text-sm lg:text-base font-semibold text-stone-900 mb-2 line-clamp-2 leading-snug min-h-[2.5em]">
                     {product.name}
-                  </h4>
-                  <div className="flex items-center gap-1 mb-2">
-                    <Star className="w-3 h-3 fill-[#FFD800] text-[#FFD800]" />
-                    <span className="text-[11px] font-semibold text-stone-900">{product.rating}</span>
-                    <span className="text-[10px] text-stone-400">({product.reviews})</span>
+                  </h3>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-1.5 mb-3">
+                    <div className="flex items-center gap-0.5">
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={`w-3 h-3 ${
+                            i < Math.floor(product.rating)
+                              ? 'fill-yellow-400 text-yellow-400'
+                              : 'fill-stone-200 text-stone-200'
+                          }`}
+                        />
+                      ))}
+                    </div>
+                    <span className="text-xs font-semibold text-stone-900">
+                      {product.rating}
+                    </span>
+                    <span className="text-xs text-stone-400">
+                      ({product.reviews})
+                    </span>
                   </div>
-                  <div className="flex items-baseline gap-1.5">
-                    <span className="text-sm font-bold text-[#500099]">{product.price}</span>
-                    <span className="text-[11px] text-stone-400 line-through">{product.originalPrice}</span>
+
+                  {/* Price */}
+                  <div className="flex items-baseline gap-2 mb-3">
+                    <span className="text-lg lg:text-xl font-bold text-stone-900">
+                      {formatPrice(product.price)}
+                    </span>
+                    {product.originalPrice > product.price && (
+                      <span className="text-xs lg:text-sm text-stone-400 line-through">
+                        {formatPrice(product.originalPrice)}
+                      </span>
+                    )}
                   </div>
+
+                  {/* Add to Cart Button */}
+                  <Button
+                    size="sm"
+                    className="w-full bg-stone-900 hover:bg-stone-800 text-white rounded-lg h-9 lg:h-10 text-xs lg:text-sm font-semibold"
+                  >
+                    <ShoppingCart className="w-4 h-4 mr-1.5" />
+                    Add to Cart
+                  </Button>
                 </div>
               </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Official Stores */}
-      <section className="max-w-6xl mx-auto px-4 mt-6">
-        <div className="bg-white rounded-xl border border-stone-200">
-          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-stone-900 grid place-items-center">
-                <Store className="w-4 h-4 text-white" />
-              </div>
-              <h2 className="text-base font-semibold">Official Stores</h2>
+        {/* Categories Grid */}
+        <section className="mb-12">
+          <div className="flex items-center justify-between mb-5 lg:mb-6">
+            <div>
+              <h2 className="text-xl lg:text-2xl font-bold text-stone-900 mb-1">Shop by Category</h2>
+              <p className="text-sm text-stone-600">Find what you need, fast</p>
             </div>
-            <button className="flex items-center gap-1 text-xs font-semibold text-[#500099] hover:gap-1.5 transition-all">
-              View All <ChevronRight className="w-3.5 h-3.5" />
-            </button>
           </div>
 
-          <div className="p-4 flex gap-3 overflow-x-auto no-scrollbar">
-            {officialStores.map((s) => (
-              <div key={s.id} className={`min-w-[180px] rounded-xl border border-stone-200 bg-gradient-to-br ${s.bg} p-4`}>
-                <div className="h-24 rounded-lg bg-white/60 grid place-items-center">
-                  <span className="text-stone-700 font-semibold">{s.name}</span>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 lg:gap-4">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                className="bg-white rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-stone-200 hover:border-stone-900 hover:shadow-lg transition-all group"
+              >
+                <div className="text-4xl lg:text-5xl mb-3 lg:mb-4 group-hover:scale-110 transition-transform">
+                  {cat.icon}
                 </div>
-              </div>
+                <h3 className="text-sm lg:text-base font-semibold text-stone-900 group-hover:text-stone-900">
+                  {cat.name}
+                </h3>
+              </button>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
 
-      {/* Brands strip */}
-      <section className="max-w-6xl mx-auto px-4 mt-6">
-        <div className="bg-white rounded-xl border border-stone-200 p-3 flex items-center gap-4 overflow-x-auto no-scrollbar">
-          {brands.map((b) => (
-            <div key={b} className="px-4 py-2 rounded-full border border-stone-200 bg-stone-50 text-[13px] text-stone-700 whitespace-nowrap hover:bg-stone-100">
-              {b}
+      {/* Mobile Bottom Navigation */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-50 safe-area-inset-bottom">
+        <div className="flex items-center justify-around px-2 py-3">
+          <button className="flex flex-col items-center gap-1 px-3 py-1">
+            <div className="w-6 h-6 flex items-center justify-center">
+              <ShoppingCart className="w-5 h-5 text-stone-900" strokeWidth={2.5} />
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Recommended for You */}
-      <section className="max-w-6xl mx-auto px-4 mt-6 mb-24">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-base font-semibold">Recommended for you</h2>
-          <button className="flex items-center gap-1 text-xs font-semibold text-[#500099] hover:gap-1.5 transition-all">
-            View All <ChevronRight className="w-3.5 h-3.5" />
+            <span className="text-[10px] font-bold text-stone-900">Shop</span>
           </button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
-          {featuredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
-            >
-              <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-4">
-                <span className="text-6xl group-hover:scale-110 transition-transform">{product.image}</span>
-                {product.discount > 0 && (
-                  <div className="absolute top-2 left-2 bg-[#500099] text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-md">
-                    -{product.discount}%
-                  </div>
-                )}
-                <button className="absolute top-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
-                  <Heart className="w-3.5 h-3.5 text-stone-700" strokeWidth={2} />
-                </button>
-                <button className="absolute bottom-2 left-2 right-2 h-9 rounded-lg bg-stone-900 text-white text-[12px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
-                  Add to Cart
-                </button>
-              </div>
-              <div className="p-3">
-                <p className="text-[10px] text-stone-500 mb-0.5">{product.category}</p>
-                <h4 className="text-sm font-semibold text-stone-900 mb-1.5 line-clamp-2 leading-tight">
-                  {product.name}
-                </h4>
-                <div className="flex items-center gap-1 mb-2">
-                  <Star className="w-3 h-3 fill-[#FFD800] text-[#FFD800]" />
-                  <span className="text-[11px] font-semibold text-stone-900">{product.rating}</span>
-                  <span className="text-[10px] text-stone-400">({product.reviews})</span>
-                </div>
-                <div className="flex items-baseline gap-1.5">
-                  <span className="text-base font-bold text-[#500099]">{product.price}</span>
-                  <span className="text-[11px] text-stone-400 line-through">{product.originalPrice}</span>
-                </div>
-              </div>
+
+          <button
+            onClick={() => router.push("/user-space")}
+            className="flex flex-col items-center gap-1 px-3 py-1"
+          >
+            <div className="w-6 h-6 flex items-center justify-center">
+              <Filter className="w-5 h-5 text-stone-500" strokeWidth={2} />
             </div>
-          ))}
-        </div>
-      </section>
+            <span className="text-[10px] font-medium text-stone-500">Menu</span>
+          </button>
 
-      {/* Clean Fixed Bottom Navigation (kept for existing UX) */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50 md:hidden">
-        <div className="max-w-md mx-auto px-4">
-          <div className="flex items-center justify-around h-16">
-            {/* Shop Icon - Active */}
-            <button className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative">
-              <div className="w-6 h-6 flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#500099]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </div>
-              <span className="text-[10px] font-semibold text-[#500099]">Shop</span>
-              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
-            </button>
-
-            {/* Menu Icon */}
-            <button 
-              onClick={() => router.push("/user-space")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
-            >
-              <div className="w-6 h-6 flex items-center justify-center">
-                <svg className="w-6 h-6 text-stone-400 group-hover:text-[#500099] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-                </svg>
-              </div>
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] group-hover:font-semibold transition-all">Menu</span>
-            </button>
-
-            {/* Profile Icon */}
-            <button 
-              onClick={() => router.push("/account")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
-            >
-              <div className="w-6 h-6 flex items-center justify-center">
-                <svg className="w-6 h-6 text-stone-400 group-hover:text-[#500099] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-              </div>
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] group-hover:font-semibold transition-all">Profile</span>
-            </button>
-          </div>
+          <button
+            onClick={() => router.push("/account")}
+            className="flex flex-col items-center gap-1 px-3 py-1"
+          >
+            <div className="w-6 h-6 flex items-center justify-center">
+              <User className="w-5 h-5 text-stone-500" strokeWidth={2} />
+            </div>
+            <span className="text-[10px] font-medium text-stone-500">Account</span>
+          </button>
         </div>
       </div>
     </div>
