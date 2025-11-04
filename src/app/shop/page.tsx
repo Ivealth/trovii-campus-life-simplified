@@ -3,9 +3,8 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
-import { Menu, ShoppingCart, Search, ChevronRight, Filter, Sparkles } from "lucide-react"
+import { Menu, ShoppingCart, Search, ChevronRight } from "lucide-react"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 
 export default function ShopPage() {
   const router = useRouter()
@@ -20,9 +19,9 @@ export default function ShopPage() {
 
   if (isPending) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-4 border-stone-900 border-t-transparent rounded-full animate-spin" />
+          <div className="w-8 h-8 border-4 border-[#500099] border-t-transparent rounded-full animate-spin" />
           <p className="text-sm text-stone-600">Loading...</p>
         </div>
       </div>
@@ -32,130 +31,106 @@ export default function ShopPage() {
   if (!session?.user) return null
 
   const categories = [
-    { id: "all", name: "All", icon: "grid" },
-    { id: "fashion", name: "Fashion", icon: "shirt" },
-    { id: "tech", name: "Tech", icon: "laptop" },
-    { id: "books", name: "Books", icon: "book" },
-    { id: "supplies", name: "Supplies", icon: "pen" },
+    { id: "all", name: "Browse All", icon: "🏪" },
+    { id: "fashion", name: "Fashion", icon: "👕" },
+    { id: "computers", name: "Computers", icon: "💻" },
+    { id: "phones", name: "Phones", icon: "📱" },
+    { id: "deals", name: "All Deals", icon: "🏷️" },
   ]
 
   const featuredProducts = [
     {
       id: 1,
-      name: "Premium Laptop Backpack",
+      name: "Premium Backpack",
       category: "Fashion",
-      price: "$89.99",
-      originalPrice: "$119.99",
+      price: "₦15,000",
+      originalPrice: "₦20,000",
       discount: "25% OFF",
-      image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=400&h=400&fit=crop&q=80",
-      badge: "Best Seller"
+      image: "🎒",
     },
     {
       id: 2,
-      name: "Wireless Noise-Canceling Headphones",
-      category: "Tech",
-      price: "$149.99",
-      originalPrice: "$199.99",
-      discount: "25% OFF",
-      image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=400&fit=crop&q=80",
-      badge: "Featured"
+      name: "Wireless Earbuds",
+      category: "Electronics",
+      price: "₦8,500",
+      originalPrice: "₦12,000",
+      discount: "30% OFF",
+      image: "🎧",
     },
     {
       id: 3,
-      name: "Smart Study Desk Lamp",
-      category: "Supplies",
-      price: "$45.99",
-      originalPrice: "$65.99",
+      name: "Study Lamp",
+      category: "Accessories",
+      price: "₦4,200",
+      originalPrice: "₦6,000",
       discount: "30% OFF",
-      image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400&h=400&fit=crop&q=80",
-      badge: null
-    },
-    {
-      id: 4,
-      name: "Ergonomic Study Chair",
-      category: "Supplies",
-      price: "$199.99",
-      originalPrice: "$299.99",
-      discount: "33% OFF",
-      image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=400&fit=crop&q=80",
-      badge: "Popular"
-    },
-    {
-      id: 5,
-      name: "Complete Calculus Textbook Set",
-      category: "Books",
-      price: "$79.99",
-      originalPrice: "$120.99",
-      discount: "34% OFF",
-      image: "https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=400&h=400&fit=crop&q=80",
-      badge: null
-    },
-    {
-      id: 6,
-      name: "Professional Notebook Bundle",
-      category: "Supplies",
-      price: "$24.99",
-      originalPrice: "$34.99",
-      discount: "29% OFF",
-      image: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=400&h=400&fit=crop&q=80",
-      badge: null
+      image: "💡",
     },
   ]
 
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col pb-20">
-      {/* Premium Header */}
-      <div className="bg-white/90 backdrop-blur-xl border-b border-stone-200 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-6 py-4">
-          {/* Top Bar */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center">
-                <span className="text-white font-bold text-base">T</span>
+      {/* Promotional Banner */}
+      <div className="bg-gradient-to-r from-[#500099] via-[#3D0086] to-[#500099] text-white py-2.5 px-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="text-xs font-semibold bg-[#FFD800] text-[#500099] px-2 py-0.5 rounded">STUDENT DEALS</span>
+            <span className="text-xs font-medium hidden sm:inline">UP TO 40% OFF</span>
+          </div>
+          <button className="text-xs font-semibold bg-white text-[#500099] px-3 py-1 rounded-md hover:bg-stone-100 transition-colors">
+            Shop Now
+          </button>
+        </div>
+      </div>
+
+      {/* Header */}
+      <div className="bg-white border-b border-stone-200 shadow-sm sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-4 py-3">
+          <div className="flex items-center justify-between mb-3">
+            <button className="p-2 hover:bg-stone-100 rounded-lg transition-colors">
+              <Menu className="w-5 h-5 text-stone-700" />
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center">
+                <span className="text-white font-bold text-sm">T</span>
               </div>
-              <div>
-                <span className="text-lg font-bold text-stone-900 block leading-tight">Student Marketplace</span>
-                <span className="text-xs text-stone-500">Exclusive deals for students</span>
-              </div>
+              <span className="text-base font-bold text-stone-900">Trovii Shop</span>
             </div>
-            <button className="relative p-2.5 hover:bg-stone-100 rounded-xl transition-colors">
-              <ShoppingCart className="w-5 h-5 text-stone-700" strokeWidth={2} />
-              <div className="absolute top-1.5 right-1.5 w-2 h-2 bg-stone-900 rounded-full"></div>
+            <button className="p-2 hover:bg-stone-100 rounded-lg transition-colors relative">
+              <ShoppingCart className="w-5 h-5 text-stone-700" />
+              <div className="absolute top-1 right-1 w-2 h-2 bg-[#500099] rounded-full"></div>
             </button>
           </div>
 
           {/* Search Bar */}
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
             <Input
               type="text"
-              placeholder="Search products, brands, categories..."
+              placeholder="Search for products, brands and categories..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-4 h-12 bg-white border-stone-300 rounded-xl text-sm placeholder:text-stone-400 focus-visible:ring-2 focus-visible:ring-stone-900"
+              className="w-full pl-10 pr-4 py-2.5 bg-stone-100 border-0 rounded-lg text-sm placeholder:text-stone-400 focus-visible:ring-2 focus-visible:ring-[#500099]"
             />
-            <Button 
-              size="sm" 
-              variant="ghost" 
-              className="absolute right-2 top-1/2 -translate-y-1/2 h-8 px-3 hover:bg-stone-100 rounded-lg"
-            >
-              <Filter className="w-4 h-4 mr-1.5" />
-              Filter
-            </Button>
           </div>
         </div>
       </div>
 
       {/* Categories */}
       <div className="bg-white border-b border-stone-200">
-        <div className="max-w-7xl mx-auto px-6 py-5">
+        <div className="max-w-6xl mx-auto px-4 py-4">
           <div className="flex items-center gap-3 overflow-x-auto no-scrollbar">
             {categories.map((category) => (
               <button
                 key={category.id}
-                className="flex items-center gap-2 px-4 py-2.5 bg-stone-100 hover:bg-stone-900 hover:text-white rounded-xl text-sm font-medium text-stone-700 transition-all whitespace-nowrap"
+                className="flex flex-col items-center justify-center min-w-[72px] gap-1.5 group"
               >
-                {category.name}
+                <div className="w-14 h-14 rounded-full bg-stone-100 flex items-center justify-center text-2xl group-hover:bg-gradient-to-br group-hover:from-[#500099] group-hover:to-[#3D0086] transition-all group-hover:scale-105">
+                  <span className="group-hover:scale-110 transition-transform">{category.icon}</span>
+                </div>
+                <span className="text-[10px] font-medium text-stone-600 group-hover:text-[#500099] transition-colors text-center">
+                  {category.name}
+                </span>
               </button>
             ))}
           </div>
@@ -163,80 +138,64 @@ export default function ShopPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 py-8">
-        <div className="max-w-7xl mx-auto px-6">
+      <div className="flex-1 px-4 py-5">
+        <div className="max-w-6xl mx-auto">
           {/* Hero Banner */}
-          <div className="relative bg-gradient-to-br from-stone-900 via-stone-800 to-stone-900 rounded-3xl overflow-hidden mb-10 p-10 md:p-12">
-            <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-[#500099]/20 to-transparent rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#086BFA]/10 to-transparent rounded-full blur-3xl" />
-            
-            <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 mb-4">
-                  <Sparkles className="w-3.5 h-3.5 text-white" />
-                  <span className="text-xs font-semibold text-white">Student Exclusive</span>
+          <div className="relative bg-gradient-to-br from-[#500099] via-[#3D0086] to-[#500099] rounded-2xl overflow-hidden mb-6 shadow-lg">
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 right-0 w-40 h-40 bg-[#FFD800] rounded-full blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#086BFA] rounded-full blur-3xl"></div>
+            </div>
+            <div className="relative px-6 py-8">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="inline-block bg-[#FFD800] text-[#500099] text-[10px] font-bold px-2 py-1 rounded mb-2">
+                    UP TO 40% OFF
+                  </div>
+                  <h2 className="text-xl font-bold text-white mb-1.5">
+                    Beauty Powered<br />by Nature
+                  </h2>
+                  <p className="text-xs text-white/80 mb-3">Free Delivery</p>
+                  <button className="bg-white text-[#500099] text-xs font-semibold px-4 py-2 rounded-lg hover:bg-stone-100 transition-colors">
+                    Shop Now
+                  </button>
                 </div>
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-3 leading-tight">
-                  Save up to 40%<br />on campus essentials
-                </h2>
-                <p className="text-stone-300 mb-6 text-sm">
-                  Premium products curated for student success
-                </p>
-                <Button className="bg-white text-stone-900 hover:bg-stone-100 font-semibold h-11 px-6 rounded-xl">
-                  Shop Now
-                  <ChevronRight className="ml-1 w-4 h-4" />
-                </Button>
-              </div>
-              <div className="flex-shrink-0">
-                <img 
-                  src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=300&h=300&fit=crop&q=80" 
-                  alt="Featured products"
-                  className="w-48 h-48 rounded-2xl object-cover shadow-2xl ring-4 ring-white/20"
-                />
+                <div className="flex-shrink-0 ml-4">
+                  <div className="w-32 h-32 bg-white/10 backdrop-blur-sm rounded-2xl flex items-center justify-center">
+                    <span className="text-6xl">🧴</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
           {/* Featured Products */}
-          <div className="mb-10">
-            <div className="flex items-center justify-between mb-6">
-              <div>
-                <h3 className="text-2xl font-bold text-stone-900 mb-1">Featured Products</h3>
-                <p className="text-sm text-stone-600">Handpicked deals for students</p>
-              </div>
-              <Button variant="ghost" className="text-sm font-semibold text-stone-700 hover:text-stone-900 gap-1">
-                View All
-                <ChevronRight className="w-4 h-4" />
-              </Button>
+          <div className="mb-6">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-stone-900">Featured Products</h3>
+              <button className="flex items-center gap-1 text-xs font-semibold text-[#500099] hover:gap-2 transition-all">
+                View All <ChevronRight className="w-3.5 h-3.5" />
+              </button>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {featuredProducts.map((product) => (
                 <div
                   key={product.id}
-                  className="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all cursor-pointer group"
+                  className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
                 >
-                  <div className="relative aspect-square overflow-hidden bg-stone-100">
-                    <img 
-                      src={product.image} 
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                    {product.badge && (
-                      <div className="absolute top-3 left-3 bg-stone-900 text-white text-[10px] font-bold px-2.5 py-1 rounded-lg">
-                        {product.badge}
-                      </div>
-                    )}
-                    <div className="absolute top-3 right-3 bg-white text-stone-900 text-[10px] font-bold px-2.5 py-1 rounded-lg shadow-lg">
+                  <div className="relative aspect-square bg-stone-50 flex items-center justify-center">
+                    <span className="text-6xl group-hover:scale-110 transition-transform">{product.image}</span>
+                    <div className="absolute top-2 right-2 bg-[#500099] text-white text-[10px] font-bold px-2 py-0.5 rounded">
                       {product.discount}
                     </div>
                   </div>
-                  <div className="p-4">
-                    <p className="text-[10px] text-stone-500 mb-1 uppercase tracking-wider font-medium">{product.category}</p>
-                    <h4 className="text-sm font-semibold text-stone-900 mb-3 line-clamp-2 leading-tight">
+                  <div className="p-3">
+                    <p className="text-[10px] text-stone-500 mb-0.5">{product.category}</p>
+                    <h4 className="text-sm font-semibold text-stone-900 mb-1.5 line-clamp-1">
                       {product.name}
                     </h4>
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-lg font-bold text-stone-900">{product.price}</span>
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-base font-bold text-[#500099]">{product.price}</span>
                       <span className="text-xs text-stone-400 line-through">{product.originalPrice}</span>
                     </div>
                   </div>
@@ -245,21 +204,21 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Special Offer Banner */}
-          <div className="bg-gradient-to-r from-stone-100 via-white to-stone-100 rounded-2xl border border-stone-200 p-8 hover:shadow-lg transition-all cursor-pointer">
-            <div className="flex flex-col md:flex-row items-center gap-6">
-              <img 
-                src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=200&h=200&fit=crop&q=80" 
-                alt="Textbook sale"
-                className="w-32 h-32 rounded-xl object-cover shadow-lg"
-              />
-              <div className="flex-1 text-center md:text-left">
-                <h4 className="text-xl font-bold text-stone-900 mb-2">📚 Semester Textbook Sale</h4>
-                <p className="text-stone-600 mb-4">Save up to 50% on required course materials</p>
-                <Button variant="outline" className="border-stone-300 hover:bg-stone-50 font-semibold rounded-xl">
-                  Browse Books
-                  <ChevronRight className="ml-1 w-4 h-4" />
-                </Button>
+          {/* Special Offers */}
+          <div>
+            <h3 className="text-lg font-bold text-stone-900 mb-4">Special Offers</h3>
+            <div className="bg-white rounded-xl border border-stone-200 p-4 hover:shadow-lg transition-all cursor-pointer">
+              <div className="flex items-center gap-4">
+                <div className="w-20 h-20 rounded-lg bg-gradient-to-br from-[#FFD800] to-[#FFEA32] flex items-center justify-center flex-shrink-0">
+                  <span className="text-4xl">📚</span>
+                </div>
+                <div className="flex-1">
+                  <h4 className="text-base font-bold text-stone-900 mb-1">Textbook Sale</h4>
+                  <p className="text-xs text-stone-600 mb-2">Save up to 50% on academic books</p>
+                  <button className="text-xs font-semibold text-[#500099] flex items-center gap-1 hover:gap-2 transition-all">
+                    Shop Now <ChevronRight className="w-3 h-3" />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -267,42 +226,50 @@ export default function ShopPage() {
       </div>
 
       {/* Premium Fixed Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-stone-200 shadow-2xl z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-stone-200 shadow-[0_-4px_16px_rgba(0,0,0,0.08)] z-50">
         <div className="max-w-md mx-auto px-6">
           <div className="flex items-center justify-around h-16">
-            {/* Shop Icon - Active */}
-            <button className="flex flex-col items-center justify-center gap-1 py-2 px-4 group active:scale-95 transition-all">
+            {/* Shop Icon - Active with Stylish Logo */}
+            <button className="flex flex-col items-center justify-center gap-1.5 py-2 px-4 group active:scale-95 transition-all">
               <div className="relative">
-                <div className="w-6 h-6 rounded-xl bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center shadow-lg">
-                  <ShoppingCart className="w-3.5 h-3.5 text-white" strokeWidth={2.5} />
+                <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center shadow-lg shadow-[#500099]/20">
+                  <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
                 </div>
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-stone-900" />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
               </div>
-              <span className="text-[11px] font-semibold text-stone-900">Shop</span>
+              <span className="text-[11px] font-semibold text-[#500099]">Shop</span>
             </button>
 
-            {/* Menu Icon */}
+            {/* Menu Icon - Modern Logo */}
             <button 
               onClick={() => router.push("/user-space")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group active:scale-95 transition-all"
+              className="flex flex-col items-center justify-center gap-1.5 py-2 px-4 group active:scale-95 transition-all"
             >
-              <div className="w-6 h-6 rounded-xl bg-stone-100 group-hover:bg-gradient-to-br group-hover:from-stone-900 group-hover:to-stone-700 flex items-center justify-center transition-all">
-                <Menu className="w-3.5 h-3.5 text-stone-500 group-hover:text-white transition-colors" strokeWidth={2.5} />
+              <div className="relative">
+                <div className="w-6 h-6 rounded-lg bg-stone-100 group-hover:bg-gradient-to-br group-hover:from-[#500099] group-hover:to-[#3D0086] flex items-center justify-center transition-all group-hover:shadow-lg group-hover:shadow-[#500099]/20">
+                  <svg className="w-3.5 h-3.5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                </div>
               </div>
-              <span className="text-[11px] font-medium text-stone-500 group-hover:text-stone-900 group-hover:font-semibold transition-all">Menu</span>
+              <span className="text-[11px] font-medium text-stone-500 group-hover:text-[#500099] group-hover:font-semibold transition-all">Menu</span>
             </button>
 
-            {/* Profile Icon */}
+            {/* Profile Icon - Elegant Logo */}
             <button 
               onClick={() => router.push("/account")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group active:scale-95 transition-all"
+              className="flex flex-col items-center justify-center gap-1.5 py-2 px-4 group active:scale-95 transition-all"
             >
-              <div className="w-6 h-6 rounded-full bg-stone-100 group-hover:bg-gradient-to-br group-hover:from-stone-900 group-hover:to-stone-700 flex items-center justify-center transition-all">
-                <svg className="w-3.5 h-3.5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
+              <div className="relative">
+                <div className="w-6 h-6 rounded-full bg-stone-100 group-hover:bg-gradient-to-br group-hover:from-[#500099] group-hover:to-[#3D0086] flex items-center justify-center transition-all group-hover:shadow-lg group-hover:shadow-[#500099]/20">
+                  <svg className="w-3.5 h-3.5 text-stone-500 group-hover:text-white transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
               </div>
-              <span className="text-[11px] font-medium text-stone-500 group-hover:text-stone-900 group-hover:font-semibold transition-all">Profile</span>
+              <span className="text-[11px] font-medium text-stone-500 group-hover:text-[#500099] group-hover:font-semibold transition-all">Profile</span>
             </button>
           </div>
         </div>

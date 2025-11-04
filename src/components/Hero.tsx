@@ -1,64 +1,61 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Play } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { motion } from "framer-motion"
 
 export default function Hero() {
   return (
-    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden bg-gradient-to-b from-white via-stone-50/30 to-white">
-      {/* Sophisticated background effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-[10%] w-[600px] h-[600px] bg-gradient-to-br from-[#500099]/8 to-transparent rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-[5%] w-[500px] h-[500px] bg-gradient-to-tr from-[#086BFA]/5 to-transparent rounded-full blur-3xl" />
-      </div>
+    <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+      {/* Background gradient accents */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#500099]/5 rounded-full blur-3xl" />
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#FFEA32]/10 rounded-full blur-3xl" />
       
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 relative">
-        <div className="text-center max-w-4xl mx-auto">
-          {/* Premium Badge */}
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative">
+        <div className="text-center max-w-3xl mx-auto">
+          {/* Badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center space-x-2 bg-white border border-stone-200 shadow-sm rounded-full px-4 py-2 mb-8"
+            transition={{ duration: 0.4 }}
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#500099]/10 to-[#FFEA32]/10 border border-[#500099]/20 rounded-full px-3 py-1.5 mb-6"
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-[#500099] animate-pulse" />
-            <span className="text-xs font-medium text-stone-700 tracking-wide">Powered by Ivealth LTD</span>
+            <span className="text-[11px] font-medium text-[#500099] tracking-wide uppercase">By Ivealth LTD</span>
           </motion.div>
 
-          {/* Main Headline - More sophisticated */}
+          {/* Main Headline */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-[3rem] sm:text-6xl md:text-7xl font-bold text-stone-900 mb-6 leading-[1.05] tracking-[-0.02em]"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="text-[2.5rem] sm:text-5xl md:text-6xl font-bold text-stone-900 mb-5 leading-[1.1] tracking-tight"
           >
-            The modern way to
-            <span className="block mt-2 bg-gradient-to-r from-[#500099] via-[#3D0086] to-[#086BFA] bg-clip-text text-transparent">
-              navigate campus life
+            Your campus life,
+            <span className="block bg-gradient-to-r from-[#500099] to-[#086BFA] bg-clip-text text-transparent">
+              simplified
             </span>
           </motion.h1>
 
-          {/* Refined Subheadline */}
+          {/* Subheadline */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-stone-600 mb-10 max-w-2xl mx-auto leading-relaxed font-normal"
+            transition={{ duration: 0.4, delay: 0.2 }}
+            className="text-[15px] text-stone-600 mb-8 max-w-2xl mx-auto leading-relaxed"
           >
-            Streamline your student experience with integrated food delivery, career opportunities, and community connections—designed exclusively for ambitious students.
+            Food delivery, career opportunities, and community connections—all in one platform. Save time, earn money, and unlock opportunities designed for students.
           </motion.p>
 
-          {/* Refined CTA Buttons */}
+          {/* CTA Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="flex flex-col sm:flex-row items-center justify-center gap-3"
           >
             <Button
               size="lg"
-              className="w-full sm:w-auto bg-stone-900 hover:bg-stone-800 text-white font-medium px-8 h-12 rounded-xl shadow-lg shadow-stone-900/25 transition-all"
+              className="w-full sm:w-auto bg-gradient-to-r from-[#500099] to-[#3D0086] hover:from-[#3D0086] hover:to-[#500099] text-white font-medium text-[14px] px-6 h-11 rounded-lg shadow-lg shadow-[#500099]/25"
             >
               Get Started Free
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -66,69 +63,57 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto border-stone-300 hover:border-stone-400 hover:bg-stone-50 text-stone-700 font-medium px-8 h-12 rounded-xl transition-all"
+              className="w-full sm:w-auto border-[#500099] text-[#500099] hover:bg-[#500099]/5 font-medium text-[14px] px-6 h-11 rounded-lg"
             >
-              <Play className="mr-2 h-4 w-4" />
               Watch Demo
             </Button>
           </motion.div>
 
-          {/* Sophisticated Social Proof */}
+          {/* Social Proof */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-8 text-sm text-stone-600"
+            transition={{ duration: 0.4, delay: 0.4 }}
+            className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-6 text-[13px] text-stone-500"
           >
-            <div className="flex items-center space-x-3">
-              <div className="flex -space-x-2">
-                {[1, 2, 3, 4, 5].map((i) => (
+            <div className="flex items-center space-x-2">
+              <div className="flex -space-x-1.5">
+                {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="w-9 h-9 rounded-full bg-gradient-to-br from-stone-200 to-stone-300 border-2 border-white shadow-sm"
+                    className="w-7 h-7 rounded-full bg-gradient-to-br from-[#500099]/20 to-[#086BFA]/20 border-2 border-white"
                   />
                 ))}
               </div>
-              <div className="text-left">
-                <div className="font-semibold text-stone-900">1,200+</div>
-                <div className="text-xs text-stone-500">students joined</div>
-              </div>
+              <span className="font-medium text-stone-600">1,200+ students joined</span>
             </div>
-            <div className="h-8 w-px bg-stone-200 hidden sm:block" />
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-1.5">
               <div className="flex text-[#FFD800]">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <svg key={i} className="w-5 h-5 fill-current" viewBox="0 0 20 20">
+                  <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
                     <path d="M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z" />
                   </svg>
                 ))}
               </div>
-              <div className="text-left">
-                <div className="font-semibold text-stone-900">4.9/5</div>
-                <div className="text-xs text-stone-500">average rating</div>
-              </div>
+              <span className="font-medium text-stone-600">4.9/5 rating</span>
             </div>
           </motion.div>
         </div>
 
-        {/* Premium Hero Visual */}
+        {/* Hero Image/Mockup */}
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-20 relative"
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="mt-14 md:mt-16 relative"
         >
-          <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-stone-900/20 border border-stone-200 bg-white">
-            <div className="absolute inset-0 bg-gradient-to-tr from-[#500099]/5 to-transparent z-10" />
+          <div className="relative rounded-xl overflow-hidden shadow-xl shadow-stone-900/10 border border-stone-200 bg-white ring-1 ring-[#500099]/5">
             <img
-              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1400&h=700&fit=crop&q=90"
-              alt="Students collaborating on Trovii platform"
+              src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop&q=80"
+              alt="Students using Trovii platform"
               className="w-full h-auto"
             />
           </div>
-          {/* Floating accent elements */}
-          <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-[#FFD800] to-[#FFEA32] rounded-2xl opacity-20 blur-2xl" />
-          <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-[#500099] to-[#086BFA] rounded-2xl opacity-20 blur-2xl" />
         </motion.div>
       </div>
     </section>
