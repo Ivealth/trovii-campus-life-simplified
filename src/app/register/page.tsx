@@ -48,23 +48,23 @@ export default function RegisterPage() {
         }
 
         toast.success("Account created successfully!")
-        // Auto sign in after registration
+        // Auto sign in after registration and redirect to user-space
         const { error: signInError } = await authClient.signIn.email({
           email: formData.email,
           password: formData.password,
-          callbackURL: "/account"
+          callbackURL: "/user-space"
         })
 
         if (signInError) {
           router.push("/register?mode=signin")
         } else {
-          router.push("/account")
+          router.push("/user-space")
         }
       } else {
         const { error } = await authClient.signIn.email({
           email: formData.email,
           password: formData.password,
-          callbackURL: "/account"
+          callbackURL: "/user-space"
         })
 
         if (error?.code) {
@@ -73,7 +73,7 @@ export default function RegisterPage() {
           return
         }
 
-        router.push("/account")
+        router.push("/user-space")
       }
     } catch (error) {
       toast.error("Something went wrong. Please try again.")
@@ -152,6 +152,7 @@ export default function RegisterPage() {
                     onBlur={() => setFocusedField(null)}
                     placeholder={focusedField === "name" ? "John Doe" : ""}
                     required
+                    autoComplete="off"
                     className="peer w-full h-12 px-4 text-[14px] text-stone-900 bg-white border border-stone-300 rounded-lg focus:border-[#500099] focus:outline-none focus:ring-2 focus:ring-[#500099]/20 transition-all placeholder:text-stone-400 placeholder:text-[13px]"
                   />
                   <label
