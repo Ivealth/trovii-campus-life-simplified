@@ -8,7 +8,7 @@ export default function Hero() {
   return (
     <section className="relative pt-28 pb-16 md:pt-32 md:pb-20 overflow-hidden">
       {/* Background gradient accents */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#500099]/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#FFD800]/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-[#FFEA32]/10 rounded-full blur-3xl" />
       
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative">
@@ -18,9 +18,9 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#500099]/10 to-[#FFEA32]/10 border border-[#500099]/20 rounded-full px-3 py-1.5 mb-6"
+            className="inline-flex items-center space-x-2 bg-gradient-to-r from-[#FFD800]/10 to-[#FFEA32]/10 border border-[#FFD800]/20 rounded-full px-3 py-1.5 mb-6"
           >
-            <span className="text-[11px] font-medium text-[#500099] tracking-wide uppercase">By Ivealth LTD</span>
+            <span className="text-[11px] font-medium text-[#FDC500] tracking-wide uppercase">By Ivealth LTD</span>
           </motion.div>
 
           {/* Main Headline */}
@@ -31,7 +31,7 @@ export default function Hero() {
             className="text-[2.5rem] sm:text-5xl md:text-6xl font-bold text-stone-900 mb-5 leading-[1.1] tracking-tight"
           >
             Your campus life,
-            <span className="block bg-gradient-to-r from-[#500099] to-[#086BFA] bg-clip-text text-transparent">
+            <span className="block bg-gradient-to-r from-[#FFD800] to-[#FDC500] bg-clip-text text-transparent">
               simplified
             </span>
           </motion.h1>
@@ -55,7 +55,7 @@ export default function Hero() {
           >
             <Button
               size="lg"
-              className="w-full sm:w-auto bg-gradient-to-r from-[#500099] to-[#3D0086] hover:from-[#3D0086] hover:to-[#500099] text-white font-medium text-[14px] px-6 h-11 rounded-lg shadow-lg shadow-[#500099]/25"
+              className="w-full sm:w-auto bg-gradient-to-r from-[#FFD800] to-[#FDC500] hover:from-[#FDC500] hover:to-[#FFD800] text-stone-900 font-medium text-[14px] px-6 h-11 rounded-lg shadow-lg shadow-[#FFD800]/25"
             >
               Get Started Free
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -63,7 +63,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="w-full sm:w-auto border-[#500099] text-[#500099] hover:bg-[#500099]/5 font-medium text-[14px] px-6 h-11 rounded-lg"
+              className="w-full sm:w-auto border-[#FFD800] text-[#FDC500] hover:bg-[#FFD800]/5 font-medium text-[14px] px-6 h-11 rounded-lg"
             >
               Watch Demo
             </Button>
@@ -81,7 +81,7 @@ export default function Hero() {
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="w-7 h-7 rounded-full bg-gradient-to-br from-[#500099]/20 to-[#086BFA]/20 border-2 border-white"
+                    className="w-7 h-7 rounded-full bg-gradient-to-br from-[#FFD800]/20 to-[#086BFA]/20 border-2 border-white"
                   />
                 ))}
               </div>
@@ -107,7 +107,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="mt-14 md:mt-16 relative"
         >
-          <div className="relative rounded-xl overflow-hidden shadow-xl shadow-stone-900/10 border border-stone-200 bg-white ring-1 ring-[#500099]/5">
+          <div className="relative rounded-xl overflow-hidden shadow-xl shadow-stone-900/10 border border-stone-200 bg-white ring-1 ring-[#FFD800]/5">
             <img
               src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1200&h=600&fit=crop&q=80"
               alt="Students using Trovii platform"
