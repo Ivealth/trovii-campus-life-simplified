@@ -14,8 +14,10 @@ export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    password: ""
+    password: "",
+    confirmPassword: ""
   })
+  const [rememberMe, setRememberMe] = useState(false)
   const [focusedField, setFocusedField] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -32,6 +34,13 @@ export default function RegisterPage() {
 
     try {
       if (mode === "signup") {
+        // Validate confirm password match
+        if (formData.password !== formData.confirmPassword) {
+          toast.error("Passwords do not match. Please re-enter them.")
+          setIsSubmitting(false)
+          return
+        }
+
         const { error } = await authClient.signUp.email({
           email: formData.email,
           name: formData.name,
@@ -64,6 +73,7 @@ export default function RegisterPage() {
         const { error } = await authClient.signIn.email({
           email: formData.email,
           password: formData.password,
+          rememberMe: rememberMe,
           callbackURL: "/user-space"
         })
 
@@ -214,6 +224,45 @@ export default function RegisterPage() {
                   Password
                 </label>
               </div>
+
+              {mode === "signup" && (
+                <div className="relative">
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    value={formData.confirmPassword}
+                    onChange={handleInputChange}
+                    onFocus={() => setFocusedField("confirmPassword")}
+                    onBlur={() => setFocusedField(null)}
+                    placeholder={focusedField === "confirmPassword" ? "Re-enter your password" : ""}
+                    required
+                    minLength={6}
+                    autoComplete="off"
+                    className="peer w-full h-12 px-4 text-[14px] text-stone-900 bg-white border border-stone-300 rounded-lg focus:border-[#500099] focus:outline-none focus:ring-2 focus:ring-[#500099]/20 transition-all placeholder:text-stone-400 placeholder:text-[13px]"
+                  />
+                  <label
+                    htmlFor="confirmPassword"
+                    className="absolute left-4 top-1/2 -translate-y-1/2 text-[14px] text-stone-600 bg-white px-1 transition-all duration-200 pointer-events-none
+                    peer-focus:top-0 peer-focus:text-[11px] peer-focus:text-[#500099] peer-focus:font-medium
+                    peer-[:not(:placeholder-shown)]:top-0 peer-[:not(:placeholder-shown)]:text-[11px] peer-[:not(:placeholder-shown)]:text-stone-700 peer-[:not(:placeholder-shown)]:font-medium"
+                  >
+                    Confirm Password
+                  </label>
+                </div>
+              )}
+
+              {mode === "signin" && (
+                <label className="flex items-center gap-2 text-[13px] text-stone-600 select-none">
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 rounded border-stone-300 text-[#500099] focus:ring-[#500099]"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />
+                  Remember me on this device
+                </label>
+              )}
 
               <Button
                 type="submit"
