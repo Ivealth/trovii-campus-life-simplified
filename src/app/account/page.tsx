@@ -54,7 +54,7 @@ export default function AccountPage() {
   const username = session.user.email?.split('@')[0] || 'user'
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col pb-24">
+    <div className="min-h-screen bg-stone-50 flex flex-col pb-16">
       {/* Simple Header - More Compact */}
       <div className="bg-white border-b border-stone-200">
         <div className="max-w-md mx-auto px-4">
@@ -116,44 +116,35 @@ export default function AccountPage() {
         </div>
       </div>
 
-      {/* Modern Premium Bottom Navigation with Yellow Accents */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 px-4 w-full max-w-md">
-        <div className="bg-white/80 backdrop-blur-xl rounded-[28px] border border-stone-200/50 shadow-[0_8px_32px_rgba(0,0,0,0.12)] px-4">
-          <div className="flex items-center justify-around h-16">
+      {/* Fixed Bottom Navigation with Active State */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] z-50">
+        <div className="max-w-md mx-auto px-4">
+          <div className="flex items-center justify-around h-14">
             {/* Shop Icon */}
             <button 
-              onClick={() => router.push("/marketplace")}
-              className="relative flex flex-col items-center justify-center w-16 h-16 group active:scale-95 transition-all"
+              onClick={() => router.push("/user-space")}
+              className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all"
             >
-              <div className="relative z-10 flex flex-col items-center gap-1.5">
-                <ShoppingBag className="w-6 h-6 text-stone-400 group-hover:text-[#FFD800] transition-colors" strokeWidth={2} />
-                <span className="text-[9px] font-medium text-stone-400 group-hover:text-[#FFD800] transition-colors tracking-wide">SHOP</span>
-              </div>
+              <ShoppingBag className="w-5 h-5 text-stone-400 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] transition-colors">Shop</span>
             </button>
 
-            {/* Menu Icon */}
+            {/* Menu/Grid Icon */}
             <button 
               onClick={() => router.push("/user-space")}
-              className="relative flex flex-col items-center justify-center w-16 h-16 group active:scale-95 transition-all"
+              className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all"
             >
-              <div className="relative z-10 flex flex-col items-center gap-1.5">
-                <LayoutGrid className="w-6 h-6 text-stone-400 group-hover:text-[#FFD800] transition-colors" strokeWidth={2} />
-                <span className="text-[9px] font-medium text-stone-400 group-hover:text-[#FFD800] transition-colors tracking-wide">MENU</span>
-              </div>
+              <LayoutGrid className="w-5 h-5 text-stone-400 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] transition-colors">Menu</span>
             </button>
 
-            {/* Profile Icon - Active with Yellow */}
-            <button className="relative flex flex-col items-center justify-center w-16 h-16 group active:scale-95 transition-all">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#FFD800] to-[#FDC500] rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative z-10 flex flex-col items-center gap-1">
-                <div className="relative">
-                  <div className="absolute inset-0 bg-[#FFD800] rounded-xl blur-md opacity-40" />
-                  <div className="relative w-10 h-10 rounded-xl bg-gradient-to-br from-[#FFD800] to-[#FDC500] flex items-center justify-center shadow-lg shadow-[#FFD800]/30">
-                    <User className="w-5 h-5 text-stone-900" strokeWidth={2.5} />
-                  </div>
-                </div>
-                <span className="text-[9px] font-bold text-[#FFD800] tracking-wide">PROFILE</span>
+            {/* Profile Icon - Active State */}
+            <button className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all">
+              <div className="relative">
+                <User className="w-5 h-5 text-[#500099] transition-colors" strokeWidth={2} />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
               </div>
+              <span className="text-[10px] font-semibold text-[#500099] transition-colors">Profile</span>
             </button>
           </div>
         </div>
