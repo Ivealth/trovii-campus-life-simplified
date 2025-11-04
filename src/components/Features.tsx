@@ -8,16 +8,19 @@ const features = [
     icon: UtensilsCrossed,
     title: "Food Delivery",
     description: "Order from campus restaurants and get meals delivered directly to your location. Save time during busy study sessions.",
+    gradient: "from-yellow-500 to-orange-500"
   },
   {
     icon: Briefcase,
     title: "Career Launchpad",
     description: "Browse gigs, internships, and part-time opportunities tailored for students. Earn money on your schedule.",
+    gradient: "from-purple-500 to-purple-600"
   },
   {
     icon: Users,
     title: "Community Hub",
     description: "Connect with classmates, join clubs, and stay updated on campus events. Build your network.",
+    gradient: "from-blue-500 to-blue-600"
   }
 ]
 
@@ -58,9 +61,9 @@ export default function Features() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
-                <div className="group">
-                  <div className="w-12 h-12 rounded-xl bg-stone-100 flex items-center justify-center mb-5 group-hover:bg-stone-900 transition-colors duration-200">
-                    <feature.icon className="w-6 h-6 text-stone-900 group-hover:text-white transition-colors duration-200" />
+                <div className="group h-full p-8 rounded-2xl border border-stone-200 hover:border-transparent hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300`}>
+                    <feature.icon className="w-6 h-6 text-white" />
                   </div>
                   <h3 className="text-[19px] font-semibold text-stone-900 mb-3 tracking-tight">
                     {feature.title}
@@ -76,7 +79,7 @@ export default function Features() {
       </section>
 
       {/* How it Works Section */}
-      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-stone-50">
+      <section id="how-it-works" className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-purple-50 via-blue-50 to-yellow-50">
         <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
@@ -95,9 +98,9 @@ export default function Features() {
 
           <div className="grid md:grid-cols-3 gap-12 mb-20">
             {[
-              { step: "01", title: "Sign up", desc: "Create your free account with your student email" },
-              { step: "02", title: "Browse", desc: "Explore food options, gigs, and community events" },
-              { step: "03", title: "Get started", desc: "Order, apply, or connect—it's that simple" },
+              { step: "01", title: "Sign up", desc: "Create your free account with your student email", color: "purple" },
+              { step: "02", title: "Browse", desc: "Explore food options, gigs, and community events", color: "blue" },
+              { step: "03", title: "Get started", desc: "Order, apply, or connect—it's that simple", color: "yellow" },
             ].map((item, index) => (
               <motion.div
                 key={item.step}
@@ -107,7 +110,11 @@ export default function Features() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="text-[13px] font-bold text-stone-400 mb-4 tracking-wider">{item.step}</div>
+                <div className={`text-[13px] font-bold ${
+                  item.color === 'purple' ? 'text-purple-600' : 
+                  item.color === 'blue' ? 'text-blue-600' : 
+                  'text-yellow-600'
+                } mb-4 tracking-wider`}>{item.step}</div>
                 <h3 className="text-[19px] font-semibold text-stone-900 mb-2">{item.title}</h3>
                 <p className="text-[15px] text-stone-600">{item.desc}</p>
               </motion.div>
@@ -120,12 +127,12 @@ export default function Features() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
-            className="grid grid-cols-3 gap-8 max-w-3xl mx-auto py-12 border-t border-stone-200"
+            className="grid grid-cols-3 gap-8 max-w-3xl mx-auto py-12 border-t border-purple-200"
           >
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-[2rem] sm:text-4xl font-bold text-stone-900 mb-1">{stat.value}</div>
-                <div className="text-[13px] text-stone-500 font-medium">{stat.label}</div>
+                <div className="text-[2rem] sm:text-4xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-1">{stat.value}</div>
+                <div className="text-[13px] text-stone-600 font-medium">{stat.label}</div>
               </div>
             ))}
           </motion.div>
