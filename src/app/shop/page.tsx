@@ -1,15 +1,30 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
-import { Search, ChevronRight, Heart, Star } from "lucide-react"
+import { 
+  Search, ChevronRight, Heart, Star, 
+  ShoppingCart, User, ChevronDown, Store, Timer
+} from "lucide-react"
 import { Input } from "@/components/ui/input"
 
 export default function ShopPage() {
   const router = useRouter()
   const { data: session, isPending } = useSession()
   const [searchQuery, setSearchQuery] = useState("")
+  const [now, setNow] = useState(() => Date.now())
+
+  // Countdown to next 2 hours for Deals of the Day
+  const dealEndsAt = useMemo(() => Date.now() + 2 * 60 * 60 * 1000, [])
+  useEffect(() => {
+    const t = setInterval(() => setNow(Date.now()), 1000)
+    return () => clearInterval(t)
+  }, [])
+  const remainingMs = Math.max(0, dealEndsAt - now)
+  const hours = String(Math.floor(remainingMs / (1000 * 60 * 60))).padStart(2, "0")
+  const minutes = String(Math.floor((remainingMs / (1000 * 60)) % 60)).padStart(2, "0")
+  const seconds = String(Math.floor((remainingMs / 1000) % 60)).padStart(2, "0")
 
   useEffect(() => {
     if (!isPending && !session?.user) {
@@ -30,12 +45,21 @@ export default function ShopPage() {
 
   if (!session?.user) return null
 
+  const topLinks = [
+    { label: "Sell on Trovii", href: "#" },
+    { label: "Help", href: "#" },
+    { label: "Track Order", href: "#" },
+  ]
+
   const categories = [
-    { id: "electronics", name: "Electronics", icon: "⚡", color: "from-[#086BFA] to-[#500099]" },
-    { id: "fashion", name: "Fashion", icon: "👔", color: "from-[#500099] to-[#3D0086]" },
-    { id: "books", name: "Books", icon: "📚", color: "from-[#FFD800] to-[#FDC500]" },
-    { id: "health", name: "Health", icon: "🏥", color: "from-[#10b981] to-[#059669]" },
-    { id: "food", name: "Food", icon: "🍕", color: "from-[#f97316] to-[#ea580c]" },
+    { id: "phones", name: "Phones & Tablets" },
+    { id: "computers", name: "Computers & Accessories" },
+    { id: "electronics", name: "Electronics" },
+    { id: "fashion", name: "Fashion" },
+    { id: "beauty", name: "Beauty & Health" },
+    { id: "home", name: "Home & Kitchen" },
+    { id: "grocery", name: "Grocery" },
+    { id: "gaming", name: "Gaming" },
   ]
 
   const featuredProducts = [
@@ -113,165 +137,288 @@ export default function ShopPage() {
     },
   ]
 
-  const trendingDeals = [
+  const heroBanners = [
     {
-      id: 1,
-      title: "Flash Sale: Electronics",
-      subtitle: "Up to 50% off on laptops & tablets",
-      bgColor: "from-[#500099] to-[#3D0086]",
-      icon: "⚡",
+      id: "banner-1",
+      title: "Back to Campus Deals",
+      sub: "Save big on tech, fashion & essentials",
+      bg: "from-[#500099] to-[#3D0086]",
     },
     {
-      id: 2,
-      title: "Textbook Clearance",
-      subtitle: "Academic books starting at ₦2,000",
-      bgColor: "from-[#FFD800] to-[#FDC500]",
-      icon: "📖",
+      id: "banner-2",
+      title: "Food Delivery Savings",
+      sub: "Free delivery on first 3 orders",
+      bg: "from-[#086BFA] to-[#500099]",
+    },
+    {
+      id: "banner-3",
+      title: "Internship Kickstart",
+      sub: "Launch your career on Trovii",
+      bg: "from-[#FDC500] to-[#FFD800]",
     },
   ]
 
+  const officialStores = [
+    { id: "apple", name: "Apple", bg: "from-stone-100 to-stone-50" },
+    { id: "samsung", name: "Samsung", bg: "from-stone-100 to-stone-50" },
+    { id: "nike", name: "Nike", bg: "from-stone-100 to-stone-50" },
+    { id: "adidas", name: "Adidas", bg: "from-stone-100 to-stone-50" },
+    { id: "hp", name: "HP", bg: "from-stone-100 to-stone-50" },
+    { id: "dell", name: "Dell", bg: "from-stone-100 to-stone-50" },
+  ]
+
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col pb-20">
-      {/* Modern Header with Search */}
-      <div className="bg-white sticky top-0 z-40 shadow-sm">
-        <div className="max-w-6xl mx-auto">
-          {/* Top Bar */}
-          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100">
-            <div className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center shadow-md">
-                <span className="text-white font-bold text-base">T</span>
-              </div>
-              <div>
-                <h1 className="text-base font-bold text-stone-900 leading-none">Trovii Shop</h1>
-                <p className="text-[10px] text-[#500099] font-medium">Student Marketplace</p>
-              </div>
-            </div>
-            <button className="relative p-2 hover:bg-stone-100 rounded-lg transition-colors">
-              <Heart className="w-5 h-5 text-stone-700" strokeWidth={2} />
-              <div className="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-[#500099] rounded-full"></div>
-            </button>
-          </div>
-
-          {/* Search Bar */}
-          <div className="px-4 py-3">
-            <div className="relative">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-stone-400" strokeWidth={2.5} />
-              <Input
-                type="text"
-                placeholder="Search products, brands..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-11 pr-4 py-2.5 bg-stone-50 border-stone-200 rounded-xl text-sm placeholder:text-stone-400 focus-visible:ring-2 focus-visible:ring-[#500099] focus-visible:border-[#500099] h-11"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Categories Carousel */}
-      <div className="bg-white border-b border-stone-100 px-4 py-4">
-        <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-1">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              className="flex flex-col items-center min-w-[70px] gap-2 group"
-            >
-              <div className={`w-14 h-14 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center shadow-md group-hover:scale-105 transition-transform`}>
-                <span className="text-2xl filter drop-shadow-sm">{category.icon}</span>
-              </div>
-              <span className="text-[11px] font-medium text-stone-700 text-center leading-tight">
-                {category.name}
-              </span>
-            </button>
+    <div className="min-h-screen bg-stone-50 flex flex-col">
+      {/* Top Utility Bar */}
+      <div className="hidden md:block bg-stone-100 border-b border-stone-200">
+        <div className="max-w-6xl mx-auto px-4 h-10 flex items-center justify-end gap-6 text-[13px] text-stone-600">
+          {topLinks.map((l) => (
+            <a key={l.label} href={l.href} className="hover:text-stone-900 transition-colors">{l.label}</a>
           ))}
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 px-4 py-5">
-        <div className="max-w-6xl mx-auto space-y-6">
-          {/* Trending Deals */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base font-bold text-stone-900">🔥 Trending Deals</h2>
-            </div>
-            <div className="space-y-3">
-              {trendingDeals.map((deal) => (
-                <div
-                  key={deal.id}
-                  className={`relative bg-gradient-to-r ${deal.bgColor} rounded-2xl overflow-hidden shadow-lg cursor-pointer active:scale-[0.98] transition-transform`}
-                >
-                  <div className="absolute inset-0 opacity-10">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full blur-3xl"></div>
-                  </div>
-                  <div className="relative px-5 py-4 flex items-center justify-between">
-                    <div className="flex-1">
-                      <h3 className="text-base font-bold text-white mb-0.5">
-                        {deal.title}
-                      </h3>
-                      <p className="text-xs text-white/90">
-                        {deal.subtitle}
-                      </p>
-                    </div>
-                    <div className="flex-shrink-0 ml-4">
-                      <div className="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                        <span className="text-3xl">{deal.icon}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
+      {/* Main Header: Logo + Search + Icons */}
+      <header className="bg-white border-b border-stone-200 sticky top-0 z-40">
+        <div className="max-w-6xl mx-auto px-4 py-3 grid grid-cols-12 items-center gap-4">
+          {/* Logo */}
+          <a href="/" className="col-span-6 sm:col-span-3 flex items-center gap-2">
+            <div className="w-9 h-9 rounded-xl bg-stone-900 text-white flex items-center justify-center font-bold">T</div>
+            <span className="text-base font-semibold text-stone-900">Trovii</span>
+          </a>
+
+          {/* Search */}
+          <div className="col-span-12 sm:col-span-6">
+            <div className="flex items-stretch rounded-xl border border-stone-200 overflow-hidden">
+              <button className="hidden sm:flex items-center gap-1 px-3 bg-stone-50 border-r border-stone-200 text-[13px] text-stone-700">
+                All Categories <ChevronDown className="w-4 h-4" />
+              </button>
+              <div className="relative flex-1">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+                <Input
+                  type="text"
+                  placeholder="Search for products, brands and categories"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="h-11 pl-9 border-0 focus-visible:ring-0"
+                />
+              </div>
+              <button className="px-4 bg-stone-900 text-white text-[13px] font-medium hover:bg-stone-800">Search</button>
             </div>
           </div>
 
-          {/* Featured Products Grid */}
-          <div>
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-base font-bold text-stone-900">Featured Products</h2>
-              <button className="flex items-center gap-1 text-xs font-semibold text-[#500099] hover:gap-1.5 transition-all">
-                View All <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+          {/* Icons */}
+          <div className="col-span-6 sm:col-span-3 flex items-center justify-end gap-3">
+            <button
+              onClick={() => router.push("/account")}
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-stone-100"
+            >
+              <User className="w-5 h-5 text-stone-700" />
+              <span className="hidden md:inline text-[13px] font-medium text-stone-700">Account</span>
+            </button>
+            <button className="relative flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-stone-100">
+              <ShoppingCart className="w-5 h-5 text-stone-700" />
+              <span className="hidden md:inline text-[13px] font-medium text-stone-700">Cart</span>
+              <span className="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-[#500099] text-white text-[11px] grid place-items-center">0</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Category Nav Bar */}
+        <div className="hidden md:block border-t border-stone-200">
+          <div className="max-w-6xl mx-auto px-4 h-11 flex items-center gap-6 text-[13px]">
+            <button className="flex items-center gap-2 font-semibold text-stone-900">
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>
+              </svg>
+              All Categories
+            </button>
+            <div className="flex items-center gap-6 text-stone-700">
+              {categories.map((c) => (
+                <button key={c.id} className="hover:text-stone-900">{c.name}</button>
+              ))}
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {featuredProducts.map((product) => (
+          </div>
+        </div>
+      </header>
+
+      {/* Main Hero Area: Left Sidebar + Carousel + Side Banners */}
+      <section className="max-w-6xl mx-auto px-4 py-4 grid grid-cols-1 md:grid-cols-12 gap-4">
+        {/* Left categories (desktop) */}
+        <aside className="hidden md:block md:col-span-3 bg-white rounded-xl border border-stone-200">
+          <ul className="py-2">
+            {categories.map((c) => (
+              <li key={c.id}>
+                <button className="w-full flex items-center justify-between text-left text-[14px] px-4 py-2.5 hover:bg-stone-50">
+                  <span className="text-stone-700">{c.name}</span>
+                  <ChevronRight className="w-4 h-4 text-stone-400" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        {/* Center hero carousel */}
+        <div className="md:col-span-6">
+          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar p-3">
+              {heroBanners.map((b) => (
                 <div
-                  key={product.id}
-                  className="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
+                  key={b.id}
+                  className={`min-w-[85%] md:min-w-[calc(100%-1.5rem)] snap-start rounded-xl bg-gradient-to-r ${b.bg} p-6 relative text-white`}
                 >
-                  <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-4">
-                    <span className="text-6xl group-hover:scale-110 transition-transform">{product.image}</span>
-                    {product.discount > 0 && (
-                      <div className="absolute top-2 left-2 bg-[#500099] text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-md">
-                        -{product.discount}%
-                      </div>
-                    )}
-                    <button className="absolute top-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Heart className="w-3.5 h-3.5 text-stone-700" strokeWidth={2} />
-                    </button>
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute -right-6 -top-6 w-40 h-40 bg-white rounded-full blur-3xl" />
                   </div>
-                  <div className="p-3">
-                    <p className="text-[10px] text-stone-500 mb-0.5">{product.category}</p>
-                    <h4 className="text-sm font-semibold text-stone-900 mb-1.5 line-clamp-2 leading-tight">
-                      {product.name}
-                    </h4>
-                    <div className="flex items-center gap-1 mb-2">
-                      <Star className="w-3 h-3 fill-[#FFD800] text-[#FFD800]" />
-                      <span className="text-[11px] font-semibold text-stone-900">{product.rating}</span>
-                      <span className="text-[10px] text-stone-400">({product.reviews})</span>
-                    </div>
-                    <div className="flex items-baseline gap-1.5">
-                      <span className="text-base font-bold text-[#500099]">{product.price}</span>
-                      <span className="text-[11px] text-stone-400 line-through">{product.originalPrice}</span>
-                    </div>
+                  <div className="relative">
+                    <h3 className="text-xl font-bold mb-1">{b.title}</h3>
+                    <p className="text-sm/6 text-white/90 mb-4">{b.sub}</p>
+                    <button className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-[13px] font-medium px-3 py-2 rounded-lg">
+                      Shop Now <ChevronRight className="w-4 h-4" />
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Clean Fixed Bottom Navigation */}
+        {/* Right side banners */}
+        <div className="md:col-span-3 grid grid-rows-2 gap-4">
+          <div className="rounded-xl border border-stone-200 bg-gradient-to-br from-stone-100 to-stone-50 p-5">
+            <p className="text-sm font-semibold text-stone-900">Student Essentials</p>
+            <p className="text-[13px] text-stone-600">Bags, bottles & more</p>
+          </div>
+          <div className="rounded-xl border border-stone-200 bg-gradient-to-br from-stone-100 to-stone-50 p-5">
+            <p className="text-sm font-semibold text-stone-900">Campus Tech</p>
+            <p className="text-[13px] text-stone-600">Laptops & accessories</p>
+          </div>
+        </div>
+      </section>
+
+      {/* Deals of the Day */}
+      <section className="max-w-6xl mx-auto px-4 mt-2">
+        <div className="bg-white rounded-xl border border-stone-200">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-[#FFD800] grid place-items-center">
+                <Timer className="w-4 h-4 text-stone-900" />
+              </div>
+              <h2 className="text-base font-semibold">Deals of the Day</h2>
+            </div>
+            <div className="text-[13px] font-mono bg-stone-100 rounded-md px-2 py-1">
+              Ends in {hours}:{minutes}:{seconds}
+            </div>
+          </div>
+
+          <div className="p-4 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+            {featuredProducts.slice(0, 5).map((product) => (
+              <div
+                key={product.id}
+                className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
+              >
+                <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-4">
+                  <span className="text-5xl group-hover:scale-110 transition-transform">{product.image}</span>
+                  {product.discount > 0 && (
+                    <div className="absolute top-2 left-2 bg-[#500099] text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-md">
+                      -{product.discount}%
+                    </div>
+                  )}
+                </div>
+                <div className="p-3">
+                  <p className="text-[11px] text-stone-500 mb-0.5">{product.category}</p>
+                  <h4 className="text-[13px] font-semibold text-stone-900 mb-1.5 line-clamp-2 leading-tight">
+                    {product.name}
+                  </h4>
+                  <div className="flex items-center gap-1 mb-2">
+                    <Star className="w-3 h-3 fill-[#FFD800] text-[#FFD800]" />
+                    <span className="text-[11px] font-semibold text-stone-900">{product.rating}</span>
+                    <span className="text-[10px] text-stone-400">({product.reviews})</span>
+                  </div>
+                  <div className="flex items-baseline gap-1.5">
+                    <span className="text-sm font-bold text-[#500099]">{product.price}</span>
+                    <span className="text-[11px] text-stone-400 line-through">{product.originalPrice}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Official Stores */}
+      <section className="max-w-6xl mx-auto px-4 mt-6">
+        <div className="bg-white rounded-xl border border-stone-200">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-stone-200">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-stone-900 grid place-items-center">
+                <Store className="w-4 h-4 text-white" />
+              </div>
+              <h2 className="text-base font-semibold">Official Stores</h2>
+            </div>
+            <button className="flex items-center gap-1 text-xs font-semibold text-[#500099] hover:gap-1.5 transition-all">
+              View All <ChevronRight className="w-3.5 h-3.5" />
+            </button>
+          </div>
+
+          <div className="p-4 flex gap-3 overflow-x-auto no-scrollbar">
+            {officialStores.map((s) => (
+              <div key={s.id} className={`min-w-[180px] rounded-xl border border-stone-200 bg-gradient-to-br ${s.bg} p-4`}>
+                <div className="h-24 rounded-lg bg-white/60 grid place-items-center">
+                  <span className="text-stone-700 font-semibold">{s.name}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Recommended for You */}
+      <section className="max-w-6xl mx-auto px-4 mt-6 mb-24">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-base font-semibold">Recommended for you</h2>
+          <button className="flex items-center gap-1 text-xs font-semibold text-[#500099] hover:gap-1.5 transition-all">
+            View All <ChevronRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3">
+          {featuredProducts.map((product) => (
+            <div
+              key={product.id}
+              className="bg-white rounded-2xl border border-stone-200 overflow-hidden hover:shadow-lg transition-all cursor-pointer group"
+            >
+              <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-4">
+                <span className="text-6xl group-hover:scale-110 transition-transform">{product.image}</span>
+                {product.discount > 0 && (
+                  <div className="absolute top-2 left-2 bg-[#500099] text-white text-[10px] font-bold px-2 py-1 rounded-lg shadow-md">
+                    -{product.discount}%
+                  </div>
+                )}
+                <button className="absolute top-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
+                  <Heart className="w-3.5 h-3.5 text-stone-700" strokeWidth={2} />
+                </button>
+              </div>
+              <div className="p-3">
+                <p className="text-[10px] text-stone-500 mb-0.5">{product.category}</p>
+                <h4 className="text-sm font-semibold text-stone-900 mb-1.5 line-clamp-2 leading-tight">
+                  {product.name}
+                </h4>
+                <div className="flex items-center gap-1 mb-2">
+                  <Star className="w-3 h-3 fill-[#FFD800] text-[#FFD800]" />
+                  <span className="text-[11px] font-semibold text-stone-900">{product.rating}</span>
+                  <span className="text-[10px] text-stone-400">({product.reviews})</span>
+                </div>
+                <div className="flex items-baseline gap-1.5">
+                  <span className="text-base font-bold text-[#500099]">{product.price}</span>
+                  <span className="text-[11px] text-stone-400 line-through">{product.originalPrice}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Clean Fixed Bottom Navigation (kept for existing UX) */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50">
         <div className="max-w-md mx-auto px-4">
           <div className="flex items-center justify-around h-16">

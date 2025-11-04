@@ -28,6 +28,9 @@ export default function Navigation() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
+            <a href="/shop" className="text-[14px] font-medium text-stone-600 hover:text-stone-900 transition-colors">
+              Shop
+            </a>
             <a href="#features" className="text-[14px] font-medium text-stone-600 hover:text-stone-900 transition-colors">
               Features
             </a>
@@ -83,6 +86,13 @@ export default function Navigation() {
       {isOpen && (
         <div className="md:hidden border-t border-stone-200/50 bg-white/95 backdrop-blur-xl">
           <div className="px-4 py-6 space-y-4">
+            <a
+              href="/shop"
+              className="block text-[15px] font-medium text-stone-600 hover:text-stone-900"
+              onClick={() => setIsOpen(false)}
+            >
+              Shop
+            </a>
             <a
               href="#features"
               className="block text-[15px] font-medium text-stone-600 hover:text-stone-900"
