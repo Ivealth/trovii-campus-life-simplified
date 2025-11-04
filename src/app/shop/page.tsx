@@ -1,11 +1,12 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
+import Image from "next/image"
 import { 
   Search, ChevronRight, Heart, Star, 
-  ShoppingCart, User, Filter, SlidersHorizontal,
+  ShoppingCart, User, SlidersHorizontal,
   TrendingUp, Zap, Package, Shield
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -18,21 +19,21 @@ const HERO_BANNERS = [
     title: "Welcome to Campus Marketplace",
     subtitle: "Everything students need, delivered to your dorm",
     cta: "Start Shopping",
-    gradient: "from-violet-600 via-purple-600 to-indigo-600",
+    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/wide-cinematic-shot-of-happy-diverse-col-3df80116-20251104170946.jpg",
   },
   {
     id: "banner-2",
     title: "Tech Essentials for Every Student",
     subtitle: "Latest gadgets, best prices, fast delivery",
     cta: "Explore Tech",
-    gradient: "from-blue-600 via-cyan-600 to-teal-600",
+    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/wide-lifestyle-photography-of-modern-tec-fea57d23-20251104170946.jpg",
   },
   {
     id: "banner-3",
     title: "Fashion That Fits Your Style",
     subtitle: "Trendy looks for campus life",
     cta: "Shop Fashion",
-    gradient: "from-pink-600 via-rose-600 to-red-600",
+    image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/wide-lifestyle-photography-of-trendy-fas-aeae684b-20251104170945.jpg",
   },
 ]
 
@@ -89,7 +90,7 @@ export default function ShopPage() {
       originalPrice: 35000,
       rating: 4.8,
       reviews: 234,
-      image: "🎧",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-prem-cf211428-20251104170913.jpg",
       badge: "Best Seller",
       inStock: true,
     },
@@ -101,7 +102,7 @@ export default function ShopPage() {
       originalPrice: 65000,
       rating: 4.9,
       reviews: 189,
-      image: "⌚",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-mode-2188afbe-20251104170914.jpg",
       badge: "Trending",
       inStock: true,
     },
@@ -113,7 +114,7 @@ export default function ShopPage() {
       originalPrice: 18000,
       rating: 4.7,
       reviews: 156,
-      image: "🎒",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-styl-4dc890b3-20251104170915.jpg",
       badge: null,
       inStock: true,
     },
@@ -125,7 +126,7 @@ export default function ShopPage() {
       originalPrice: 12000,
       rating: 4.6,
       reviews: 203,
-      image: "🖱️",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-slee-71b3b40c-20251104170913.jpg",
       badge: "Best Value",
       inStock: true,
     },
@@ -137,7 +138,7 @@ export default function ShopPage() {
       originalPrice: 48000,
       rating: 4.9,
       reviews: 178,
-      image: "👟",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-whit-a1f576e8-20251104170911.jpg",
       badge: "Top Rated",
       inStock: true,
     },
@@ -149,7 +150,7 @@ export default function ShopPage() {
       originalPrice: 9500,
       rating: 4.5,
       reviews: 142,
-      image: "💡",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-mode-d6e8029d-20251104170914.jpg",
       badge: null,
       inStock: true,
     },
@@ -161,7 +162,7 @@ export default function ShopPage() {
       originalPrice: 22000,
       rating: 4.7,
       reviews: 167,
-      image: "🔊",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-blac-a5e7d18a-20251104170915.jpg",
       badge: "New Arrival",
       inStock: true,
     },
@@ -173,7 +174,7 @@ export default function ShopPage() {
       originalPrice: 7000,
       rating: 4.4,
       reviews: 98,
-      image: "👜",
+      image: "https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/project-uploads/405c7896-0e87-4a3e-a924-36158b06d2c5/generated_images/professional-product-photography-of-beig-a1e39d8f-20251104170911.jpg",
       badge: null,
       inStock: true,
     },
@@ -309,17 +310,27 @@ export default function ShopPage() {
                   idx === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'
                 }`}
               >
-                <div className={`h-full w-full bg-gradient-to-r ${banner.gradient} relative`}>
-                  {/* Decorative elements */}
-                  <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMSIgb3BhY2l0eT0iMC4xIi8+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyaWQpIi8+PC9zdmc+')] opacity-20"></div>
+                <div className="relative h-full w-full">
+                  {/* Background Image */}
+                  <Image
+                    src={banner.image}
+                    alt={banner.title}
+                    fill
+                    className="object-cover"
+                    priority={idx === 0}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 90vw, 1200px"
+                  />
+                  
+                  {/* Dark Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent"></div>
                   
                   <div className="relative h-full flex items-center">
                     <div className="w-full px-6 sm:px-12 lg:px-16">
                       <div className="max-w-xl">
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 lg:mb-4 leading-tight">
+                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-3 lg:mb-4 leading-tight drop-shadow-lg">
                           {banner.title}
                         </h1>
-                        <p className="text-base sm:text-lg text-white/90 mb-6 lg:mb-8 leading-relaxed">
+                        <p className="text-base sm:text-lg text-white/95 mb-6 lg:mb-8 leading-relaxed drop-shadow-md">
                           {banner.subtitle}
                         </p>
                         <Button
@@ -402,10 +413,14 @@ export default function ShopPage() {
                 className="bg-white rounded-xl lg:rounded-2xl border border-stone-200 overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all cursor-pointer group"
               >
                 {/* Product Image */}
-                <div className="relative aspect-square bg-gradient-to-br from-stone-50 to-stone-100 flex items-center justify-center p-6 lg:p-8">
-                  <span className="text-6xl lg:text-7xl group-hover:scale-110 transition-transform duration-300">
-                    {product.image}
-                  </span>
+                <div className="relative aspect-square bg-white">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                    className="object-contain p-4 lg:p-6 group-hover:scale-105 transition-transform duration-300"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  />
                   
                   {/* Badges */}
                   {product.badge && (
@@ -422,14 +437,14 @@ export default function ShopPage() {
                   )}
 
                   {/* Wishlist Button */}
-                  <button className="absolute bottom-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all hover:bg-stone-900 hover:text-white">
+                  <button className="absolute bottom-3 right-3 w-9 h-9 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-all hover:bg-stone-900 hover:text-white border border-stone-200">
                     <Heart className="w-4 h-4" />
                   </button>
                 </div>
 
                 {/* Product Info */}
-                <div className="p-3 lg:p-4">
-                  <p className="text-[10px] lg:text-xs text-stone-500 font-medium mb-1">
+                <div className="p-3 lg:p-4 border-t border-stone-100">
+                  <p className="text-[10px] lg:text-xs text-stone-500 font-medium mb-1 uppercase tracking-wide">
                     {product.category}
                   </p>
                   <h3 className="text-sm lg:text-base font-semibold text-stone-900 mb-2 line-clamp-2 leading-snug min-h-[2.5em]">
@@ -526,9 +541,9 @@ export default function ShopPage() {
             className="flex flex-col items-center gap-1 px-3 py-1"
           >
             <div className="w-6 h-6 flex items-center justify-center">
-              <Filter className="w-5 h-5 text-stone-500" strokeWidth={2} />
+              <Package className="w-5 h-5 text-stone-500" strokeWidth={2} />
             </div>
-            <span className="text-[10px] font-medium text-stone-500">Menu</span>
+            <span className="text-[10px] font-medium text-stone-500">Orders</span>
           </button>
 
           <button
