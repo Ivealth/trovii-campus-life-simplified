@@ -29,7 +29,7 @@ export default function UserSpacePage() {
   if (!session?.user) return null
 
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col pb-20">
+    <div className="min-h-screen bg-stone-50 flex flex-col pb-16">
       {/* Header - White with Drop Shadow (matching landing page) */}
       <div className="bg-white/80 backdrop-blur-md border-b border-stone-200 shadow-sm sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
@@ -130,26 +130,35 @@ export default function UserSpacePage() {
         </div>
       </div>
 
-      {/* Redesigned Fixed Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] z-50 safe-area-inset-bottom">
-        <div className="max-w-lg mx-auto px-6">
-          <div className="flex items-center justify-around h-16">
+      {/* Compact Fixed Bottom Navigation with Active States */}
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_8px_rgba(0,0,0,0.06)] z-50">
+        <div className="max-w-md mx-auto px-4">
+          <div className="flex items-center justify-around h-14">
             {/* Shop Icon */}
-            <button className="flex items-center justify-center w-14 h-14 group active:scale-95 transition-all">
-              <ShoppingBag className="w-6 h-6 text-stone-700 group-hover:text-[#500099] group-active:text-[#500099] transition-colors" strokeWidth={1.5} />
+            <button className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all">
+              <div className="relative">
+                <ShoppingBag className="w-5 h-5 text-stone-400 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-stone-400 group-hover:bg-[#500099] transition-colors" />
+              </div>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] transition-colors">Shop</span>
             </button>
 
-            {/* Menu/Grid Icon */}
-            <button className="flex items-center justify-center w-14 h-14 group active:scale-95 transition-all">
-              <LayoutGrid className="w-6 h-6 text-stone-700 group-hover:text-[#500099] group-active:text-[#500099] transition-colors" strokeWidth={1.5} />
+            {/* Menu/Grid Icon - Active State */}
+            <button className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all">
+              <div className="relative">
+                <LayoutGrid className="w-5 h-5 text-[#500099] transition-colors" strokeWidth={2} />
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
+              </div>
+              <span className="text-[10px] font-semibold text-[#500099] transition-colors">Menu</span>
             </button>
 
             {/* Profile Icon */}
             <button 
               onClick={() => router.push("/account")}
-              className="flex items-center justify-center w-14 h-14 group active:scale-95 transition-all"
+              className="flex flex-col items-center justify-center gap-1 py-2 px-3 group active:scale-95 transition-all"
             >
-              <User className="w-6 h-6 text-stone-700 group-hover:text-[#500099] group-active:text-[#500099] transition-colors" strokeWidth={1.5} />
+              <User className="w-5 h-5 text-stone-400 group-hover:text-[#500099] transition-colors" strokeWidth={2} />
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] transition-colors">Profile</span>
             </button>
           </div>
         </div>
