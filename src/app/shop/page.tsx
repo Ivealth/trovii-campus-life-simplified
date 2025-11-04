@@ -9,6 +9,28 @@ import {
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
+// Define hero banners at module scope to avoid TDZ issues
+const HERO_BANNERS = [
+  {
+    id: "banner-1",
+    title: "Back to Campus Deals",
+    sub: "Save big on tech, fashion & essentials",
+    bg: "from-[#500099] to-[#3D0086]",
+  },
+  {
+    id: "banner-2",
+    title: "Food Delivery Savings",
+    sub: "Free delivery on first 3 orders",
+    bg: "from-[#086BFA] to-[#500099]",
+  },
+  {
+    id: "banner-3",
+    title: "Internship Kickstart",
+    sub: "Launch your career on Trovii",
+    bg: "from-[#FDC500] to-[#FFD800]",
+  },
+]
+
 export default function ShopPage() {
   const router = useRouter()
   const { data: session, isPending } = useSession()
@@ -36,7 +58,8 @@ export default function ShopPage() {
 
   // Auto-rotate hero banners
   useEffect(() => {
-    const id = setInterval(() => setHeroIndex((i) => (i + 1) % heroBanners.length), 5000)
+    if (HERO_BANNERS.length <= 1) return
+    const id = setInterval(() => setHeroIndex((i) => (i + 1) % HERO_BANNERS.length), 5000)
     return () => clearInterval(id)
   }, [])
 
@@ -142,27 +165,6 @@ export default function ShopPage() {
       reviews: 92,
       image: "💡",
       inStock: true,
-    },
-  ]
-
-  const heroBanners = [
-    {
-      id: "banner-1",
-      title: "Back to Campus Deals",
-      sub: "Save big on tech, fashion & essentials",
-      bg: "from-[#500099] to-[#3D0086]",
-    },
-    {
-      id: "banner-2",
-      title: "Food Delivery Savings",
-      sub: "Free delivery on first 3 orders",
-      bg: "from-[#086BFA] to-[#500099]",
-    },
-    {
-      id: "banner-3",
-      title: "Internship Kickstart",
-      sub: "Launch your career on Trovii",
-      bg: "from-[#FDC500] to-[#FFD800]",
     },
   ]
 
@@ -287,7 +289,7 @@ export default function ShopPage() {
         {/* Center hero carousel */}
         <div className="md:col-span-6">
           <div className="relative bg-white rounded-xl border border-stone-200 overflow-hidden h-56 md:h-72">
-            {heroBanners.map((b, idx) => (
+            {HERO_BANNERS.map((b, idx) => (
               <div
                 key={b.id}
                 className={`absolute inset-0 transition-opacity duration-500 ${idx === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
@@ -309,7 +311,7 @@ export default function ShopPage() {
             <div className="absolute inset-y-0 left-0 flex items-center p-2">
               <button
                 aria-label="Previous"
-                onClick={() => setHeroIndex((i) => (i - 1 + heroBanners.length) % heroBanners.length)}
+                onClick={() => setHeroIndex((i) => (i - 1 + HERO_BANNERS.length) % HERO_BANNERS.length)}
                 className="w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center"
               >
                 <ChevronLeft className="w-5 h-5 text-stone-800" />
@@ -318,14 +320,14 @@ export default function ShopPage() {
             <div className="absolute inset-y-0 right-0 flex items-center p-2">
               <button
                 aria-label="Next"
-                onClick={() => setHeroIndex((i) => (i + 1) % heroBanners.length)}
+                onClick={() => setHeroIndex((i) => (i + 1) % HERO_BANNERS.length)}
                 className="w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center"
               >
                 <ChevronRight className="w-5 h-5 text-stone-800" />
               </button>
             </div>
             <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
-              {heroBanners.map((_, i) => (
+              {HERO_BANNERS.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setHeroIndex(i)}
