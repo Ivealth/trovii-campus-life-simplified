@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
 import { 
-  Search, ChevronRight, Heart, Star, 
+  Search, ChevronRight, ChevronLeft, Heart, Star, 
   ShoppingCart, User, ChevronDown, Store, Timer
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
@@ -14,6 +14,8 @@ export default function ShopPage() {
   const { data: session, isPending } = useSession()
   const [searchQuery, setSearchQuery] = useState("")
   const [now, setNow] = useState(() => Date.now())
+  const [heroIndex, setHeroIndex] = useState(0)
+  const [showCategories, setShowCategories] = useState(false)
 
   // Countdown to next 2 hours for Deals of the Day
   const dealEndsAt = useMemo(() => Date.now() + 2 * 60 * 60 * 1000, [])
@@ -31,6 +33,12 @@ export default function ShopPage() {
       router.push("/register?mode=signin")
     }
   }, [session, isPending, router])
+
+  // Auto-rotate hero banners
+  useEffect(() => {
+    const id = setInterval(() => setHeroIndex((i) => (i + 1) % heroBanners.length), 5000)
+    return () => clearInterval(id)
+  }, [])
 
   if (isPending) {
     return (
@@ -167,6 +175,9 @@ export default function ShopPage() {
     { id: "dell", name: "Dell", bg: "from-stone-100 to-stone-50" },
   ]
 
+  // Brands strip (reuse official stores names for now)
+  const brands = officialStores.map((s) => s.name)
+
   return (
     <div className="min-h-screen bg-stone-50 flex flex-col">
       {/* Top Utility Bar */}
@@ -225,9 +236,9 @@ export default function ShopPage() {
         </div>
 
         {/* Category Nav Bar */}
-        <div className="hidden md:block border-t border-stone-200">
+        <div className="hidden md:block border-t border-stone-200 relative">
           <div className="max-w-6xl mx-auto px-4 h-11 flex items-center gap-6 text-[13px]">
-            <button className="flex items-center gap-2 font-semibold text-stone-900">
+            <button onClick={() => setShowCategories((s) => !s)} className="flex items-center gap-2 font-semibold text-stone-900">
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round"/>
               </svg>
@@ -239,13 +250,28 @@ export default function ShopPage() {
               ))}
             </div>
           </div>
+
+          {showCategories && (
+            <div className="absolute left-0 right-0 top-11 z-30">
+              <div className="max-w-6xl mx-auto px-4">
+                <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 p-4 bg-white border border-stone-200 rounded-xl shadow-2xl">
+                  {categories.map((c) => (
+                    <button key={c.id} className="text-left p-3 rounded-lg hover:bg-stone-50">
+                      <p className="text-[13px] font-semibold text-stone-900">{c.name}</p>
+                      <p className="text-[12px] text-stone-500">Explore {c.name.toLowerCase()}</p>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </header>
 
       {/* Main Hero Area: Left Sidebar + Carousel + Side Banners */}
       <section className="max-w-6xl mx-auto px-4 py-4 grid grid-cols-1 md:grid-cols-12 gap-4">
         {/* Left categories (desktop) */}
-        <aside className="hidden md:block md:col-span-3 bg-white rounded-xl border border-stone-200">
+        <aside className="hidden md:block md:col-span-3 bg-white rounded-xl border border-stone-200 sticky top-24">
           <ul className="py-2">
             {categories.map((c) => (
               <li key={c.id}>
@@ -260,24 +286,52 @@ export default function ShopPage() {
 
         {/* Center hero carousel */}
         <div className="md:col-span-6">
-          <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
-            <div className="flex gap-3 overflow-x-auto snap-x snap-mandatory no-scrollbar p-3">
-              {heroBanners.map((b) => (
-                <div
-                  key={b.id}
-                  className={`min-w-[85%] md:min-w-[calc(100%-1.5rem)] snap-start rounded-xl bg-gradient-to-r ${b.bg} p-6 relative text-white`}
-                >
+          <div className="relative bg-white rounded-xl border border-stone-200 overflow-hidden h-56 md:h-72">
+            {heroBanners.map((b, idx) => (
+              <div
+                key={b.id}
+                className={`absolute inset-0 transition-opacity duration-500 ${idx === heroIndex ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+              >
+                <div className={`h-full w-full bg-gradient-to-r ${b.bg} p-6 relative text-white`}>
                   <div className="absolute inset-0 opacity-10">
                     <div className="absolute -right-6 -top-6 w-40 h-40 bg-white rounded-full blur-3xl" />
                   </div>
-                  <div className="relative">
-                    <h3 className="text-xl font-bold mb-1">{b.title}</h3>
+                  <div className="relative h-full flex flex-col items-start justify-center">
+                    <h3 className="text-xl md:text-2xl font-bold mb-1">{b.title}</h3>
                     <p className="text-sm/6 text-white/90 mb-4">{b.sub}</p>
                     <button className="inline-flex items-center gap-1.5 bg-white/15 hover:bg-white/25 text-white text-[13px] font-medium px-3 py-2 rounded-lg">
                       Shop Now <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
+              </div>
+            ))}
+            <div className="absolute inset-y-0 left-0 flex items-center p-2">
+              <button
+                aria-label="Previous"
+                onClick={() => setHeroIndex((i) => (i - 1 + heroBanners.length) % heroBanners.length)}
+                className="w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center"
+              >
+                <ChevronLeft className="w-5 h-5 text-stone-800" />
+              </button>
+            </div>
+            <div className="absolute inset-y-0 right-0 flex items-center p-2">
+              <button
+                aria-label="Next"
+                onClick={() => setHeroIndex((i) => (i + 1) % heroBanners.length)}
+                className="w-9 h-9 rounded-full bg-white/90 hover:bg-white shadow flex items-center justify-center"
+              >
+                <ChevronRight className="w-5 h-5 text-stone-800" />
+              </button>
+            </div>
+            <div className="absolute bottom-3 left-0 right-0 flex items-center justify-center gap-2">
+              {heroBanners.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setHeroIndex(i)}
+                  className={`h-1.5 rounded-full transition-all ${i === heroIndex ? 'w-6 bg-white' : 'w-3 bg-white/60'}`}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
               ))}
             </div>
           </div>
@@ -324,6 +378,9 @@ export default function ShopPage() {
                       -{product.discount}%
                     </div>
                   )}
+                  <button className="absolute bottom-2 left-2 right-2 h-8 rounded-lg bg-stone-900 text-white text-[12px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                    Add to Cart
+                  </button>
                 </div>
                 <div className="p-3">
                   <p className="text-[11px] text-stone-500 mb-0.5">{product.category}</p>
@@ -373,6 +430,17 @@ export default function ShopPage() {
         </div>
       </section>
 
+      {/* Brands strip */}
+      <section className="max-w-6xl mx-auto px-4 mt-6">
+        <div className="bg-white rounded-xl border border-stone-200 p-3 flex items-center gap-4 overflow-x-auto no-scrollbar">
+          {brands.map((b) => (
+            <div key={b} className="px-4 py-2 rounded-full border border-stone-200 bg-stone-50 text-[13px] text-stone-700 whitespace-nowrap hover:bg-stone-100">
+              {b}
+            </div>
+          ))}
+        </div>
+      </section>
+
       {/* Recommended for You */}
       <section className="max-w-6xl mx-auto px-4 mt-6 mb-24">
         <div className="flex items-center justify-between mb-3">
@@ -397,6 +465,9 @@ export default function ShopPage() {
                 <button className="absolute top-2 right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-md opacity-0 group-hover:opacity-100 transition-opacity">
                   <Heart className="w-3.5 h-3.5 text-stone-700" strokeWidth={2} />
                 </button>
+                <button className="absolute bottom-2 left-2 right-2 h-9 rounded-lg bg-stone-900 text-white text-[12px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                  Add to Cart
+                </button>
               </div>
               <div className="p-3">
                 <p className="text-[10px] text-stone-500 mb-0.5">{product.category}</p>
@@ -419,7 +490,7 @@ export default function ShopPage() {
       </section>
 
       {/* Clean Fixed Bottom Navigation (kept for existing UX) */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50">
+      <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50 md:hidden">
         <div className="max-w-md mx-auto px-4">
           <div className="flex items-center justify-around h-16">
             {/* Shop Icon - Active */}
