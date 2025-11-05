@@ -274,53 +274,53 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Top Bar */}
-      <div className="bg-stone-900 text-white">
-        <div className="container mx-auto px-4 py-2">
-          <p className="text-xs text-center">
+      {/* Top Bar - Increased Size & Fixed */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-stone-900 text-white">
+        <div className="container mx-auto px-4 py-3">
+          <p className="text-sm text-center font-medium">
             Free delivery on orders over ₦50,000 • Shop now and save!
           </p>
         </div>
       </div>
 
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-stone-200 shadow-sm">
+      {/* Header - Reduced Size */}
+      <header className="sticky top-[52px] z-40 bg-white border-b border-stone-200 shadow-sm">
         <div className="container mx-auto px-4">
-          {/* Top Row */}
-          <div className="flex items-center justify-between py-4">
+          {/* Top Row - Reduced Padding & Logo Size */}
+          <div className="flex items-center justify-between py-2.5">
             <button 
               onClick={() => router.push("/")}
-              className="flex items-center gap-2.5 group"
+              className="flex items-center gap-1.5 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-stone-900 flex items-center justify-center">
-                <span className="text-white font-bold text-lg">T</span>
+              <div className="w-7 h-7 rounded-md bg-stone-900 flex items-center justify-center">
+                <span className="text-white font-bold text-sm">T</span>
               </div>
               <div>
-                <span className="text-lg font-bold text-stone-900 block leading-none">Trovii</span>
-                <span className="text-[10px] text-stone-500 leading-none">Marketplace</span>
+                <span className="text-sm font-bold text-stone-900 block leading-none">Trovii</span>
+                <span className="text-[9px] text-stone-500 leading-none">Marketplace</span>
               </div>
             </button>
 
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push("/account")}
-                className="hidden sm:flex items-center gap-2"
+                className="hidden sm:flex items-center gap-1.5 h-8 px-2.5"
               >
-                <User className="w-4 h-4" />
-                <span className="hidden md:inline">Account</span>
+                <User className="w-3.5 h-3.5" />
+                <span className="hidden md:inline text-xs">Account</span>
               </Button>
               
               <Button
                 onClick={() => toast.info("Cart page coming soon!")}
-                className="relative bg-stone-900 hover:bg-stone-800"
+                className="relative bg-stone-900 hover:bg-stone-800 h-8 px-2.5 text-xs"
                 size="sm"
               >
-                <ShoppingCart className="w-4 h-4 sm:mr-2" />
+                <ShoppingCart className="w-3.5 h-3.5 sm:mr-1.5" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartCount > 0 && (
-                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-400 text-stone-900 text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">
+                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-yellow-400 text-stone-900 text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white">
                     {cartCount}
                   </span>
                 )}
@@ -328,34 +328,34 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Search Bar */}
-          <div className="pb-4">
+          {/* Search Bar - Reduced Size */}
+          <div className="pb-2.5">
             <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <Input
                 type="text"
                 placeholder="Search for products, brands, and categories..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-12 h-12 text-[15px] border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
+                className="pl-10 pr-10 h-9 text-sm border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="w-4 h-4" />
                 </button>
               )}
             </div>
           </div>
 
-          {/* Categories Bar */}
-          <div className="pb-3 overflow-x-auto scrollbar-hide">
-            <div className="flex items-center gap-2 min-w-max">
+          {/* Categories Bar - Reduced Size */}
+          <div className="pb-2 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-1.5 min-w-max">
               <button
                 onClick={() => setSelectedCategory("all")}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
                   selectedCategory === "all"
                     ? "bg-stone-900 text-white"
                     : "bg-stone-100 text-stone-700 hover:bg-stone-200"
@@ -367,7 +367,7 @@ export default function ShopPage() {
                 <button
                   key={cat.id}
                   onClick={() => setSelectedCategory(cat.id.toString())}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
                     selectedCategory === cat.id.toString()
                       ? "bg-stone-900 text-white"
                       : "bg-stone-100 text-stone-700 hover:bg-stone-200"
@@ -381,8 +381,8 @@ export default function ShopPage() {
         </div>
       </header>
 
-      {/* Main Content */}
-      <main className="container mx-auto px-4 py-6">
+      {/* Main Content - Add top margin for fixed banner */}
+      <main className="container mx-auto px-4 py-6 mt-[52px]">
         {/* Filters & Controls Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 bg-white p-4 rounded-lg border border-stone-200">
           <div className="flex items-center gap-4 flex-wrap">
