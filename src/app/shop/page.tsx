@@ -275,7 +275,7 @@ export default function ShopPage() {
   return (
     <div className="min-h-screen bg-stone-50">
       {/* Top Bar - Minimal Banner */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-stone-900 text-white">
+      <div className="fixed top-0 left-0 right-0 z-50 bg-stone-900 text-white shadow-sm">
         <div className="container mx-auto px-4 py-1.5">
           <p className="text-[11px] text-center font-medium">
             Free delivery on orders over ₦50,000 • Shop now and save!
@@ -283,10 +283,10 @@ export default function ShopPage() {
         </div>
       </div>
 
-      {/* Header - Better Logo Positioning */}
-      <header className="sticky top-[34px] z-40 bg-white border-b border-stone-200 shadow-sm">
+      {/* Header - Sticky Below Banner */}
+      <header className="fixed top-[34px] left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm">
         <div className="container mx-auto px-4">
-          {/* Top Row - Better Logo Design */}
+          {/* Top Row */}
           <div className="flex items-center justify-between py-3">
             <button 
               onClick={() => router.push("/")}
@@ -381,8 +381,35 @@ export default function ShopPage() {
         </div>
       </header>
 
-      {/* Main Content - Adjust top margin for smaller banner */}
-      <main className="container mx-auto px-4 py-6 mt-[34px]">
+      {/* Promotional Banner - Big Banner After Header (Konga Style) */}
+      <div className="fixed top-[162px] left-0 right-0 z-30 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <div className="hidden sm:flex items-center justify-center w-12 h-12 bg-stone-900 rounded-full">
+                <span className="text-2xl">🎉</span>
+              </div>
+              <div>
+                <h3 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
+                  Black Friday Deals!
+                </h3>
+                <p className="text-xs sm:text-sm text-stone-700 font-medium">
+                  Up to 70% off on selected items • Limited time offer
+                </p>
+              </div>
+            </div>
+            <Button 
+              size="sm"
+              className="hidden sm:flex bg-stone-900 hover:bg-stone-800 text-white font-semibold h-9 px-6 rounded-full shadow-lg"
+            >
+              Shop Now
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content - Adjust for fixed banner and promo */}
+      <main className="container mx-auto px-4 py-6" style={{ marginTop: '230px' }}>
         {/* Filters & Controls Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 bg-white p-4 rounded-lg border border-stone-200">
           <div className="flex items-center gap-4 flex-wrap">
