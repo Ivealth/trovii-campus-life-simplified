@@ -274,30 +274,30 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Top Bar - Increased Size & Fixed */}
+      {/* Top Bar - Minimal Banner */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-stone-900 text-white">
-        <div className="container mx-auto px-4 py-3">
-          <p className="text-sm text-center font-medium">
+        <div className="container mx-auto px-4 py-1.5">
+          <p className="text-[11px] text-center font-medium">
             Free delivery on orders over ₦50,000 • Shop now and save!
           </p>
         </div>
       </div>
 
-      {/* Header - Reduced Size */}
-      <header className="sticky top-[52px] z-40 bg-white border-b border-stone-200 shadow-sm">
+      {/* Header - Better Logo Positioning */}
+      <header className="sticky top-[34px] z-40 bg-white border-b border-stone-200 shadow-sm">
         <div className="container mx-auto px-4">
-          {/* Top Row - Reduced Padding & Logo Size */}
-          <div className="flex items-center justify-between py-2.5">
+          {/* Top Row - Better Logo Design */}
+          <div className="flex items-center justify-between py-3">
             <button 
               onClick={() => router.push("/")}
-              className="flex items-center gap-1.5 group"
+              className="flex items-center gap-2 group"
             >
-              <div className="w-7 h-7 rounded-md bg-stone-900 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">T</span>
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                <span className="text-white font-bold text-base">T</span>
               </div>
-              <div>
-                <span className="text-sm font-bold text-stone-900 block leading-none">Trovii</span>
-                <span className="text-[9px] text-stone-500 leading-none">Marketplace</span>
+              <div className="flex flex-col">
+                <span className="text-base font-bold text-stone-900 leading-none tracking-tight">Trovii</span>
+                <span className="text-[10px] text-stone-500 leading-none tracking-wide">Marketplace</span>
               </div>
             </button>
 
@@ -328,7 +328,7 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Search Bar - Reduced Size */}
+          {/* Search Bar */}
           <div className="pb-2.5">
             <div className="relative max-w-2xl mx-auto">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
@@ -350,7 +350,7 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Categories Bar - Reduced Size */}
+          {/* Categories Bar */}
           <div className="pb-2 overflow-x-auto scrollbar-hide">
             <div className="flex items-center gap-1.5 min-w-max">
               <button
@@ -381,8 +381,8 @@ export default function ShopPage() {
         </div>
       </header>
 
-      {/* Main Content - Add top margin for fixed banner */}
-      <main className="container mx-auto px-4 py-6 mt-[52px]">
+      {/* Main Content - Adjust top margin for smaller banner */}
+      <main className="container mx-auto px-4 py-6 mt-[34px]">
         {/* Filters & Controls Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 bg-white p-4 rounded-lg border border-stone-200">
           <div className="flex items-center gap-4 flex-wrap">
