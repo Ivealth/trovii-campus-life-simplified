@@ -274,7 +274,7 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-stone-50">
-      {/* Top Bar - Minimal Banner */}
+      {/* Top Bar - Minimal Banner (Fixed) */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-stone-900 text-white shadow-sm">
         <div className="container mx-auto px-4 py-1.5">
           <p className="text-[11px] text-center font-medium">
@@ -314,7 +314,7 @@ export default function ShopPage() {
               
               <Button
                 onClick={() => toast.info("Cart page coming soon!")}
-                className="relative bg-stone-900 hover:bg-stone-800 h-8 px-2.5 text-xs"
+                className="relative h-8 px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
                 <ShoppingCart className="w-3.5 h-3.5 sm:mr-1.5" />
@@ -382,34 +382,36 @@ export default function ShopPage() {
       </header>
 
       {/* Promotional Banner - Big Banner After Header (Konga Style) */}
-      <div className="fixed top-[162px] left-0 right-0 z-30 bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="hidden sm:flex items-center justify-center w-12 h-12 bg-stone-900 rounded-full">
-                <span className="text-2xl">🎉</span>
+      <div className="pt-[162px]">
+        <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <div className="hidden sm:flex items-center justify-center w-12 h-12 bg-stone-900 rounded-full">
+                  <span className="text-2xl">🎉</span>
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
+                    Black Friday Deals!
+                  </h3>
+                  <p className="text-xs sm:text-sm text-stone-700 font-medium">
+                    Up to 70% off on selected items • Limited time offer
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-base sm:text-lg font-bold text-stone-900 leading-tight">
-                  Black Friday Deals!
-                </h3>
-                <p className="text-xs sm:text-sm text-stone-700 font-medium">
-                  Up to 70% off on selected items • Limited time offer
-                </p>
-              </div>
+              <Button 
+                size="sm"
+                className="hidden sm:flex bg-stone-900 hover:bg-stone-800 text-white font-semibold h-9 px-6 rounded-full shadow-lg"
+              >
+                Shop Now
+              </Button>
             </div>
-            <Button 
-              size="sm"
-              className="hidden sm:flex bg-stone-900 hover:bg-stone-800 text-white font-semibold h-9 px-6 rounded-full shadow-lg"
-            >
-              Shop Now
-            </Button>
           </div>
         </div>
       </div>
 
-      {/* Main Content - Adjust for fixed banner and promo */}
-      <main className="container mx-auto px-4 py-6" style={{ marginTop: '230px' }}>
+      {/* Main Content */}
+      <main className="container mx-auto px-4 py-6">
         {/* Filters & Controls Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 bg-white p-4 rounded-lg border border-stone-200">
           <div className="flex items-center gap-4 flex-wrap">
