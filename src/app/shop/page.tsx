@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
 import Image from "next/image"
 import { 
-  Search, Heart, Star, ShoppingCart, User, 
-  SlidersHorizontal, X, ChevronDown, Home,
-  ArrowUpDown, Filter
+  Search, Heart, Star, ShoppingCart, User, ChevronDown,
+  SlidersHorizontal, X, Grid3x3, List, Plus, Minus, Check
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -19,6 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface Category {
   id: number
@@ -53,6 +58,8 @@ export default function ShopPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [sortBy, setSortBy] = useState<string>("featured")
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000])
   const [showFilters, setShowFilters] = useState(false)
   
   // API Data States
@@ -160,6 +167,11 @@ export default function ShopPage() {
       )
     }
 
+    // Apply price range filter
+    filtered = filtered.filter(
+      (p) => p.price >= priceRange[0] && p.price <= priceRange[1]
+    )
+
     // Apply sorting
     switch (sortBy) {
       case "price-low":
@@ -174,13 +186,16 @@ export default function ShopPage() {
       case "name":
         filtered.sort((a, b) => a.name.localeCompare(b.name))
         break
+      case "newest":
+        filtered.sort((a, b) => b.id - a.id)
+        break
       default:
         // Keep original order (featured)
         break
     }
 
     return filtered
-  }, [allProducts, searchQuery, selectedCategory, sortBy])
+  }, [allProducts, searchQuery, selectedCategory, sortBy, priceRange])
 
   // Add to cart
   const handleAddToCart = async (productId: number, productName: string) => {
@@ -203,7 +218,7 @@ export default function ShopPage() {
       })
 
       if (response.ok) {
-        toast.success(`${productName} added to cart!`)
+        toast.success(`Added to cart`)
         setCartCount((prev) => prev + 1)
       } else {
         const error = await response.json()
@@ -246,10 +261,10 @@ export default function ShopPage() {
 
   if (isPending) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 border-4 border-primary border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-muted-foreground font-medium">Loading store...</p>
+          <div className="w-12 h-12 border-4 border-stone-900 border-t-transparent rounded-full animate-spin" />
+          <p className="text-sm text-stone-600 font-medium">Loading store...</p>
         </div>
       </div>
     )
@@ -258,54 +273,54 @@ export default function ShopPage() {
   if (!session?.user) return null
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-stone-50">
+      {/* Top Bar */}
+      <div className="bg-stone-900 text-white">
+        <div className="container mx-auto px-4 py-2">
+          <p className="text-xs text-center">
+            Free delivery on orders over ₦50,000 • Shop now and save!
+          </p>
+        </div>
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-card border-b border-border backdrop-blur supports-[backdrop-filter]:bg-card/95">
-        <div className="container mx-auto px-4 py-4">
+      <header className="sticky top-0 z-50 bg-white border-b border-stone-200 shadow-sm">
+        <div className="container mx-auto px-4">
           {/* Top Row */}
-          <div className="flex items-center justify-between gap-4 mb-4">
+          <div className="flex items-center justify-between py-4">
             <button 
               onClick={() => router.push("/")}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2.5 group"
             >
-              <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
-                <span className="text-primary-foreground font-bold text-base">T</span>
+              <div className="w-10 h-10 rounded-lg bg-stone-900 flex items-center justify-center">
+                <span className="text-white font-bold text-lg">T</span>
               </div>
-              <div className="hidden sm:block">
-                <span className="text-base font-bold text-foreground block leading-none">Trovii</span>
-                <span className="text-[9px] text-muted-foreground leading-none">Shop</span>
+              <div>
+                <span className="text-lg font-bold text-stone-900 block leading-none">Trovii</span>
+                <span className="text-[10px] text-stone-500 leading-none">Marketplace</span>
               </div>
             </button>
 
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => router.push("/")}
-                className="hidden sm:flex"
-              >
-                <Home className="w-4 h-4 mr-2" />
-                Home
-              </Button>
+            <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push("/account")}
-                className="hidden sm:flex"
+                className="hidden sm:flex items-center gap-2"
               >
-                <User className="w-4 h-4 mr-2" />
-                Account
+                <User className="w-4 h-4" />
+                <span className="hidden md:inline">Account</span>
               </Button>
+              
               <Button
-                variant="default"
-                size="sm"
                 onClick={() => toast.info("Cart page coming soon!")}
-                className="relative"
+                className="relative bg-stone-900 hover:bg-stone-800"
+                size="sm"
               >
                 <ShoppingCart className="w-4 h-4 sm:mr-2" />
                 <span className="hidden sm:inline">Cart</span>
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-destructive text-white text-[10px] font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute -top-2 -right-2 w-5 h-5 bg-yellow-400 text-stone-900 text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">
                     {cartCount}
                   </span>
                 )}
@@ -314,228 +329,426 @@ export default function ShopPage() {
           </div>
 
           {/* Search Bar */}
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 pr-10 h-11"
-            />
-            {searchQuery && (
+          <div className="pb-4">
+            <div className="relative max-w-2xl mx-auto">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-stone-400" />
+              <Input
+                type="text"
+                placeholder="Search for products, brands, and categories..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-12 pr-12 h-12 text-[15px] border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Categories Bar */}
+          <div className="pb-3 overflow-x-auto scrollbar-hide">
+            <div className="flex items-center gap-2 min-w-max">
               <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                onClick={() => setSelectedCategory("all")}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                  selectedCategory === "all"
+                    ? "bg-stone-900 text-white"
+                    : "bg-stone-100 text-stone-700 hover:bg-stone-200"
+                }`}
               >
-                <X className="w-4 h-4" />
+                All Products
               </button>
-            )}
+              {categories.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setSelectedCategory(cat.id.toString())}
+                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
+                    selectedCategory === cat.id.toString()
+                      ? "bg-stone-900 text-white"
+                      : "bg-stone-100 text-stone-700 hover:bg-stone-200"
+                  }`}
+                >
+                  {cat.icon} {cat.name}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </header>
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-6">
-        {/* Filters & Sort Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Button
-              variant={selectedCategory === "all" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory("all")}
-              className="h-8"
-            >
-              All Products
-            </Button>
-            {!loadingCategories && categories.slice(0, 5).map((cat) => (
-              <Button
-                key={cat.id}
-                variant={selectedCategory === cat.id.toString() ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(cat.id.toString())}
-                className="h-8"
-              >
-                {cat.icon} {cat.name}
-              </Button>
-            ))}
-            {categories.length > 5 && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => setShowFilters(!showFilters)}
-                className="h-8"
-              >
-                <SlidersHorizontal className="w-4 h-4 mr-1" />
-                More
-              </Button>
-            )}
+        {/* Filters & Controls Bar */}
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 bg-white p-4 rounded-lg border border-stone-200">
+          <div className="flex items-center gap-4 flex-wrap">
+            <div className="flex items-center gap-2">
+              <span className="text-sm text-stone-600">
+                {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
+              </span>
+              {searchQuery && (
+                <span className="text-sm text-stone-400">
+                  • Showing results for "{searchQuery}"
+                </span>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            <ArrowUpDown className="w-4 h-4 text-muted-foreground" />
+          <div className="flex items-center gap-3">
+            {/* View Toggle */}
+            <div className="hidden sm:flex items-center gap-1 bg-stone-100 rounded-lg p-1">
+              <button
+                onClick={() => setViewMode("grid")}
+                className={`p-1.5 rounded transition-colors ${
+                  viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-stone-200"
+                }`}
+              >
+                <Grid3x3 className="w-4 h-4" />
+              </button>
+              <button
+                onClick={() => setViewMode("list")}
+                className={`p-1.5 rounded transition-colors ${
+                  viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-stone-200"
+                }`}
+              >
+                <List className="w-4 h-4" />
+              </button>
+            </div>
+
+            {/* Sort Dropdown */}
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full sm:w-[180px] h-8">
+              <SelectTrigger className="w-[180px] h-9 border-stone-300">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="featured">Featured</SelectItem>
+                <SelectItem value="newest">Newest First</SelectItem>
                 <SelectItem value="price-low">Price: Low to High</SelectItem>
                 <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="rating">Highest Rated</SelectItem>
+                <SelectItem value="rating">Top Rated</SelectItem>
                 <SelectItem value="name">Name: A-Z</SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
-        {/* Results Info */}
-        <div className="mb-4">
-          <p className="text-sm text-muted-foreground">
-            Showing <span className="font-semibold text-foreground">{filteredProducts.length}</span> products
-            {searchQuery && (
-              <span> for "<span className="font-semibold text-foreground">{searchQuery}</span>"</span>
-            )}
-          </p>
-        </div>
-
-        {/* Products Grid */}
+        {/* Products Grid/List */}
         {loadingProducts ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-            {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-card rounded-lg border border-border overflow-hidden animate-pulse">
-                <div className="aspect-square bg-muted"></div>
-                <div className="p-3 space-y-2">
-                  <div className="h-4 bg-muted rounded w-3/4"></div>
-                  <div className="h-3 bg-muted rounded w-1/2"></div>
+          <div className={viewMode === "grid" 
+            ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+            : "space-y-4"
+          }>
+            {[...Array(10)].map((_, i) => (
+              <div key={i} className="bg-white rounded-lg border border-stone-200 overflow-hidden animate-pulse">
+                <div className="aspect-square bg-stone-100"></div>
+                <div className="p-4 space-y-3">
+                  <div className="h-4 bg-stone-100 rounded w-3/4"></div>
+                  <div className="h-3 bg-stone-100 rounded w-1/2"></div>
+                  <div className="h-8 bg-stone-100 rounded"></div>
                 </div>
               </div>
             ))}
           </div>
         ) : filteredProducts.length === 0 ? (
-          <div className="text-center py-16 bg-card rounded-lg border border-border">
-            <Filter className="w-16 h-16 mx-auto text-muted-foreground/50 mb-4" />
-            <h3 className="text-lg font-semibold text-foreground mb-2">No products found</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              Try adjusting your search or filters
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchQuery("")
-                setSelectedCategory("all")
-                setSortBy("featured")
-              }}
-            >
-              Clear all filters
-            </Button>
+          <div className="text-center py-20 bg-white rounded-lg border border-stone-200">
+            <div className="max-w-md mx-auto">
+              <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Search className="w-10 h-10 text-stone-400" />
+              </div>
+              <h3 className="text-xl font-semibold text-stone-900 mb-2">No products found</h3>
+              <p className="text-stone-600 mb-6">
+                We couldn't find any products matching your search. Try different keywords or filters.
+              </p>
+              <Button
+                onClick={() => {
+                  setSearchQuery("")
+                  setSelectedCategory("all")
+                  setSortBy("featured")
+                }}
+                className="bg-stone-900 hover:bg-stone-800"
+              >
+                Clear all filters
+              </Button>
+            </div>
           </div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+          <div className={viewMode === "grid"
+            ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+            : "space-y-4"
+          }>
             {filteredProducts.map((product) => (
-              <div
-                key={product.id}
-                className="group bg-card rounded-lg border border-border overflow-hidden hover:shadow-lg transition-all duration-200"
-              >
-                {/* Product Image */}
-                <div className="relative aspect-square bg-muted/30">
-                  <Image
-                    src={product.imageUrl}
-                    alt={product.name}
-                    fill
-                    className="object-contain p-4 group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                  />
-                  
-                  {/* Badges */}
-                  <div className="absolute top-2 left-2 flex flex-col gap-1">
-                    {product.badge && (
-                      <div className="bg-primary text-primary-foreground text-[10px] font-bold px-2 py-0.5 rounded">
-                        {product.badge}
-                      </div>
-                    )}
-                    {product.originalPrice && product.originalPrice > product.price && (
-                      <div className="bg-destructive text-white text-[10px] font-bold px-2 py-0.5 rounded">
-                        -{calculateDiscount(product.originalPrice, product.price)}%
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Wishlist */}
-                  <button
-                    onClick={() => toggleWishlist(product.id)}
-                    className="absolute top-2 right-2 w-8 h-8 bg-card/90 backdrop-blur rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 border border-border"
-                  >
-                    <Heart
-                      className={`w-4 h-4 ${
-                        wishlist.has(product.id) ? "fill-red-500 text-red-500" : ""
-                      }`}
+              viewMode === "grid" ? (
+                // Grid View
+                <div
+                  key={product.id}
+                  className="group bg-white rounded-lg border border-stone-200 overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all duration-300"
+                >
+                  {/* Product Image */}
+                  <div className="relative aspect-square bg-stone-50 overflow-hidden">
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 20vw"
                     />
-                  </button>
-                </div>
-
-                {/* Product Info */}
-                <div className="p-3">
-                  <p className="text-[10px] text-muted-foreground font-medium mb-1 uppercase tracking-wide">
-                    {product.categoryName || "Uncategorized"}
-                  </p>
-                  <h3 className="text-sm font-semibold text-foreground mb-1.5 line-clamp-2 leading-tight min-h-[2.5em]">
-                    {product.name}
-                  </h3>
-
-                  {/* Rating */}
-                  <div className="flex items-center gap-1 mb-2">
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-3 h-3 ${
-                            i < Math.floor(product.rating)
-                              ? "fill-yellow-400 text-yellow-400"
-                              : "fill-muted text-muted"
-                          }`}
-                        />
-                      ))}
+                    
+                    {/* Badges */}
+                    <div className="absolute top-2 left-2 flex flex-col gap-1">
+                      {product.badge && (
+                        <span className="bg-yellow-400 text-stone-900 text-[10px] font-bold px-2 py-1 rounded">
+                          {product.badge}
+                        </span>
+                      )}
+                      {product.originalPrice && product.originalPrice > product.price && (
+                        <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">
+                          -{calculateDiscount(product.originalPrice, product.price)}% OFF
+                        </span>
+                      )}
                     </div>
-                    <span className="text-xs text-muted-foreground">
-                      ({product.reviewCount})
-                    </span>
+
+                    {/* Wishlist Button */}
+                    <button
+                      onClick={() => toggleWishlist(product.id)}
+                      className="absolute top-2 right-2 w-9 h-9 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
+                    >
+                      <Heart
+                        className={`w-4 h-4 ${
+                          wishlist.has(product.id) ? "fill-red-500 text-red-500" : "text-stone-600"
+                        }`}
+                      />
+                    </button>
                   </div>
 
-                  {/* Price */}
-                  <div className="flex items-baseline gap-1.5 mb-2.5">
-                    <span className="text-lg font-bold text-foreground">
-                      {formatPrice(product.price)}
-                    </span>
-                    {product.originalPrice && product.originalPrice > product.price && (
-                      <span className="text-xs text-muted-foreground line-through">
-                        {formatPrice(product.originalPrice)}
+                  {/* Product Info */}
+                  <div className="p-3">
+                    <p className="text-[10px] text-stone-500 font-medium mb-1 uppercase tracking-wider">
+                      {product.categoryName || "Uncategorized"}
+                    </p>
+                    <h3 className="text-sm font-semibold text-stone-900 mb-2 line-clamp-2 min-h-[2.5em] leading-tight">
+                      {product.name}
+                    </h3>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-1 mb-2">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-3 h-3 ${
+                              i < Math.floor(product.rating)
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "fill-stone-200 text-stone-200"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-[11px] text-stone-500">
+                        ({product.reviewCount})
                       </span>
-                    )}
+                    </div>
+
+                    {/* Price */}
+                    <div className="mb-3">
+                      <div className="flex items-baseline gap-1.5">
+                        <span className="text-lg font-bold text-stone-900">
+                          {formatPrice(product.price)}
+                        </span>
+                        {product.originalPrice && product.originalPrice > product.price && (
+                          <span className="text-xs text-stone-400 line-through">
+                            {formatPrice(product.originalPrice)}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Add to Cart Button */}
+                    <Button
+                      onClick={() => handleAddToCart(product.id, product.name)}
+                      disabled={addingToCart === product.id || product.stockQuantity === 0}
+                      className="w-full h-9 text-xs font-medium bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300"
+                    >
+                      {addingToCart === product.id ? (
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      ) : product.stockQuantity === 0 ? (
+                        "Out of Stock"
+                      ) : (
+                        <>
+                          <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
+                          Add to Cart
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </div>
+              ) : (
+                // List View
+                <div
+                  key={product.id}
+                  className="group bg-white rounded-lg border border-stone-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex"
+                >
+                  {/* Product Image */}
+                  <div className="relative w-48 h-48 bg-stone-50 flex-shrink-0">
+                    <Image
+                      src={product.imageUrl}
+                      alt={product.name}
+                      fill
+                      className="object-cover"
+                      sizes="192px"
+                    />
+                    
+                    {/* Badges */}
+                    <div className="absolute top-2 left-2 flex flex-col gap-1">
+                      {product.badge && (
+                        <span className="bg-yellow-400 text-stone-900 text-[10px] font-bold px-2 py-1 rounded">
+                          {product.badge}
+                        </span>
+                      )}
+                      {product.originalPrice && product.originalPrice > product.price && (
+                        <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">
+                          -{calculateDiscount(product.originalPrice, product.price)}% OFF
+                        </span>
+                      )}
+                    </div>
                   </div>
 
-                  {/* Add to Cart */}
-                  <Button
-                    size="sm"
-                    onClick={() => handleAddToCart(product.id, product.name)}
-                    disabled={addingToCart === product.id || product.stockQuantity === 0}
-                    className="w-full h-8 text-xs"
-                  >
-                    {addingToCart === product.id ? (
-                      <div className="w-4 h-4 border-2 border-primary-foreground border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <>
-                        <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
-                        {product.stockQuantity === 0 ? "Out of Stock" : "Add to Cart"}
-                      </>
+                  {/* Product Info */}
+                  <div className="flex-1 p-4 flex flex-col">
+                    <p className="text-xs text-stone-500 font-medium mb-1 uppercase tracking-wider">
+                      {product.categoryName || "Uncategorized"}
+                    </p>
+                    <h3 className="text-base font-semibold text-stone-900 mb-2">
+                      {product.name}
+                    </h3>
+
+                    {product.description && (
+                      <p className="text-sm text-stone-600 mb-3 line-clamp-2">
+                        {product.description}
+                      </p>
                     )}
-                  </Button>
+
+                    {/* Rating */}
+                    <div className="flex items-center gap-2 mb-3">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`w-4 h-4 ${
+                              i < Math.floor(product.rating)
+                                ? "fill-yellow-400 text-yellow-400"
+                                : "fill-stone-200 text-stone-200"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <span className="text-sm text-stone-500">
+                        ({product.reviewCount} reviews)
+                      </span>
+                    </div>
+
+                    {/* Bottom Row */}
+                    <div className="mt-auto flex items-center justify-between">
+                      {/* Price */}
+                      <div>
+                        <div className="flex items-baseline gap-2">
+                          <span className="text-2xl font-bold text-stone-900">
+                            {formatPrice(product.price)}
+                          </span>
+                          {product.originalPrice && product.originalPrice > product.price && (
+                            <span className="text-sm text-stone-400 line-through">
+                              {formatPrice(product.originalPrice)}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => toggleWishlist(product.id)}
+                          className="w-10 h-10 bg-stone-100 hover:bg-stone-200 rounded-full flex items-center justify-center transition-colors"
+                        >
+                          <Heart
+                            className={`w-5 h-5 ${
+                              wishlist.has(product.id) ? "fill-red-500 text-red-500" : "text-stone-600"
+                            }`}
+                          />
+                        </button>
+                        
+                        <Button
+                          onClick={() => handleAddToCart(product.id, product.name)}
+                          disabled={addingToCart === product.id || product.stockQuantity === 0}
+                          className="h-10 px-6 bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300"
+                        >
+                          {addingToCart === product.id ? (
+                            <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                          ) : product.stockQuantity === 0 ? (
+                            "Out of Stock"
+                          ) : (
+                            <>
+                              <ShoppingCart className="w-4 h-4 mr-2" />
+                              Add to Cart
+                            </>
+                          )}
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )
             ))}
           </div>
         )}
       </main>
+
+      {/* Footer */}
+      <footer className="bg-white border-t border-stone-200 mt-16">
+        <div className="container mx-auto px-4 py-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+            <div>
+              <h4 className="font-semibold text-stone-900 mb-3">Shop</h4>
+              <ul className="space-y-2 text-sm text-stone-600">
+                <li><a href="#" className="hover:text-stone-900">All Products</a></li>
+                <li><a href="#" className="hover:text-stone-900">New Arrivals</a></li>
+                <li><a href="#" className="hover:text-stone-900">Best Sellers</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-stone-900 mb-3">Help</h4>
+              <ul className="space-y-2 text-sm text-stone-600">
+                <li><a href="#" className="hover:text-stone-900">Customer Service</a></li>
+                <li><a href="#" className="hover:text-stone-900">Track Order</a></li>
+                <li><a href="#" className="hover:text-stone-900">Returns</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-stone-900 mb-3">About</h4>
+              <ul className="space-y-2 text-sm text-stone-600">
+                <li><a href="#" className="hover:text-stone-900">About Trovii</a></li>
+                <li><a href="#" className="hover:text-stone-900">Careers</a></li>
+                <li><a href="#" className="hover:text-stone-900">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 className="font-semibold text-stone-900 mb-3">Follow Us</h4>
+              <ul className="space-y-2 text-sm text-stone-600">
+                <li><a href="#" className="hover:text-stone-900">Instagram</a></li>
+                <li><a href="#" className="hover:text-stone-900">Twitter</a></li>
+                <li><a href="#" className="hover:text-stone-900">Facebook</a></li>
+              </ul>
+            </div>
+          </div>
+          <div className="border-t border-stone-200 pt-6 text-center">
+            <p className="text-sm text-stone-600">
+              © 2025 Trovii Marketplace. A product of Ivealth LTD. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
