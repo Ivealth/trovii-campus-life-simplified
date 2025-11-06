@@ -307,14 +307,14 @@ export default function ShopPage() {
               {/* Store Icon as Cart - Increased Size */}
               <Button
                 onClick={() => toast.info("Cart page coming soon!")}
-                className="relative h-8 px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
+                className="relative h-9 px-3 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-yellow-400 text-stone-900 text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 text-stone-900 text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white">
                     {cartCount}
                   </span>
                 )}
@@ -322,26 +322,19 @@ export default function ShopPage() {
             </div>
           </div>
 
-          {/* Search Bar */}
+          {/* Search Bar - Opens Search Page */}
           <div className="pb-2.5">
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <Input
-                type="text"
-                placeholder="Search for products, brands, and categories..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-9 text-sm border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
+            <button
+              onClick={() => router.push("/search")}
+              className="relative max-w-2xl mx-auto w-full"
+            >
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400 pointer-events-none" />
+                <div className="pl-10 pr-4 h-9 text-sm border border-stone-300 rounded-full bg-white flex items-center text-stone-500 hover:border-stone-400 transition-colors cursor-pointer">
+                  Search for products, brands, and categories...
+                </div>
+              </div>
+            </button>
           </div>
         </div>
       </header>
@@ -825,72 +818,72 @@ export default function ShopPage() {
             </div>
             
             <div className="overflow-y-auto max-h-[calc(80vh-72px)]">
-              {/* Menu Items Section */}
+              {/* Menu Items Section - Left Aligned with Separators */}
               <div className="px-6 py-4 border-b border-stone-200">
-                <div className="grid grid-cols-2 gap-3">
+                <div className="flex flex-col">
                   {/* Sell on Trovii */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <button className="flex items-center gap-4 py-4 hover:bg-stone-50 transition-colors text-left border-b border-stone-100 last:border-b-0">
+                    <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-yellow-400 to-yellow-500 shadow-sm">
+                      <svg className="w-6 h-6 text-stone-900" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-[15px] font-bold text-stone-900 leading-tight mb-1">
                         Sell on Trovii
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[12px] text-stone-500 leading-tight">
                         Join other merchants
                       </div>
                     </div>
                   </button>
 
                   {/* Order meals */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  <button className="flex items-center gap-4 py-4 hover:bg-stone-50 transition-colors text-left border-b border-stone-100 last:border-b-0">
+                    <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-sm">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-[15px] font-bold text-stone-900 leading-tight mb-1">
                         Order meals
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[12px] text-stone-500 leading-tight">
                         Food delivery
                       </div>
                     </div>
                   </button>
 
                   {/* Gift center */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <button className="flex items-center gap-4 py-4 hover:bg-stone-50 transition-colors text-left border-b border-stone-100 last:border-b-0">
+                    <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-[15px] font-bold text-stone-900 leading-tight mb-1">
                         Gift center
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[12px] text-stone-500 leading-tight">
                         Send gifts easily
                       </div>
                     </div>
                   </button>
 
                   {/* Business management */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <button className="flex items-center gap-4 py-4 hover:bg-stone-50 transition-colors text-left border-b border-stone-100 last:border-b-0">
+                    <div className="w-11 h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-stone-700 to-stone-900 shadow-sm">
+                      <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-[15px] font-bold text-stone-900 leading-tight mb-1">
                         Business
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[12px] text-stone-500 leading-tight">
                         Manage your business
                       </div>
                     </div>
