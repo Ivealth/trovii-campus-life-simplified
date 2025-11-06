@@ -64,43 +64,64 @@ export default function UserSpacePage() {
           </div>
 
           {/* Quick Access Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-2 gap-4 mb-8">
             {/* Food Delivery Card */}
-            <div className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#FFD800] to-[#FFEA32] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <span className="text-2xl">🍔</span>
+            <div className="bg-white rounded-2xl border border-stone-200 p-5 hover:shadow-lg hover:border-stone-300 transition-all cursor-pointer group">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FFD800] to-[#FDC500] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-sm">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                </svg>
               </div>
-              <h3 className="text-lg font-semibold text-stone-900 mb-2">
+              <h3 className="text-base font-semibold text-stone-900 mb-1.5">
                 Food Delivery
               </h3>
-              <p className="text-sm text-stone-600">
-                Order from your favorite campus restaurants
+              <p className="text-xs text-stone-600 leading-snug">
+                Order from campus restaurants
               </p>
             </div>
 
             {/* Career Launchpad Card */}
-            <div className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <span className="text-2xl">💼</span>
+            <div className="bg-white rounded-2xl border border-stone-200 p-5 hover:shadow-lg hover:border-stone-300 transition-all cursor-pointer group">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#500099] to-[#3D0086] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-sm">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
               </div>
-              <h3 className="text-lg font-semibold text-stone-900 mb-2">
-                Career Launchpad
+              <h3 className="text-base font-semibold text-stone-900 mb-1.5">
+                Career Hub
               </h3>
-              <p className="text-sm text-stone-600">
-                Discover gigs, internships, and opportunities
+              <p className="text-xs text-stone-600 leading-snug">
+                Gigs & internships
               </p>
             </div>
 
             {/* Community Hub Card */}
-            <div className="bg-white rounded-xl border border-stone-200 p-6 hover:shadow-lg transition-shadow cursor-pointer group">
-              <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[#086BFA] to-[#500099] flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                <span className="text-2xl">👥</span>
+            <div className="bg-white rounded-2xl border border-stone-200 p-5 hover:shadow-lg hover:border-stone-300 transition-all cursor-pointer group">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#086BFA] to-[#500099] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-sm">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </div>
-              <h3 className="text-lg font-semibold text-stone-900 mb-2">
-                Community Hub
+              <h3 className="text-base font-semibold text-stone-900 mb-1.5">
+                Community
               </h3>
-              <p className="text-sm text-stone-600">
-                Connect with fellow students and join events
+              <p className="text-xs text-stone-600 leading-snug">
+                Connect with students
+              </p>
+            </div>
+
+            {/* Campus Events Card */}
+            <div className="bg-white rounded-2xl border border-stone-200 p-5 hover:shadow-lg hover:border-stone-300 transition-all cursor-pointer group">
+              <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-[#FFEA32] to-[#FFD800] flex items-center justify-center mb-3 group-hover:scale-105 transition-transform shadow-sm">
+                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="text-base font-semibold text-stone-900 mb-1.5">
+                Campus Events
+              </h3>
+              <p className="text-xs text-stone-600 leading-snug">
+                Join exciting activities
               </p>
             </div>
           </div>
