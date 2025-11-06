@@ -813,9 +813,9 @@ export default function ShopPage() {
             className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] animate-in fade-in duration-200"
             onClick={() => setShowCategoryMenu(false)}
           />
-          <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[70] animate-in slide-in-from-bottom duration-300 max-h-[70vh] overflow-hidden">
+          <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[70] animate-in slide-in-from-bottom duration-300 max-h-[80vh] overflow-hidden">
             <div className="sticky top-0 bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-stone-900">Categories</h3>
+              <h3 className="text-lg font-bold text-stone-900">Menu</h3>
               <button
                 onClick={() => setShowCategoryMenu(false)}
                 className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
@@ -824,54 +824,131 @@ export default function ShopPage() {
               </button>
             </div>
             
-            <div className="overflow-y-auto max-h-[calc(70vh-72px)] px-6 py-4">
-              <div className="space-y-2">
-                <button
-                  onClick={() => {
-                    setSelectedCategory("all")
-                    setShowCategoryMenu(false)
-                  }}
-                  className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
-                    selectedCategory === "all"
-                      ? "bg-yellow-400 text-stone-900 shadow-md"
-                      : "bg-stone-50 text-stone-700 hover:bg-stone-100"
-                  }`}
-                >
-                  <div className="flex items-center justify-between">
-                    <span className="text-base">🛍️ All Products</span>
-                    {selectedCategory === "all" && (
-                      <Check className="w-5 h-5" />
-                    )}
-                  </div>
-                </button>
-                
-                {categories.map((cat) => (
+            <div className="overflow-y-auto max-h-[calc(80vh-72px)]">
+              {/* Menu Items Section */}
+              <div className="px-6 py-4 border-b border-stone-200">
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Sell on Trovii */}
+                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                        Sell on Trovii
+                      </div>
+                      <div className="text-[11px] text-stone-500 leading-tight">
+                        Join other merchants
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Order meals */}
+                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                        Order meals
+                      </div>
+                      <div className="text-[11px] text-stone-500 leading-tight">
+                        Food delivery
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Gift center */}
+                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                        Gift center
+                      </div>
+                      <div className="text-[11px] text-stone-500 leading-tight">
+                        Send gifts easily
+                      </div>
+                    </div>
+                  </button>
+
+                  {/* Business management */}
+                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
+                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                        Business
+                      </div>
+                      <div className="text-[11px] text-stone-500 leading-tight">
+                        Manage your business
+                      </div>
+                    </div>
+                  </button>
+                </div>
+              </div>
+
+              {/* Categories Section */}
+              <div className="px-6 py-4">
+                <h4 className="text-base font-bold text-stone-900 mb-3">Categories</h4>
+                <div className="space-y-2">
                   <button
-                    key={cat.id}
                     onClick={() => {
-                      setSelectedCategory(cat.id.toString())
+                      setSelectedCategory("all")
                       setShowCategoryMenu(false)
                     }}
                     className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
-                      selectedCategory === cat.id.toString()
+                      selectedCategory === "all"
                         ? "bg-yellow-400 text-stone-900 shadow-md"
                         : "bg-stone-50 text-stone-700 hover:bg-stone-100"
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl">{cat.icon}</span>
-                        <div>
-                          <div className="text-base">{cat.name}</div>
-                          <div className="text-xs text-stone-500 mt-0.5">{cat.productCount} products</div>
-                        </div>
-                      </div>
-                      {selectedCategory === cat.id.toString() && (
+                      <span className="text-base">🛍️ All Products</span>
+                      {selectedCategory === "all" && (
                         <Check className="w-5 h-5" />
                       )}
                     </div>
                   </button>
-                ))}
+                  
+                  {categories.map((cat) => (
+                    <button
+                      key={cat.id}
+                      onClick={() => {
+                        setSelectedCategory(cat.id.toString())
+                        setShowCategoryMenu(false)
+                      }}
+                      className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
+                        selectedCategory === cat.id.toString()
+                          ? "bg-yellow-400 text-stone-900 shadow-md"
+                          : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-xl">{cat.icon}</span>
+                          <div>
+                            <div className="text-base">{cat.name}</div>
+                            <div className="text-xs text-stone-500 mt-0.5">{cat.productCount} products</div>
+                          </div>
+                        </div>
+                        {selectedCategory === cat.id.toString() && (
+                          <Check className="w-5 h-5" />
+                        )}
+                      </div>
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
