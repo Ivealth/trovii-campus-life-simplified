@@ -306,7 +306,7 @@ export default function ShopPage() {
               
               {/* Store Icon as Cart - Increased Size */}
               <Button
-                onClick={() => toast.info("Cart page coming soon!")}
+                onClick={() => router.push("/cart")}
                 className="relative h-8 px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
@@ -349,27 +349,24 @@ export default function ShopPage() {
       {/* Promotional Banner */}
       <div className="pt-[128px] pb-4">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex items-center justify-between gap-4">
-              <div className="flex items-center gap-5">
-                <div className="hidden sm:flex items-center justify-center w-20 h-20 bg-stone-900 rounded-2xl shadow-lg">
-                  <span className="text-5xl">🎉</span>
-                </div>
-                <div className="flex sm:hidden items-center justify-center w-14 h-14 bg-stone-900 rounded-xl">
-                  <span className="text-3xl">🎉</span>
+          <div className="container mx-auto px-4 py-4 sm:py-6">
+            <div className="flex items-center justify-between gap-3 sm:gap-4">
+              <div className="flex items-center gap-3 sm:gap-5">
+                <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 bg-stone-900 rounded-xl sm:rounded-2xl shadow-lg">
+                  <span className="text-2xl sm:text-4xl">🎉</span>
                 </div>
                 <div>
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 leading-tight mb-1">
+                  <h3 className="text-sm sm:text-xl md:text-2xl font-bold text-stone-900 leading-tight mb-0.5 sm:mb-1">
                     Black Friday Deals!
                   </h3>
-                  <p className="text-sm sm:text-base md:text-lg text-stone-700 font-medium">
-                    Up to 70% off on selected items • Limited time offer
+                  <p className="text-xs sm:text-sm md:text-base text-stone-700 font-medium">
+                    Up to 70% off • Limited time
                   </p>
                 </div>
               </div>
               <Button 
-                size="lg"
-                className="hidden sm:flex bg-stone-900 hover:bg-stone-800 text-white font-bold h-12 px-10 rounded-full shadow-xl text-base"
+                size="sm"
+                className="bg-stone-900 hover:bg-stone-800 text-white font-bold h-9 sm:h-11 px-4 sm:px-8 rounded-full shadow-xl text-xs sm:text-sm whitespace-nowrap"
               >
                 Shop Now
               </Button>

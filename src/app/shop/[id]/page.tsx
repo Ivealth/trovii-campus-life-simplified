@@ -199,7 +199,7 @@ export default function ProductDetailPage() {
 
             {/* Title */}
             <div>
-              <h1 className="text-3xl font-bold text-stone-900 mb-2">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 mb-2">
                 {product.name}
               </h1>
               
@@ -225,11 +225,11 @@ export default function ProductDetailPage() {
             {/* Price */}
             <div className="bg-stone-100 rounded-xl p-5">
               <div className="flex items-baseline gap-3">
-                <span className="text-4xl font-bold text-stone-900">
+                <span className="text-2xl sm:text-3xl md:text-4xl font-bold text-stone-900">
                   {formatPrice(product.price)}
                 </span>
                 {product.originalPrice && product.originalPrice > product.price && (
-                  <span className="text-xl text-stone-400 line-through">
+                  <span className="text-lg sm:text-xl text-stone-400 line-through">
                     {formatPrice(product.originalPrice)}
                   </span>
                 )}
