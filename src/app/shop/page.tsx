@@ -310,7 +310,7 @@ export default function ShopPage() {
                 className="relative h-8 px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {cartCount > 0 && (
@@ -349,24 +349,27 @@ export default function ShopPage() {
       {/* Promotional Banner */}
       <div className="pt-[128px] pb-4">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
-          <div className="container mx-auto px-4 py-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="hidden sm:flex items-center justify-center w-14 h-14 bg-stone-900 rounded-full">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center gap-5">
+                <div className="hidden sm:flex items-center justify-center w-20 h-20 bg-stone-900 rounded-2xl shadow-lg">
+                  <span className="text-5xl">🎉</span>
+                </div>
+                <div className="flex sm:hidden items-center justify-center w-14 h-14 bg-stone-900 rounded-xl">
                   <span className="text-3xl">🎉</span>
                 </div>
                 <div>
-                  <h3 className="text-lg sm:text-xl font-bold text-stone-900 leading-tight">
+                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-stone-900 leading-tight mb-1">
                     Black Friday Deals!
                   </h3>
-                  <p className="text-sm sm:text-base text-stone-700 font-medium">
+                  <p className="text-sm sm:text-base md:text-lg text-stone-700 font-medium">
                     Up to 70% off on selected items • Limited time offer
                   </p>
                 </div>
               </div>
               <Button 
-                size="sm"
-                className="hidden sm:flex bg-stone-900 hover:bg-stone-800 text-white font-semibold h-10 px-8 rounded-full shadow-lg"
+                size="lg"
+                className="hidden sm:flex bg-stone-900 hover:bg-stone-800 text-white font-bold h-12 px-10 rounded-full shadow-xl text-base"
               >
                 Shop Now
               </Button>
@@ -479,7 +482,8 @@ export default function ShopPage() {
                 // Grid View
                 <div
                   key={product.id}
-                  className="group bg-white rounded-lg border border-stone-200 overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all duration-300"
+                  onClick={() => router.push(`/shop/${product.id}`)}
+                  className="group bg-white rounded-lg border border-stone-200 overflow-hidden hover:shadow-xl hover:border-stone-300 transition-all duration-300 cursor-pointer"
                 >
                   {/* Product Image */}
                   <div className="relative aspect-square bg-stone-50 overflow-hidden">
@@ -507,7 +511,10 @@ export default function ShopPage() {
 
                     {/* Wishlist Button */}
                     <button
-                      onClick={() => toggleWishlist(product.id)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        toggleWishlist(product.id)
+                      }}
                       className="absolute top-2 right-2 w-9 h-9 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
                     >
                       <Heart
@@ -562,7 +569,10 @@ export default function ShopPage() {
 
                     {/* Add to Cart Button */}
                     <Button
-                      onClick={() => handleAddToCart(product.id, product.name)}
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleAddToCart(product.id, product.name)
+                      }}
                       disabled={addingToCart === product.id || product.stockQuantity === 0}
                       className="w-full h-9 text-xs font-medium bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300"
                     >
