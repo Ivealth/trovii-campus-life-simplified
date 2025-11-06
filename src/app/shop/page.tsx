@@ -6,7 +6,7 @@ import { useSession } from "@/lib/auth-client"
 import Image from "next/image"
 import { 
   Search, Heart, Star, ShoppingCart, User, ChevronDown,
-  SlidersHorizontal, X, Grid3x3, List, Plus, Minus, Check
+  SlidersHorizontal, X, Grid3x3, List, Plus, Minus, Check, Menu
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -61,6 +61,7 @@ export default function ShopPage() {
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000])
   const [showFilters, setShowFilters] = useState(false)
+  const [showCategoryMenu, setShowCategoryMenu] = useState(false)
   
   // API Data States
   const [categories, setCategories] = useState<Category[]>([])
@@ -274,7 +275,7 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-stone-50 pb-20">
-      {/* Header - Fixed at Top (Banner Removed) */}
+      {/* Header - Fixed at Top */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm">
         <div className="container mx-auto px-4">
           {/* Top Row */}
@@ -303,25 +304,15 @@ export default function ShopPage() {
                 <span className="hidden md:inline text-xs">Account</span>
               </Button>
               
-              {/* Store Icon */}
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => router.push("/shop")}
-                className="h-8 px-2.5"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </Button>
-              
+              {/* Store Icon as Cart - Increased Size */}
               <Button
                 onClick={() => toast.info("Cart page coming soon!")}
                 className="relative h-8 px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
-                <ShoppingCart className="w-5 h-5 sm:mr-1.5" />
-                <span className="hidden sm:inline">Cart</span>
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
                 {cartCount > 0 && (
                   <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-yellow-400 text-stone-900 text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white">
                     {cartCount}
@@ -352,39 +343,10 @@ export default function ShopPage() {
               )}
             </div>
           </div>
-
-          {/* Categories Bar */}
-          <div className="pb-2 overflow-x-auto scrollbar-hide">
-            <div className="flex items-center gap-1.5 min-w-max">
-              <button
-                onClick={() => setSelectedCategory("all")}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                  selectedCategory === "all"
-                    ? "bg-stone-900 text-white"
-                    : "bg-stone-100 text-stone-700 hover:bg-stone-200"
-                }`}
-              >
-                All Products
-              </button>
-              {categories.map((cat) => (
-                <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id.toString())}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium transition-all whitespace-nowrap ${
-                    selectedCategory === cat.id.toString()
-                      ? "bg-stone-900 text-white"
-                      : "bg-stone-100 text-stone-700 hover:bg-stone-200"
-                  }`}
-                >
-                  {cat.icon} {cat.name}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </header>
 
-      {/* Promotional Banner - Big Banner After Header (Konga Style) - Moved Down */}
+      {/* Promotional Banner */}
       <div className="pt-[128px] pb-4">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
           <div className="container mx-auto px-4 py-5">
@@ -782,7 +744,7 @@ export default function ShopPage() {
         </div>
       </footer>
 
-      {/* Fixed Bottom Navigation - Reduced Height & Yellow Icons */}
+      {/* Fixed Bottom Navigation with Burger Icon */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50">
         <div className="max-w-md mx-auto px-4">
           <div className="flex items-center justify-around h-14">
@@ -800,7 +762,22 @@ export default function ShopPage() {
               <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-yellow-400" />
             </button>
 
-            {/* Menu Icon */}
+            {/* Burger Menu Icon - Categories */}
+            <button 
+              onClick={() => setShowCategoryMenu(true)}
+              className="flex flex-col items-center justify-center gap-0.5 py-2 px-4 group relative"
+            >
+              <div className="w-6 h-6 flex items-center justify-center">
+                <div className="flex flex-col gap-1">
+                  <div className="w-5 h-0.5 bg-stone-400 group-hover:bg-yellow-400 rounded-full transition-colors"></div>
+                  <div className="w-5 h-0.5 bg-stone-400 group-hover:bg-yellow-400 rounded-full transition-colors"></div>
+                  <div className="w-5 h-0.5 bg-stone-400 group-hover:bg-yellow-400 rounded-full transition-colors"></div>
+                </div>
+              </div>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-yellow-400 group-hover:font-semibold transition-all">Menu</span>
+            </button>
+
+            {/* Dashboard Icon */}
             <button 
               onClick={() => router.push("/user-space")}
               className="flex flex-col items-center justify-center gap-0.5 py-2 px-4 group relative"
@@ -810,7 +787,7 @@ export default function ShopPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
               </div>
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-yellow-400 group-hover:font-semibold transition-all">Menu</span>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-yellow-400 group-hover:font-semibold transition-all">Dashboard</span>
             </button>
 
             {/* Profile Icon */}
@@ -828,6 +805,78 @@ export default function ShopPage() {
           </div>
         </div>
       </div>
+
+      {/* Category Menu Overlay */}
+      {showCategoryMenu && (
+        <>
+          <div 
+            className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[60] animate-in fade-in duration-200"
+            onClick={() => setShowCategoryMenu(false)}
+          />
+          <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[70] animate-in slide-in-from-bottom duration-300 max-h-[70vh] overflow-hidden">
+            <div className="sticky top-0 bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between">
+              <h3 className="text-lg font-bold text-stone-900">Categories</h3>
+              <button
+                onClick={() => setShowCategoryMenu(false)}
+                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
+              >
+                <X className="w-5 h-5 text-stone-600" />
+              </button>
+            </div>
+            
+            <div className="overflow-y-auto max-h-[calc(70vh-72px)] px-6 py-4">
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    setSelectedCategory("all")
+                    setShowCategoryMenu(false)
+                  }}
+                  className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
+                    selectedCategory === "all"
+                      ? "bg-yellow-400 text-stone-900 shadow-md"
+                      : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                  }`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-base">🛍️ All Products</span>
+                    {selectedCategory === "all" && (
+                      <Check className="w-5 h-5" />
+                    )}
+                  </div>
+                </button>
+                
+                {categories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => {
+                      setSelectedCategory(cat.id.toString())
+                      setShowCategoryMenu(false)
+                    }}
+                    className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
+                      selectedCategory === cat.id.toString()
+                        ? "bg-yellow-400 text-stone-900 shadow-md"
+                        : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                    }`}
+                  >
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <span className="text-xl">{cat.icon}</span>
+                        <div>
+                          <div className="text-base">{cat.name}</div>
+                          <div className="text-xs text-stone-500 mt-0.5">{cat.productCount} products</div>
+                        </div>
+                      </div>
+                      {selectedCategory === cat.id.toString() && (
+                        <Check className="w-5 h-5" />
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
