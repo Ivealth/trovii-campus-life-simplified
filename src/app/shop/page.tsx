@@ -347,7 +347,7 @@ export default function ShopPage() {
       </header>
 
       {/* Promotional Banner */}
-      <div className="pt-[128px] pb-4">
+      <div className="pt-[128px] pb-2">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
           <div className="container mx-auto px-4 py-4 sm:py-6">
             <div className="flex items-center justify-between gap-3 sm:gap-4">
@@ -376,23 +376,23 @@ export default function ShopPage() {
       </div>
 
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-6">
+      <main className="container mx-auto px-4 py-3">
         {/* Filters & Controls Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6 bg-white p-4 rounded-lg border border-stone-200">
-          <div className="flex items-center gap-4 flex-wrap">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 bg-white p-3 sm:p-4 rounded-lg border border-stone-200">
+          <div className="flex items-center gap-4 flex-wrap w-full sm:w-auto">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-stone-600">
+              <span className="text-xs sm:text-sm text-stone-600">
                 {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
               </span>
               {searchQuery && (
-                <span className="text-sm text-stone-400">
-                  • Showing results for "{searchQuery}"
+                <span className="text-xs sm:text-sm text-stone-400 truncate max-w-[150px] sm:max-w-none">
+                  • Results for "{searchQuery}"
                 </span>
               )}
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 w-full sm:w-auto">
             {/* View Toggle */}
             <div className="hidden sm:flex items-center gap-1 bg-stone-100 rounded-lg p-1">
               <button
@@ -415,7 +415,7 @@ export default function ShopPage() {
 
             {/* Sort Dropdown */}
             <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[180px] h-9 border-stone-300">
+              <SelectTrigger className="w-full sm:w-[180px] h-9 border-stone-300 text-xs sm:text-sm">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -433,7 +433,7 @@ export default function ShopPage() {
         {/* Products Grid/List */}
         {loadingProducts ? (
           <div className={viewMode === "grid" 
-            ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+            ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4"
             : "space-y-4"
           }>
             {[...Array(10)].map((_, i) => (
@@ -471,7 +471,7 @@ export default function ShopPage() {
           </div>
         ) : (
           <div className={viewMode === "grid"
-            ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
+            ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4"
             : "space-y-4"
           }>
             {filteredProducts.map((product) => (
@@ -493,14 +493,14 @@ export default function ShopPage() {
                     />
                     
                     {/* Badges */}
-                    <div className="absolute top-2 left-2 flex flex-col gap-1">
+                    <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 flex flex-col gap-1">
                       {product.badge && (
-                        <span className="bg-yellow-400 text-stone-900 text-[10px] font-bold px-2 py-1 rounded">
+                        <span className="bg-yellow-400 text-stone-900 text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                           {product.badge}
                         </span>
                       )}
                       {product.originalPrice && product.originalPrice > product.price && (
-                        <span className="bg-red-500 text-white text-[10px] font-bold px-2 py-1 rounded">
+                        <span className="bg-red-500 text-white text-[9px] sm:text-[10px] font-bold px-1.5 sm:px-2 py-0.5 sm:py-1 rounded">
                           -{calculateDiscount(product.originalPrice, product.price)}% OFF
                         </span>
                       )}
@@ -512,10 +512,10 @@ export default function ShopPage() {
                         e.stopPropagation()
                         toggleWishlist(product.id)
                       }}
-                      className="absolute top-2 right-2 w-9 h-9 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
+                      className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 w-7 h-7 sm:w-9 sm:h-9 bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all hover:scale-110 shadow-lg"
                     >
                       <Heart
-                        className={`w-4 h-4 ${
+                        className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
                           wishlist.has(product.id) ? "fill-red-500 text-red-500" : "text-stone-600"
                         }`}
                       />
@@ -523,21 +523,21 @@ export default function ShopPage() {
                   </div>
 
                   {/* Product Info */}
-                  <div className="p-3">
-                    <p className="text-[10px] text-stone-500 font-medium mb-1 uppercase tracking-wider">
+                  <div className="p-2.5 sm:p-3">
+                    <p className="text-[9px] sm:text-[10px] text-stone-500 font-medium mb-1 uppercase tracking-wider line-clamp-1">
                       {product.categoryName || "Uncategorized"}
                     </p>
-                    <h3 className="text-sm font-semibold text-stone-900 mb-2 line-clamp-2 min-h-[2.5em] leading-tight">
+                    <h3 className="text-xs sm:text-sm font-semibold text-stone-900 mb-1.5 sm:mb-2 line-clamp-2 min-h-[2.5em] leading-tight">
                       {product.name}
                     </h3>
 
                     {/* Rating */}
-                    <div className="flex items-center gap-1 mb-2">
+                    <div className="flex items-center gap-1 mb-1.5 sm:mb-2">
                       <div className="flex items-center">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
-                            className={`w-3 h-3 ${
+                            className={`w-2.5 h-2.5 sm:w-3 sm:h-3 ${
                               i < Math.floor(product.rating)
                                 ? "fill-yellow-400 text-yellow-400"
                                 : "fill-stone-200 text-stone-200"
@@ -545,19 +545,19 @@ export default function ShopPage() {
                           />
                         ))}
                       </div>
-                      <span className="text-[11px] text-stone-500">
+                      <span className="text-[10px] sm:text-[11px] text-stone-500">
                         ({product.reviewCount})
                       </span>
                     </div>
 
                     {/* Price */}
-                    <div className="mb-3">
-                      <div className="flex items-baseline gap-1.5">
-                        <span className="text-lg font-bold text-stone-900">
+                    <div className="mb-2 sm:mb-3">
+                      <div className="flex items-baseline gap-1 sm:gap-1.5">
+                        <span className="text-base sm:text-lg font-bold text-stone-900">
                           {formatPrice(product.price)}
                         </span>
                         {product.originalPrice && product.originalPrice > product.price && (
-                          <span className="text-xs text-stone-400 line-through">
+                          <span className="text-[10px] sm:text-xs text-stone-400 line-through">
                             {formatPrice(product.originalPrice)}
                           </span>
                         )}
@@ -571,15 +571,15 @@ export default function ShopPage() {
                         handleAddToCart(product.id, product.name)
                       }}
                       disabled={addingToCart === product.id || product.stockQuantity === 0}
-                      className="w-full h-9 text-xs font-medium bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300"
+                      className="w-full h-8 sm:h-9 text-[10px] sm:text-xs font-medium bg-stone-900 hover:bg-stone-800 disabled:bg-stone-300"
                     >
                       {addingToCart === product.id ? (
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                       ) : product.stockQuantity === 0 ? (
                         "Out of Stock"
                       ) : (
                         <>
-                          <ShoppingCart className="w-3.5 h-3.5 mr-1.5" />
+                          <ShoppingCart className="w-3 h-3 sm:w-3.5 sm:h-3.5 mr-1 sm:mr-1.5" />
                           Add to Cart
                         </>
                       )}

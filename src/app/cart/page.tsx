@@ -156,33 +156,33 @@ export default function CartPage() {
               onClick={() => router.push("/shop")}
               className="flex items-center gap-2 text-stone-900 hover:text-stone-600 transition-colors"
             >
-              <ArrowLeft className="w-5 h-5" />
-              <span className="text-sm font-medium">Continue Shopping</span>
+              <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+              <span className="text-xs sm:text-sm font-medium">Continue Shopping</span>
             </button>
             
-            <h1 className="text-lg font-bold text-stone-900">Shopping Cart</h1>
+            <h1 className="text-base sm:text-lg font-bold text-stone-900">Shopping Cart</h1>
             
-            <div className="w-24"></div>
+            <div className="w-16 sm:w-24"></div>
           </div>
         </div>
       </header>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-6">
+      <div className="container mx-auto px-4 py-4 sm:py-6">
         {cartItems.length === 0 ? (
           // Empty Cart
-          <div className="text-center py-20 bg-white rounded-2xl border border-stone-200">
-            <div className="max-w-md mx-auto">
-              <div className="w-24 h-24 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <ShoppingBag className="w-12 h-12 text-stone-400" />
+          <div className="text-center py-12 sm:py-20 bg-white rounded-2xl border border-stone-200">
+            <div className="max-w-md mx-auto px-4">
+              <div className="w-16 h-16 sm:w-24 sm:h-24 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4 sm:mb-6">
+                <ShoppingBag className="w-8 h-8 sm:w-12 sm:h-12 text-stone-400" />
               </div>
-              <h2 className="text-2xl font-bold text-stone-900 mb-2">Your cart is empty</h2>
-              <p className="text-stone-600 mb-6">
+              <h2 className="text-xl sm:text-2xl font-bold text-stone-900 mb-2">Your cart is empty</h2>
+              <p className="text-sm sm:text-base text-stone-600 mb-4 sm:mb-6">
                 Add some products to your cart and they will show up here.
               </p>
               <Button
                 onClick={() => router.push("/shop")}
-                className="bg-stone-900 hover:bg-stone-800 h-12 px-8"
+                className="bg-stone-900 hover:bg-stone-800 h-10 sm:h-12 px-6 sm:px-8 text-sm sm:text-base"
               >
                 Start Shopping
               </Button>
@@ -190,34 +190,34 @@ export default function CartPage() {
           </div>
         ) : (
           // Cart Items
-          <div className="grid lg:grid-cols-3 gap-6">
+          <div className="grid lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Cart Items List */}
-            <div className="lg:col-span-2 space-y-4">
-              <div className="bg-white rounded-lg border border-stone-200 p-4">
-                <div className="flex items-center gap-2 mb-4">
-                  <Package className="w-5 h-5 text-stone-600" />
-                  <h2 className="text-lg font-semibold text-stone-900">
+            <div className="lg:col-span-2 space-y-3 sm:space-y-4">
+              <div className="bg-white rounded-lg border border-stone-200 p-3 sm:p-4">
+                <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                  <Package className="w-4 h-4 sm:w-5 sm:h-5 text-stone-600" />
+                  <h2 className="text-base sm:text-lg font-semibold text-stone-900">
                     Cart Items ({cartItems.length})
                   </h2>
                 </div>
 
-                <div className="space-y-4">
+                <div className="space-y-3 sm:space-y-4">
                   {cartItems.map((item) => (
                     <div
                       key={item.id}
-                      className="flex gap-4 p-4 bg-stone-50 rounded-lg border border-stone-200"
+                      className="flex gap-3 sm:gap-4 p-3 sm:p-4 bg-stone-50 rounded-lg border border-stone-200"
                     >
                       {/* Product Image */}
                       <div
                         onClick={() => router.push(`/shop/${item.productId}`)}
-                        className="relative w-20 h-20 sm:w-24 sm:h-24 bg-white rounded-lg overflow-hidden flex-shrink-0 cursor-pointer hover:opacity-75 transition-opacity"
+                        className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-white rounded-lg overflow-hidden flex-shrink-0 cursor-pointer hover:opacity-75 transition-opacity"
                       >
                         <Image
                           src={item.productImageUrl}
                           alt={item.productName}
                           fill
                           className="object-cover"
-                          sizes="96px"
+                          sizes="(max-width: 640px) 64px, (max-width: 768px) 80px, 96px"
                         />
                       </div>
 
@@ -225,27 +225,27 @@ export default function CartPage() {
                       <div className="flex-1 min-w-0">
                         <h3
                           onClick={() => router.push(`/shop/${item.productId}`)}
-                          className="text-sm sm:text-base font-semibold text-stone-900 mb-1 cursor-pointer hover:text-stone-600 transition-colors line-clamp-2"
+                          className="text-xs sm:text-sm md:text-base font-semibold text-stone-900 mb-1 cursor-pointer hover:text-stone-600 transition-colors line-clamp-2"
                         >
                           {item.productName}
                         </h3>
-                        <p className="text-base sm:text-lg font-bold text-stone-900 mb-3">
+                        <p className="text-sm sm:text-base md:text-lg font-bold text-stone-900 mb-2 sm:mb-3">
                           {formatPrice(item.productPrice)}
                         </p>
 
                         {/* Quantity Controls */}
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
+                        <div className="flex items-center justify-between gap-2">
+                          <div className="flex items-center gap-1.5 sm:gap-2">
                             <Button
                               variant="outline"
                               size="sm"
                               onClick={() => updateQuantity(item.id, item.quantity - 1)}
                               disabled={updatingItem === item.id || item.quantity <= 1}
-                              className="h-8 w-8 p-0"
+                              className="h-7 w-7 sm:h-8 sm:w-8 p-0"
                             >
                               <Minus className="w-3 h-3" />
                             </Button>
-                            <span className="w-8 text-center font-semibold text-sm">
+                            <span className="w-6 sm:w-8 text-center font-semibold text-xs sm:text-sm">
                               {item.quantity}
                             </span>
                             <Button
@@ -253,7 +253,7 @@ export default function CartPage() {
                               size="sm"
                               onClick={() => updateQuantity(item.id, item.quantity + 1)}
                               disabled={updatingItem === item.id}
-                              className="h-8 w-8 p-0"
+                              className="h-7 w-7 sm:h-8 sm:w-8 p-0"
                             >
                               <Plus className="w-3 h-3" />
                             </Button>
@@ -265,14 +265,14 @@ export default function CartPage() {
                             size="sm"
                             onClick={() => removeItem(item.id)}
                             disabled={deletingItem === item.id}
-                            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-8 px-3"
+                            className="text-red-600 hover:text-red-700 hover:bg-red-50 h-7 sm:h-8 px-2 sm:px-3"
                           >
                             {deletingItem === item.id ? (
-                              <div className="w-4 h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
+                              <div className="w-3.5 h-3.5 sm:w-4 sm:h-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
                             ) : (
                               <>
-                                <Trash2 className="w-4 h-4 mr-1" />
-                                <span className="text-xs">Remove</span>
+                                <Trash2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 sm:mr-1" />
+                                <span className="hidden sm:inline text-xs">Remove</span>
                               </>
                             )}
                           </Button>
@@ -286,15 +286,15 @@ export default function CartPage() {
 
             {/* Order Summary */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg border border-stone-200 p-6 sticky top-20">
-                <h2 className="text-lg font-semibold text-stone-900 mb-4">Order Summary</h2>
+              <div className="bg-white rounded-lg border border-stone-200 p-4 sm:p-6 sticky top-20">
+                <h2 className="text-base sm:text-lg font-semibold text-stone-900 mb-3 sm:mb-4">Order Summary</h2>
 
-                <div className="space-y-3 mb-4">
-                  <div className="flex justify-between text-sm">
+                <div className="space-y-2 sm:space-y-3 mb-3 sm:mb-4">
+                  <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-stone-600">Subtotal</span>
                     <span className="font-semibold text-stone-900">{formatPrice(subtotal)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-xs sm:text-sm">
                     <span className="text-stone-600">Shipping</span>
                     <span className="font-semibold text-stone-900">
                       {shipping === 0 ? (
@@ -305,27 +305,27 @@ export default function CartPage() {
                     </span>
                   </div>
                   {shipping > 0 && (
-                    <p className="text-xs text-stone-500 bg-yellow-50 border border-yellow-200 rounded-lg p-2">
+                    <p className="text-[10px] sm:text-xs text-stone-500 bg-yellow-50 border border-yellow-200 rounded-lg p-2">
                       💡 Add {formatPrice(5000 - subtotal)} more for free shipping
                     </p>
                   )}
                 </div>
 
-                <div className="border-t border-stone-200 pt-4 mb-6">
+                <div className="border-t border-stone-200 pt-3 sm:pt-4 mb-4 sm:mb-6">
                   <div className="flex justify-between">
-                    <span className="text-base font-semibold text-stone-900">Total</span>
-                    <span className="text-xl font-bold text-stone-900">{formatPrice(total)}</span>
+                    <span className="text-sm sm:text-base font-semibold text-stone-900">Total</span>
+                    <span className="text-lg sm:text-xl font-bold text-stone-900">{formatPrice(total)}</span>
                   </div>
                 </div>
 
                 <Button
                   onClick={() => toast.info("Checkout feature coming soon!")}
-                  className="w-full h-12 bg-stone-900 hover:bg-stone-800 text-white font-semibold"
+                  className="w-full h-10 sm:h-12 bg-stone-900 hover:bg-stone-800 text-white font-semibold text-sm sm:text-base"
                 >
                   Proceed to Checkout
                 </Button>
 
-                <p className="text-xs text-center text-stone-500 mt-4">
+                <p className="text-[10px] sm:text-xs text-center text-stone-500 mt-3 sm:mt-4">
                   Secure checkout • Safe payments
                 </p>
               </div>
