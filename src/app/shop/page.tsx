@@ -274,17 +274,8 @@ export default function ShopPage() {
 
   return (
     <div className="min-h-screen bg-stone-50 pb-20">
-      {/* Top Bar - Black Banner (Fixed) - Increased Size */}
-      <div className="fixed top-0 left-0 right-0 z-50 bg-stone-900 text-white shadow-sm">
-        <div className="container mx-auto px-4 py-2">
-          <p className="text-xs text-center font-medium">
-            Free delivery on orders over ₦50,000 • Shop now and save!
-          </p>
-        </div>
-      </div>
-
-      {/* Header - Sticky Below Banner */}
-      <header className="fixed top-[40px] left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm">
+      {/* Header - Fixed at Top (Banner Removed) */}
+      <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm">
         <div className="container mx-auto px-4">
           {/* Top Row */}
           <div className="flex items-center justify-between py-3">
@@ -310,6 +301,18 @@ export default function ShopPage() {
               >
                 <User className="w-3.5 h-3.5" />
                 <span className="hidden md:inline text-xs">Account</span>
+              </Button>
+              
+              {/* Store Icon */}
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => router.push("/shop")}
+                className="h-8 px-2.5"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
               </Button>
               
               <Button
@@ -382,7 +385,7 @@ export default function ShopPage() {
       </header>
 
       {/* Promotional Banner - Big Banner After Header (Konga Style) - Moved Down */}
-      <div className="pt-[168px] pb-4">
+      <div className="pt-[128px] pb-4">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
           <div className="container mx-auto px-4 py-5">
             <div className="flex items-center justify-between">
@@ -779,48 +782,48 @@ export default function ShopPage() {
         </div>
       </footer>
 
-      {/* Fixed Bottom Navigation - Enhanced Design */}
+      {/* Fixed Bottom Navigation - Reduced Height & Yellow Icons */}
       <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 shadow-[0_-2px_20px_rgba(0,0,0,0.06)] z-50">
         <div className="max-w-md mx-auto px-4">
-          <div className="flex items-center justify-around h-16">
+          <div className="flex items-center justify-around h-14">
             {/* Shop Icon - Active */}
             <button 
               onClick={() => router.push("/shop")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
+              className="flex flex-col items-center justify-center gap-0.5 py-2 px-4 group relative"
             >
               <div className="w-6 h-6 flex items-center justify-center">
-                <svg className="w-6 h-6 text-[#500099]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <svg className="w-6 h-6 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
               </div>
-              <span className="text-[10px] font-semibold text-[#500099]">Shop</span>
-              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#500099]" />
+              <span className="text-[10px] font-semibold text-yellow-400">Shop</span>
+              <div className="absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-yellow-400" />
             </button>
 
             {/* Menu Icon */}
             <button 
               onClick={() => router.push("/user-space")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
+              className="flex flex-col items-center justify-center gap-0.5 py-2 px-4 group relative"
             >
               <div className="w-6 h-6 flex items-center justify-center">
-                <svg className="w-6 h-6 text-stone-400 group-hover:text-[#500099] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <svg className="w-6 h-6 text-stone-400 group-hover:text-yellow-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                 </svg>
               </div>
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] group-hover:font-semibold transition-all">Menu</span>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-yellow-400 group-hover:font-semibold transition-all">Menu</span>
             </button>
 
             {/* Profile Icon */}
             <button 
               onClick={() => router.push("/account")}
-              className="flex flex-col items-center justify-center gap-1 py-2 px-4 group relative"
+              className="flex flex-col items-center justify-center gap-0.5 py-2 px-4 group relative"
             >
               <div className="w-6 h-6 flex items-center justify-center">
-                <svg className="w-6 h-6 text-stone-400 group-hover:text-[#500099] transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <svg className="w-6 h-6 text-stone-400 group-hover:text-yellow-400 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
               </div>
-              <span className="text-[10px] font-medium text-stone-400 group-hover:text-[#500099] group-hover:font-semibold transition-all">Profile</span>
+              <span className="text-[10px] font-medium text-stone-400 group-hover:text-yellow-400 group-hover:font-semibold transition-all">Profile</span>
             </button>
           </div>
         </div>
