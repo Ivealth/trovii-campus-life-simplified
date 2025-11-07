@@ -294,14 +294,15 @@ export default function ShopPage() {
             </button>
 
             <div className="flex items-center gap-2">
+              {/* Account Button - Now visible on mobile */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push("/account")}
-                className="hidden sm:flex items-center gap-1.5 h-8 px-2.5"
+                className="flex items-center gap-1.5 h-8 px-2.5"
               >
-                <User className="w-3.5 h-3.5" />
-                <span className="hidden md:inline text-xs">Account</span>
+                <User className="w-4 h-4" />
+                <span className="hidden sm:inline text-xs">Account</span>
               </Button>
               
               {/* Store Icon as Cart - Increased Size */}
@@ -821,8 +822,8 @@ export default function ShopPage() {
             onClick={() => setShowCategoryMenu(false)}
           />
           <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl z-[70] animate-in slide-in-from-bottom duration-300 max-h-[80vh] overflow-hidden">
-            <div className="sticky top-0 bg-white border-b border-stone-200 px-6 py-4 flex items-center justify-between">
-              <h3 className="text-lg font-bold text-stone-900">Menu</h3>
+            <div className="sticky top-0 bg-white border-b border-stone-200 px-4 sm:px-6 py-4 flex items-center justify-between">
+              <h3 className="text-base sm:text-lg font-bold text-stone-900">Menu</h3>
               <button
                 onClick={() => setShowCategoryMenu(false)}
                 className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-stone-100 transition-colors"
@@ -833,71 +834,71 @@ export default function ShopPage() {
             
             <div className="overflow-y-auto max-h-[calc(80vh-72px)]">
               {/* Menu Items Section */}
-              <div className="px-6 py-4 border-b border-stone-200">
-                <div className="grid grid-cols-2 gap-3">
+              <div className="px-4 sm:px-6 py-4 border-b border-stone-200">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3">
                   {/* Sell on Trovii */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
+                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
+                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
                         Sell on Trovii
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
                         Join other merchants
                       </div>
                     </div>
                   </button>
 
                   {/* Order meals */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
+                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-md">
+                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
                         Order meals
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
                         Food delivery
                       </div>
                     </div>
                   </button>
 
                   {/* Gift center */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
+                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-pink-500 to-pink-600 shadow-md">
+                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
                         Gift center
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
                         Send gifts easily
                       </div>
                     </div>
                   </button>
 
                   {/* Business management */}
-                  <button className="flex items-start gap-3 p-3 rounded-xl hover:bg-stone-50 transition-colors text-left">
-                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-stone-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
+                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md">
+                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm font-semibold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
                         Business
                       </div>
-                      <div className="text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
                         Manage your business
                       </div>
                     </div>
@@ -906,24 +907,24 @@ export default function ShopPage() {
               </div>
 
               {/* Categories Section */}
-              <div className="px-6 py-4">
-                <h4 className="text-base font-bold text-stone-900 mb-3">Categories</h4>
+              <div className="px-4 sm:px-6 py-4">
+                <h4 className="text-sm sm:text-base font-bold text-stone-900 mb-3">Categories</h4>
                 <div className="space-y-2">
                   <button
                     onClick={() => {
                       setSelectedCategory("all")
                       setShowCategoryMenu(false)
                     }}
-                    className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
+                    className={`w-full text-left px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl font-medium transition-all ${
                       selectedCategory === "all"
                         ? "bg-yellow-400 text-stone-900 shadow-md"
                         : "bg-stone-50 text-stone-700 hover:bg-stone-100"
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="text-base">🛍️ All Products</span>
+                      <span className="text-sm sm:text-base">🛍️ All Products</span>
                       {selectedCategory === "all" && (
-                        <Check className="w-5 h-5" />
+                        <Check className="w-4 h-4 sm:w-5 sm:h-5" />
                       )}
                     </div>
                   </button>
@@ -935,22 +936,22 @@ export default function ShopPage() {
                         setSelectedCategory(cat.id.toString())
                         setShowCategoryMenu(false)
                       }}
-                      className={`w-full text-left px-4 py-3.5 rounded-xl font-medium transition-all ${
+                      className={`w-full text-left px-3 sm:px-4 py-3 sm:py-3.5 rounded-xl font-medium transition-all ${
                         selectedCategory === cat.id.toString()
                           ? "bg-yellow-400 text-stone-900 shadow-md"
                           : "bg-stone-50 text-stone-700 hover:bg-stone-100"
                       }`}
                     >
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-xl">{cat.icon}</span>
+                        <div className="flex items-center gap-2 sm:gap-3">
+                          <span className="text-lg sm:text-xl">{cat.icon}</span>
                           <div>
-                            <div className="text-base">{cat.name}</div>
-                            <div className="text-xs text-stone-500 mt-0.5">{cat.productCount} products</div>
+                            <div className="text-sm sm:text-base">{cat.name}</div>
+                            <div className="text-[10px] sm:text-xs text-stone-500 mt-0.5">{cat.productCount} products</div>
                           </div>
                         </div>
                         {selectedCategory === cat.id.toString() && (
-                          <Check className="w-5 h-5" />
+                          <Check className="w-4 h-4 sm:w-5 sm:h-5" />
                         )}
                       </div>
                     </button>
