@@ -153,3 +153,66 @@ export const reviews = sqliteTable('reviews', {
   createdAt: text('created_at').notNull(),
   updatedAt: text('updated_at').notNull(),
 });
+
+// Food ordering platform tables
+export const restaurants = sqliteTable('restaurants', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  name: text('name').notNull(),
+  slug: text('slug').notNull().unique(),
+  description: text('description'),
+  imageUrl: text('image_url').notNull(),
+  rating: real('rating').default(4.5),
+  reviewCount: integer('review_count').default(0),
+  deliveryTime: text('delivery_time'),
+  deliveryFee: integer('delivery_fee'),
+  minimumOrder: integer('minimum_order').default(0),
+  cuisine: text('cuisine'),
+  isOpen: integer('is_open', { mode: 'boolean' }).default(true),
+  location: text('location'),
+  phone: text('phone'),
+  createdAt: text('created_at').notNull(),
+});
+
+export const menuItems = sqliteTable('menu_items', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  restaurantId: integer('restaurant_id').notNull().references(() => restaurants.id, { onDelete: 'cascade' }),
+  name: text('name').notNull(),
+  slug: text('slug').notNull(),
+  description: text('description'),
+  price: integer('price').notNull(),
+  originalPrice: integer('original_price'),
+  imageUrl: text('image_url').notNull(),
+  category: text('category'),
+  isAvailable: integer('is_available', { mode: 'boolean' }).default(true),
+  badge: text('badge'),
+  preparationTime: text('preparation_time'),
+  createdAt: text('created_at').notNull(),
+});
+
+export const foodOrders = sqliteTable('food_orders', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  userId: text('user_id').notNull().references(() => user.id, { onDelete: 'cascade' }),
+  restaurantId: integer('restaurant_id').notNull().references(() => restaurants.id),
+  orderNumber: text('order_number').notNull().unique(),
+  status: text('status').notNull().default('pending'),
+  subtotal: integer('subtotal').notNull(),
+  deliveryFee: integer('delivery_fee').notNull(),
+  total: integer('total').notNull(),
+  deliveryAddress: text('delivery_address').notNull(),
+  deliveryInstructions: text('delivery_instructions'),
+  phone: text('phone').notNull(),
+  paymentMethod: text('payment_method').default('cash'),
+  estimatedDeliveryTime: text('estimated_delivery_time'),
+  createdAt: text('created_at').notNull(),
+  updatedAt: text('updated_at').notNull(),
+});
+
+export const foodOrderItems = sqliteTable('food_order_items', {
+  id: integer('id').primaryKey({ autoIncrement: true }),
+  orderId: integer('order_id').notNull().references(() => foodOrders.id, { onDelete: 'cascade' }),
+  menuItemId: integer('menu_item_id').notNull().references(() => menuItems.id),
+  quantity: integer('quantity').notNull(),
+  price: integer('price').notNull(),
+  specialInstructions: text('special_instructions'),
+  createdAt: text('created_at').notNull(),
+});

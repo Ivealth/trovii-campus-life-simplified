@@ -834,72 +834,78 @@ export default function ShopPage() {
             
             <div className="overflow-y-auto max-h-[calc(80vh-72px)]">
               {/* Menu Items Section */}
-              <div className="px-4 sm:px-6 py-4 border-b border-stone-200">
-                <div className="grid grid-cols-2 gap-2 sm:gap-3">
+              <div className="px-4 sm:px-6 py-3 border-b border-stone-200">
+                <div className="grid grid-cols-2 gap-2">
                   {/* Sell on Trovii */}
-                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
-                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
-                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  <button className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-stone-50 transition-colors text-left group">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 shadow-sm group-hover:shadow-md transition-shadow">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs font-bold text-stone-900 leading-tight">
                         Sell on Trovii
                       </div>
-                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
-                        Join other merchants
+                      <div className="text-[10px] text-stone-500 leading-tight">
+                        Start selling
                       </div>
                     </div>
                   </button>
 
                   {/* Order meals */}
-                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
-                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-md">
-                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                  <button 
+                    onClick={() => {
+                      setShowCategoryMenu(false)
+                      router.push("/food")
+                    }}
+                    className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-stone-50 transition-colors text-left group"
+                  >
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 shadow-sm group-hover:shadow-md transition-shadow">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.293 1.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs font-bold text-stone-900 leading-tight">
                         Order meals
                       </div>
-                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
+                      <div className="text-[10px] text-stone-500 leading-tight">
                         Food delivery
                       </div>
                     </div>
                   </button>
 
                   {/* Gift center */}
-                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
-                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-pink-500 to-pink-600 shadow-md">
-                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <button className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-stone-50 transition-colors text-left group">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 shadow-sm group-hover:shadow-md transition-shadow">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs font-bold text-stone-900 leading-tight">
                         Gift center
                       </div>
-                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
-                        Send gifts easily
+                      <div className="text-[10px] text-stone-500 leading-tight">
+                        Send gifts
                       </div>
                     </div>
                   </button>
 
                   {/* Business management */}
-                  <button className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-3 p-3 sm:p-3.5 rounded-xl hover:bg-stone-50 transition-colors text-center sm:text-left">
-                    <div className="w-12 h-12 sm:w-11 sm:h-11 flex-shrink-0 flex items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md">
-                      <svg className="w-6 h-6 sm:w-5.5 sm:h-5.5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <button className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-stone-50 transition-colors text-left group">
+                    <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 shadow-sm group-hover:shadow-md transition-shadow">
+                      <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <div className="text-xs sm:text-sm font-bold text-stone-900 leading-tight mb-0.5">
+                      <div className="text-xs font-bold text-stone-900 leading-tight">
                         Business
                       </div>
-                      <div className="text-[10px] sm:text-[11px] text-stone-500 leading-tight">
-                        Manage your business
+                      <div className="text-[10px] text-stone-500 leading-tight">
+                        Manage tools
                       </div>
                     </div>
                   </button>
