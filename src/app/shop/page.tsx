@@ -277,23 +277,23 @@ export default function ShopPage() {
     <div className="min-h-screen bg-stone-50 pb-20">
       {/* Header - Fixed at Top */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-3 sm:px-4">
           {/* Top Row */}
-          <div className="flex items-center justify-between py-3">
+          <div className="flex items-center justify-between py-2 sm:py-3">
             <button 
               onClick={() => router.push("/")}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-1.5 sm:gap-2 group"
             >
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                <span className="text-white font-bold text-base">T</span>
+              <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-lg bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
+                <span className="text-white font-bold text-sm sm:text-base">T</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-base font-bold text-stone-900 leading-none tracking-tight">Trovii</span>
-                <span className="text-[10px] text-stone-500 leading-none tracking-wide">Marketplace</span>
+                <span className="text-sm sm:text-base font-bold text-stone-900 leading-none tracking-tight">Trovii</span>
+                <span className="text-[9px] sm:text-[10px] text-stone-500 leading-none tracking-wide">Marketplace</span>
               </div>
             </button>
 
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               <Button
                 variant="ghost"
                 size="sm"
@@ -307,14 +307,14 @@ export default function ShopPage() {
               {/* Store Icon as Cart - Increased Size */}
               <Button
                 onClick={() => router.push("/cart")}
-                className="relative h-8 px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
+                className="relative h-7 sm:h-8 px-2 sm:px-2.5 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-4 h-4 bg-yellow-400 text-stone-900 text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white">
+                  <span className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-3.5 h-3.5 sm:w-4 sm:h-4 bg-yellow-400 text-stone-900 text-[8px] sm:text-[9px] font-bold rounded-full flex items-center justify-center border-2 border-white">
                     {cartCount}
                   </span>
                 )}
@@ -323,22 +323,22 @@ export default function ShopPage() {
           </div>
 
           {/* Search Bar */}
-          <div className="pb-2.5">
+          <div className="pb-2 sm:pb-2.5">
             <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
+              <Search className="absolute left-2.5 sm:left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 sm:w-4 sm:h-4 text-stone-400" />
               <Input
                 type="text"
-                placeholder="Search for products, brands, and categories..."
+                placeholder="Search products..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-9 text-sm border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
+                className="pl-8 sm:pl-10 pr-8 sm:pr-10 h-8 sm:h-9 text-xs sm:text-sm border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
+                  className="absolute right-2.5 sm:right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </button>
               )}
             </div>
@@ -347,7 +347,7 @@ export default function ShopPage() {
       </header>
 
       {/* Promotional Banner */}
-      <div className="pt-[128px] pb-2">
+      <div className="pt-[112px] sm:pt-[128px] pb-2">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
           <div className="container mx-auto px-4 py-4 sm:py-6">
             <div className="flex items-center justify-between gap-3 sm:gap-4">
