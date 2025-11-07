@@ -34,7 +34,7 @@ export default function Testimonials() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-5xl font-bold text-stone-900 mb-4 tracking-tight">
+            <h2 className="text-[2.5rem] sm:text-5xl font-bold text-stone-900 mb-4 tracking-tight leading-tight">
               Trusted by students
             </h2>
             <p className="text-[17px] text-stone-600">
@@ -89,7 +89,7 @@ export default function Testimonials() {
           <p className="text-[13px] font-medium text-stone-500 mb-8 uppercase tracking-wider">
             Available at
           </p>
-          <div className="flex items-center justify-center gap-12">
+          <div className="flex flex-wrap items-center justify-center gap-12">
             {["Berkeley", "MIT", "Stanford", "NYU", "Columbia"].map((uni) => (
               <div key={uni} className="text-[15px] font-semibold text-stone-400">
                 {uni}

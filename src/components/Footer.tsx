@@ -10,23 +10,23 @@ export default function Footer() {
       <div className="border-t border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center max-w-2xl mx-auto">
-            <h2 className="text-5xl font-bold text-stone-900 mb-4 tracking-tight">
+            <h2 className="text-[2.5rem] sm:text-5xl font-bold text-stone-900 mb-4 tracking-tight leading-tight">
               Ready to simplify your campus life?
             </h2>
             <p className="text-[17px] text-stone-600 mb-8">
               Join 1,200+ students who are saving time and earning money with Trovii.
             </p>
-            <div className="flex items-center justify-center gap-3">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
               <Button
                 size="lg"
-                className="bg-stone-900 hover:bg-stone-800 text-white font-medium text-[14px] px-7 h-12 rounded-lg"
+                className="w-full sm:w-auto bg-stone-900 hover:bg-stone-800 text-white font-medium text-[14px] px-6 h-11 rounded-lg"
               >
                 Get started free
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-stone-300 text-stone-700 hover:bg-stone-50 font-medium text-[14px] px-7 h-12 rounded-lg"
+                className="w-full sm:w-auto border-stone-300 text-stone-700 hover:bg-stone-50 font-medium text-[14px] px-6 h-11 rounded-lg"
               >
                 Contact sales
               </Button>
@@ -38,9 +38,9 @@ export default function Footer() {
       {/* Main Footer */}
       <div className="border-t border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-5 gap-8 mb-12">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
             {/* Brand */}
-            <div className="md:col-span-2">
+            <div className="col-span-2">
               <div className="flex items-center gap-2 mb-4">
                 <svg className="w-7 h-7" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <rect width="32" height="32" rx="8" fill="#500099"/>
@@ -96,7 +96,7 @@ export default function Footer() {
           </div>
 
           {/* Bottom Bar */}
-          <div className="pt-8 border-t border-stone-200 flex items-center justify-between">
+          <div className="pt-8 border-t border-stone-200 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-[14px] text-stone-500">
               © {new Date().getFullYear()} Trovii by Ivealth LTD. All rights reserved.
             </p>

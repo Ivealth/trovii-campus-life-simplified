@@ -40,7 +40,7 @@ export default function Features() {
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
             >
-              <h2 className="text-5xl font-bold text-stone-900 mb-4 tracking-tight">
+              <h2 className="text-[2.5rem] sm:text-5xl font-bold text-stone-900 mb-4 tracking-tight leading-tight">
                 Everything you need
               </h2>
               <p className="text-[17px] text-stone-600 leading-relaxed">
@@ -85,7 +85,7 @@ export default function Features() {
             transition={{ duration: 0.5 }}
             className="text-center max-w-2xl mx-auto mb-16"
           >
-            <h2 className="text-5xl font-bold text-stone-900 mb-4 tracking-tight">
+            <h2 className="text-[2.5rem] sm:text-5xl font-bold text-stone-900 mb-4 tracking-tight leading-tight">
               Simple to get started
             </h2>
             <p className="text-[17px] text-stone-600">
@@ -124,7 +124,7 @@ export default function Features() {
           >
             {stats.map((stat) => (
               <div key={stat.label} className="text-center">
-                <div className="text-4xl font-bold text-stone-900 mb-1">{stat.value}</div>
+                <div className="text-[2rem] sm:text-4xl font-bold text-stone-900 mb-1">{stat.value}</div>
                 <div className="text-[13px] text-stone-500 font-medium">{stat.label}</div>
               </div>
             ))}

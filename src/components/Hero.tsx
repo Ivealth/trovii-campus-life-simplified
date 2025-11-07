@@ -25,7 +25,7 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-7xl font-bold text-stone-900 mb-6 leading-[1.05] tracking-tight"
+            className="text-[2.75rem] sm:text-6xl lg:text-7xl font-bold text-stone-900 mb-6 leading-[1.05] tracking-tight"
           >
             Campus life,{" "}
             <span className="text-stone-400">simplified</span>
@@ -46,11 +46,11 @@ export default function Hero() {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="flex items-center justify-center gap-3 mb-12"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-12"
           >
             <Button
               size="lg"
-              className="bg-stone-900 hover:bg-stone-800 text-white font-medium text-[14px] px-7 h-12 rounded-lg group"
+              className="w-full sm:w-auto bg-stone-900 hover:bg-stone-800 text-white font-medium text-[14px] px-6 h-11 rounded-lg group"
             >
               Get started free
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
@@ -58,7 +58,7 @@ export default function Hero() {
             <Button
               size="lg"
               variant="outline"
-              className="border-stone-300 text-stone-700 hover:bg-stone-50 font-medium text-[14px] px-7 h-12 rounded-lg group"
+              className="w-full sm:w-auto border-stone-300 text-stone-700 hover:bg-stone-50 font-medium text-[14px] px-6 h-11 rounded-lg group"
             >
               <Play className="mr-2 h-4 w-4" />
               Watch demo
@@ -70,7 +70,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex items-center justify-center gap-6 text-[14px] text-stone-500"
+            className="flex flex-col sm:flex-row items-center justify-center gap-6 text-[14px] text-stone-500"
           >
             <div className="flex items-center gap-2">
               <div className="flex -space-x-2">
