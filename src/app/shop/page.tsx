@@ -59,6 +59,8 @@ export default function ShopPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [sortBy, setSortBy] = useState<string>("featured")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000])
+  const [showFilters, setShowFilters] = useState(false)
   const [showCategoryMenu, setShowCategoryMenu] = useState(false)
   
   // API Data States
@@ -166,6 +168,11 @@ export default function ShopPage() {
       )
     }
 
+    // Apply price range filter
+    filtered = filtered.filter(
+      (p) => p.price >= priceRange[0] && p.price <= priceRange[1]
+    )
+
     // Apply sorting
     switch (sortBy) {
       case "price-low":
@@ -189,7 +196,7 @@ export default function ShopPage() {
     }
 
     return filtered
-  }, [allProducts, searchQuery, selectedCategory, sortBy])
+  }, [allProducts, searchQuery, selectedCategory, sortBy, priceRange])
 
   // Add to cart
   const handleAddToCart = async (productId: number, productName: string) => {
@@ -286,25 +293,25 @@ export default function ShopPage() {
               </div>
             </button>
 
-            <div className="flex items-center gap-2">
-              {/* Account Button - MUCH BIGGER ICON */}
+            <div className="flex items-center gap-3">
+              {/* Account Button - BIGGER ICON */}
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => router.push("/account")}
-                className="flex items-center gap-1.5 h-12 px-3"
+                className="flex items-center gap-1.5 h-11 px-3"
               >
-                <User className="w-10 h-10 sm:w-9 sm:h-9" />
+                <User className="w-8 h-8" />
                 <span className="hidden sm:inline text-sm">Account</span>
               </Button>
               
-              {/* Cart Icon - MUCH BIGGER */}
+              {/* Cart Icon - BIGGER */}
               <Button
                 onClick={() => router.push("/cart")}
-                className="relative h-12 px-3 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
+                className="relative h-11 px-3 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
                 size="sm"
               >
-                <svg className="w-10 h-10 sm:w-9 sm:h-9" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
                 {cartCount > 0 && (
@@ -364,7 +371,7 @@ export default function ShopPage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-3">
-        {/* Controls Bar - Simplified without filters */}
+        {/* Filters & Controls Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 bg-white p-3 sm:p-4 rounded-lg border border-stone-200">
           <div className="flex items-center gap-4 flex-wrap w-full sm:w-auto">
             <div className="flex items-center gap-2">
