@@ -294,40 +294,38 @@ export default function ShopPage() {
             </button>
 
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* Account Button - BIG ICON */}
+              {/* Account Button - Matching bottom nav size */}
               <button
                 onClick={() => router.push("/account")}
-                className="flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-stone-50 hover:bg-stone-100 active:bg-stone-200 transition-all group"
+                className="flex flex-col items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-stone-50 hover:bg-stone-100 active:bg-stone-200 transition-all group"
               >
                 <svg 
-                  className="w-8 h-8 sm:w-9 sm:h-9 text-stone-700 group-hover:text-stone-900 transition-colors" 
+                  className="w-6 h-6 text-stone-700 group-hover:text-stone-900 transition-colors" 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor" 
-                  strokeWidth={2}
+                  strokeWidth={2.2}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                <span className="text-[9px] sm:text-[10px] font-semibold text-stone-500 group-hover:text-stone-700 mt-0.5">Account</span>
               </button>
               
-              {/* Cart Icon - BIG */}
+              {/* Cart Icon - Matching bottom nav size */}
               <button
                 onClick={() => router.push("/cart")}
-                className="relative flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-stone-900 hover:bg-stone-800 active:bg-stone-700 transition-all group shadow-md"
+                className="relative flex flex-col items-center justify-center w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-stone-900 hover:bg-stone-800 active:bg-stone-700 transition-all group shadow-md"
               >
                 <svg 
-                  className="w-8 h-8 sm:w-9 sm:h-9 text-white" 
+                  className="w-6 h-6 text-white" 
                   fill="none" 
                   viewBox="0 0 24 24" 
                   stroke="currentColor" 
-                  strokeWidth={2}
+                  strokeWidth={2.2}
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
-                <span className="text-[9px] sm:text-[10px] font-semibold text-white/80 mt-0.5">Cart</span>
                 {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 bg-yellow-400 text-stone-900 text-xs sm:text-sm font-bold rounded-full flex items-center justify-center border-2 border-white shadow-lg">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 text-stone-900 text-[10px] font-bold rounded-full flex items-center justify-center border-2 border-white shadow-lg">
                     {cartCount}
                   </span>
                 )}
@@ -829,7 +827,13 @@ export default function ShopPage() {
                   </button>
 
                   {/* Gift center */}
-                  <button className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-stone-50 transition-colors text-left group">
+                  <button 
+                    onClick={() => {
+                      setShowCategoryMenu(false)
+                      router.push("/gift")
+                    }}
+                    className="flex items-center gap-2 p-2.5 rounded-lg hover:bg-stone-50 transition-colors text-left group"
+                  >
                     <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-lg bg-gradient-to-br from-pink-500 to-pink-600 shadow-sm group-hover:shadow-md transition-shadow">
                       <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" />
