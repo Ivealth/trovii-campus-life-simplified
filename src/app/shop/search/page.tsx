@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useEffect, useState, useMemo } from "react"
@@ -6,11 +5,27 @@ import { useRouter } from "next/navigation"
 import { useSession } from "@/lib/auth-client"
 import Image from "next/image"
 import { 
-  Search, Heart, Star, ShoppingCart, X, ArrowLeft, TrendingUp, Clock
+  Search, Heart, Star, ShoppingCart, X, ArrowLeft, TrendingUp, Clock, SlidersHorizontal, Check
 } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { toast } from "sonner"
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
+
+interface Category {
+  id: number
+  name: string
+  slug: string
+  icon: string | null
+  description: string | null
+  productCount: number
+}
 
 interface Product {
   id: number
@@ -37,19 +52,36 @@ const POPULAR_SEARCHES = [
   "Gaming",
 ]
 
+const PRICE_RANGES = [
+  { label: "Under ₦5,000", min: 0, max: 5000 },
+  { label: "₦5,000 - ₦20,000", min: 5000, max: 20000 },
+  { label: "₦20,000 - ₦50,000", min: 20000, max: 50000 },
+  { label: "₦50,000 - ₦100,000", min: 50000, max: 100000 },
+  { label: "Above ₦100,000", min: 100000, max: Infinity },
+]
+
 export default function SearchPage() {
   const router = useRouter()
   const { data: session, isPending } = useSession()
   
   const [searchQuery, setSearchQuery] = useState("")
   const [allProducts, setAllProducts] = useState<Product[]>([])
+  const [categories, setCategories] = useState<Category[]>([])
   const [cartCount, setCartCount] = useState(0)
   const [wishlist, setWishlist] = useState<Set<number>>(new Set())
   const [recentSearches, setRecentSearches] = useState<string[]>([])
   
   const [loadingProducts, setLoadingProducts] = useState(true)
+  const [loadingCategories, setLoadingCategories] = useState(true)
   const [addingToCart, setAddingToCart] = useState<number | null>(null)
   const [isSearching, setIsSearching] = useState(false)
+  
+  // Filter states
+  const [showFilters, setShowFilters] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<string>("all")
+  const [selectedPriceRange, setSelectedPriceRange] = useState<number | null>(null)
+  const [minRating, setMinRating] = useState<number>(0)
+  const [sortBy, setSortBy] = useState<string>("relevance")
 
   // Auth redirect
   useEffect(() => {
@@ -65,6 +97,27 @@ export default function SearchPage() {
       setRecentSearches(JSON.parse(saved))
     }
   }, [])
+
+  // Fetch categories
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch("/api/categories")
+        if (response.ok) {
+          const data = await response.json()
+          setCategories(data)
+        }
+      } catch (error) {
+        console.error("Failed to fetch categories:", error)
+      } finally {
+        setLoadingCategories(false)
+      }
+    }
+
+    if (session?.user) {
+      fetchCategories()
+    }
+  }, [session])
 
   // Fetch products
   useEffect(() => {
@@ -117,18 +170,55 @@ export default function SearchPage() {
     }
   }, [])
 
-  // Filter products based on search
+  // Filter products based on search and filters
   const searchResults = useMemo(() => {
     if (!searchQuery.trim()) return []
     
     const query = searchQuery.toLowerCase()
-    return allProducts.filter(
+    let filtered = allProducts.filter(
       (p) =>
         p.name.toLowerCase().includes(query) ||
         p.description?.toLowerCase().includes(query) ||
         p.categoryName?.toLowerCase().includes(query)
     )
-  }, [allProducts, searchQuery])
+    
+    // Apply category filter
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter((p) => p.categoryId === parseInt(selectedCategory))
+    }
+    
+    // Apply price range filter
+    if (selectedPriceRange !== null) {
+      const range = PRICE_RANGES[selectedPriceRange]
+      filtered = filtered.filter((p) => p.price >= range.min && p.price <= range.max)
+    }
+    
+    // Apply rating filter
+    if (minRating > 0) {
+      filtered = filtered.filter((p) => p.rating >= minRating)
+    }
+    
+    // Apply sorting
+    switch (sortBy) {
+      case "price-low":
+        filtered.sort((a, b) => a.price - b.price)
+        break
+      case "price-high":
+        filtered.sort((a, b) => b.price - a.price)
+        break
+      case "rating":
+        filtered.sort((a, b) => b.rating - a.rating)
+        break
+      case "newest":
+        filtered.sort((a, b) => b.id - a.id)
+        break
+      default:
+        // relevance - keep original order
+        break
+    }
+    
+    return filtered
+  }, [allProducts, searchQuery, selectedCategory, selectedPriceRange, minRating, sortBy])
 
   // Save search to recent
   const saveSearch = (query: string) => {
@@ -155,6 +245,23 @@ export default function SearchPage() {
     setRecentSearches([])
     localStorage.removeItem("recentSearches")
   }
+
+  // Clear all filters
+  const clearAllFilters = () => {
+    setSelectedCategory("all")
+    setSelectedPriceRange(null)
+    setMinRating(0)
+    setSortBy("relevance")
+  }
+
+  // Count active filters
+  const activeFiltersCount = useMemo(() => {
+    let count = 0
+    if (selectedCategory !== "all") count++
+    if (selectedPriceRange !== null) count++
+    if (minRating > 0) count++
+    return count
+  }, [selectedCategory, selectedPriceRange, minRating])
 
   // Add to cart
   const handleAddToCart = async (productId: number, productName: string) => {
@@ -351,11 +458,159 @@ export default function SearchPage() {
             </div>
           ) : (
             <div>
-              {/* Results Header */}
-              <div className="mb-4">
-                <h2 className="text-lg font-semibold text-stone-900">
-                  {searchResults.length} {searchResults.length === 1 ? 'result' : 'results'} for "{searchQuery}"
-                </h2>
+              {/* Results Header with Filters */}
+              <div className="mb-4 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-lg font-semibold text-stone-900">
+                    {searchResults.length} {searchResults.length === 1 ? 'result' : 'results'} for "{searchQuery}"
+                  </h2>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="h-9 gap-2"
+                  >
+                    <SlidersHorizontal className="w-4 h-4" />
+                    Filters
+                    {activeFiltersCount > 0 && (
+                      <span className="ml-1 w-5 h-5 bg-yellow-400 text-stone-900 text-xs font-bold rounded-full flex items-center justify-center">
+                        {activeFiltersCount}
+                      </span>
+                    )}
+                  </Button>
+                </div>
+
+                {/* Filter Bar */}
+                {showFilters && (
+                  <div className="bg-white rounded-lg border border-stone-200 p-4 space-y-4">
+                    {/* Sort By */}
+                    <div>
+                      <label className="text-sm font-semibold text-stone-900 mb-2 block">Sort By</label>
+                      <Select value={sortBy} onValueChange={setSortBy}>
+                        <SelectTrigger className="w-full">
+                          <SelectValue />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="relevance">Most Relevant</SelectItem>
+                          <SelectItem value="newest">Newest First</SelectItem>
+                          <SelectItem value="price-low">Price: Low to High</SelectItem>
+                          <SelectItem value="price-high">Price: High to Low</SelectItem>
+                          <SelectItem value="rating">Top Rated</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+
+                    {/* Categories */}
+                    {!loadingCategories && categories.length > 0 && (
+                      <div>
+                        <label className="text-sm font-semibold text-stone-900 mb-2 block">Category</label>
+                        <div className="space-y-2">
+                          <button
+                            onClick={() => setSelectedCategory("all")}
+                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              selectedCategory === "all"
+                                ? "bg-yellow-400 text-stone-900"
+                                : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span>All Categories</span>
+                              {selectedCategory === "all" && <Check className="w-4 h-4" />}
+                            </div>
+                          </button>
+                          {categories.map((cat) => (
+                            <button
+                              key={cat.id}
+                              onClick={() => setSelectedCategory(cat.id.toString())}
+                              className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                selectedCategory === cat.id.toString()
+                                  ? "bg-yellow-400 text-stone-900"
+                                  : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                              }`}
+                            >
+                              <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2">
+                                  {cat.icon && <span>{cat.icon}</span>}
+                                  <span>{cat.name}</span>
+                                </div>
+                                {selectedCategory === cat.id.toString() && <Check className="w-4 h-4" />}
+                              </div>
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Price Range */}
+                    <div>
+                      <label className="text-sm font-semibold text-stone-900 mb-2 block">Price Range</label>
+                      <div className="space-y-2">
+                        {PRICE_RANGES.map((range, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setSelectedPriceRange(selectedPriceRange === idx ? null : idx)}
+                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              selectedPriceRange === idx
+                                ? "bg-yellow-400 text-stone-900"
+                                : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <span>{range.label}</span>
+                              {selectedPriceRange === idx && <Check className="w-4 h-4" />}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Rating */}
+                    <div>
+                      <label className="text-sm font-semibold text-stone-900 mb-2 block">Minimum Rating</label>
+                      <div className="space-y-2">
+                        {[4, 3, 2, 1].map((rating) => (
+                          <button
+                            key={rating}
+                            onClick={() => setMinRating(minRating === rating ? 0 : rating)}
+                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                              minRating === rating
+                                ? "bg-yellow-400 text-stone-900"
+                                : "bg-stone-50 text-stone-700 hover:bg-stone-100"
+                            }`}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-1">
+                                {[...Array(5)].map((_, i) => (
+                                  <Star
+                                    key={i}
+                                    className={`w-4 h-4 ${
+                                      i < rating
+                                        ? "fill-yellow-400 text-yellow-400"
+                                        : "fill-stone-300 text-stone-300"
+                                    }`}
+                                  />
+                                ))}
+                                <span className="ml-1">& Up</span>
+                              </div>
+                              {minRating === rating && <Check className="w-4 h-4" />}
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Clear Filters */}
+                    {activeFiltersCount > 0 && (
+                      <Button
+                        variant="outline"
+                        onClick={clearAllFilters}
+                        className="w-full"
+                      >
+                        Clear All Filters
+                      </Button>
+                    )}
+                  </div>
+                )}
               </div>
 
               {/* Results Grid */}
@@ -380,14 +635,26 @@ export default function SearchPage() {
                     </div>
                     <h3 className="text-xl font-semibold text-stone-900 mb-2">No results found</h3>
                     <p className="text-stone-600 mb-6">
-                      We couldn't find any products matching "{searchQuery}". Try different keywords.
+                      {activeFiltersCount > 0
+                        ? "Try adjusting your filters or search for different keywords."
+                        : `We couldn't find any products matching "${searchQuery}". Try different keywords.`}
                     </p>
-                    <Button
-                      onClick={() => handleSearch("")}
-                      className="bg-stone-900 hover:bg-stone-800"
-                    >
-                      Clear search
-                    </Button>
+                    <div className="flex gap-3 justify-center">
+                      {activeFiltersCount > 0 && (
+                        <Button
+                          onClick={clearAllFilters}
+                          variant="outline"
+                        >
+                          Clear Filters
+                        </Button>
+                      )}
+                      <Button
+                        onClick={() => handleSearch("")}
+                        className="bg-stone-900 hover:bg-stone-800"
+                      >
+                        Clear search
+                      </Button>
+                    </div>
                   </div>
                 </div>
               ) : (
