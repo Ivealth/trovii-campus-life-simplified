@@ -325,24 +325,17 @@ export default function ShopPage() {
 
           {/* Search Bar */}
           <div className="pb-2.5">
-            <div className="relative max-w-2xl mx-auto">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
-              <Input
-                type="text"
-                placeholder="Search for products, brands, and categories..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-10 h-9 text-sm border-stone-300 rounded-full focus:ring-2 focus:ring-stone-900"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-600"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
+            <button
+              onClick={() => router.push("/shop/search")}
+              className="relative max-w-2xl mx-auto w-full"
+            >
+              <div className="flex items-center gap-3 h-9 px-3 bg-white border border-stone-200 rounded-lg hover:border-stone-300 transition-colors">
+                <Search className="w-4 h-4 text-stone-400" />
+                <span className="text-sm text-stone-400 flex-1 text-left">
+                  Search for products, brands, and categories...
+                </span>
+              </div>
+            </button>
           </div>
         </div>
       </header>
