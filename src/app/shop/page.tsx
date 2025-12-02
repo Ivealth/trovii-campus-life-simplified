@@ -278,61 +278,73 @@ export default function ShopPage() {
       {/* Header - Fixed at Top */}
       <header className="fixed top-0 left-0 right-0 z-40 bg-white border-b border-stone-200 shadow-sm">
         <div className="container mx-auto px-4">
-          {/* Top Row */}
-          <div className="flex items-center justify-between py-3">
+          {/* Top Row - Redesigned with bigger icons */}
+          <div className="flex items-center justify-between py-4">
             <button 
               onClick={() => router.push("/")}
-              className="flex items-center gap-2 group"
+              className="flex items-center gap-2.5 group"
             >
-              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center shadow-sm group-hover:shadow-md transition-shadow">
-                <span className="text-white font-bold text-base">T</span>
+              <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-gradient-to-br from-stone-900 to-stone-700 flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
+                <span className="text-white font-bold text-lg sm:text-xl">T</span>
               </div>
               <div className="flex flex-col">
-                <span className="text-base font-bold text-stone-900 leading-none tracking-tight">Trovii</span>
-                <span className="text-[10px] text-stone-500 leading-none tracking-wide">Marketplace</span>
+                <span className="text-lg sm:text-xl font-bold text-stone-900 leading-none tracking-tight">Trovii</span>
+                <span className="text-[10px] sm:text-xs text-stone-500 leading-none tracking-wide">Marketplace</span>
               </div>
             </button>
 
-            <div className="flex items-center gap-3">
-              {/* Account Button - BIGGER ICON */}
-              <Button
-                variant="ghost"
-                size="sm"
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Account Button - BIG ICON */}
+              <button
                 onClick={() => router.push("/account")}
-                className="flex items-center gap-1.5 h-11 px-3"
+                className="flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-stone-50 hover:bg-stone-100 active:bg-stone-200 transition-all group"
               >
-                <User className="w-8 h-8" />
-                <span className="hidden sm:inline text-sm">Account</span>
-              </Button>
+                <svg 
+                  className="w-8 h-8 sm:w-9 sm:h-9 text-stone-700 group-hover:text-stone-900 transition-colors" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor" 
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                </svg>
+                <span className="text-[9px] sm:text-[10px] font-semibold text-stone-500 group-hover:text-stone-700 mt-0.5">Account</span>
+              </button>
               
-              {/* Cart Icon - BIGGER */}
-              <Button
+              {/* Cart Icon - BIG */}
+              <button
                 onClick={() => router.push("/cart")}
-                className="relative h-11 px-3 text-xs bg-transparent hover:bg-stone-100 text-stone-900 border-0 shadow-none"
-                size="sm"
+                className="relative flex flex-col items-center justify-center w-14 h-14 sm:w-16 sm:h-16 rounded-xl bg-stone-900 hover:bg-stone-800 active:bg-stone-700 transition-all group shadow-md"
               >
-                <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                <svg 
+                  className="w-8 h-8 sm:w-9 sm:h-9 text-white" 
+                  fill="none" 
+                  viewBox="0 0 24 24" 
+                  stroke="currentColor" 
+                  strokeWidth={2}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                 </svg>
+                <span className="text-[9px] sm:text-[10px] font-semibold text-white/80 mt-0.5">Cart</span>
                 {cartCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 w-6 h-6 bg-yellow-400 text-stone-900 text-[11px] font-bold rounded-full flex items-center justify-center border-2 border-white">
+                  <span className="absolute -top-1 -right-1 w-6 h-6 sm:w-7 sm:h-7 bg-yellow-400 text-stone-900 text-xs sm:text-sm font-bold rounded-full flex items-center justify-center border-2 border-white shadow-lg">
                     {cartCount}
                   </span>
                 )}
-              </Button>
+              </button>
             </div>
           </div>
 
           {/* Search Bar */}
-          <div className="pb-2.5">
+          <div className="pb-3">
             <button
               onClick={() => router.push("/shop/search")}
               className="relative max-w-2xl mx-auto w-full"
             >
-              <div className="flex items-center gap-3 h-9 px-3 bg-white border border-stone-200 rounded-lg hover:border-stone-300 transition-colors">
-                <Search className="w-4 h-4 text-stone-400" />
+              <div className="flex items-center gap-3 h-11 sm:h-12 px-4 bg-stone-50 border border-stone-200 rounded-xl hover:border-stone-300 hover:bg-white transition-all">
+                <Search className="w-5 h-5 text-stone-400" />
                 <span className="text-sm text-stone-400 flex-1 text-left">
-                  Search for products, brands, and categories...
+                  Search products, brands, categories...
                 </span>
               </div>
             </button>
@@ -341,7 +353,7 @@ export default function ShopPage() {
       </header>
 
       {/* Promotional Banner */}
-      <div className="pt-[128px] pb-2">
+      <div className="pt-[140px] sm:pt-[152px] pb-2">
         <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 border-y border-yellow-500 shadow-md">
           <div className="container mx-auto px-4 py-4 sm:py-6">
             <div className="flex items-center justify-between gap-3 sm:gap-4">
@@ -371,59 +383,6 @@ export default function ShopPage() {
 
       {/* Main Content */}
       <main className="container mx-auto px-4 py-3">
-        {/* Filters & Controls Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4 bg-white p-3 sm:p-4 rounded-lg border border-stone-200">
-          <div className="flex items-center gap-4 flex-wrap w-full sm:w-auto">
-            <div className="flex items-center gap-2">
-              <span className="text-xs sm:text-sm text-stone-600">
-                {filteredProducts.length} {filteredProducts.length === 1 ? 'product' : 'products'}
-              </span>
-              {searchQuery && (
-                <span className="text-xs sm:text-sm text-stone-400 truncate max-w-[150px] sm:max-w-none">
-                  • Results for "{searchQuery}"
-                </span>
-              )}
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2 w-full sm:w-auto">
-            {/* View Toggle */}
-            <div className="hidden sm:flex items-center gap-1 bg-stone-100 rounded-lg p-1">
-              <button
-                onClick={() => setViewMode("grid")}
-                className={`p-1.5 rounded transition-colors ${
-                  viewMode === "grid" ? "bg-white shadow-sm" : "hover:bg-stone-200"
-                }`}
-              >
-                <Grid3x3 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setViewMode("list")}
-                className={`p-1.5 rounded transition-colors ${
-                  viewMode === "list" ? "bg-white shadow-sm" : "hover:bg-stone-200"
-                }`}
-              >
-                <List className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* Sort Dropdown */}
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-full sm:w-[180px] h-9 border-stone-300 text-xs sm:text-sm">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="featured">Featured</SelectItem>
-                <SelectItem value="newest">Newest First</SelectItem>
-                <SelectItem value="price-low">Price: Low to High</SelectItem>
-                <SelectItem value="price-high">Price: High to Low</SelectItem>
-                <SelectItem value="rating">Top Rated</SelectItem>
-                <SelectItem value="name">Name: A-Z</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
         {/* Products Grid/List */}
         {loadingProducts ? (
           <div className={viewMode === "grid" 
